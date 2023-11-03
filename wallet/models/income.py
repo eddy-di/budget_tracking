@@ -22,9 +22,9 @@ class Income(models.Model):
         CNY = 7, 'CNY'
         TRY = 8, 'TRY'
 
-    amount = models.DecimalField(decimal_places=2)
+    amount = models.DecimalField(decimal_places=2, max_digits=12)
     currency = models.PositiveSmallIntegerField(
-        choices=CurrencyChoices.labels, 
+        choices=CurrencyChoices.choices, 
         default=CurrencyChoices.KGS
     )
     created_at = models.DateTimeField(auto_now_add=True)
@@ -36,7 +36,7 @@ class Income(models.Model):
                                null=True)
     member = models.ForeignKey(User, 
                                on_delete=models.CASCADE,
-                               related_name='wallet_spendings')
+                               related_name='wallet_incomes')
 
     class Meta:
         # атрибут ordering, сообщает Django, что он должен сортировать результаты по полю creted_at 

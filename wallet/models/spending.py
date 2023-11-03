@@ -22,9 +22,9 @@ class Spending(models.Model):
         CNY = 7, 'CNY'
         TRY = 8, 'TRY'
 
-    amount = models.DecimalField(decimal_places=2)
+    amount = models.DecimalField(decimal_places=2, max_digits=12)
     currency = models.PositiveSmallIntegerField(
-        choices=CurrencyChoices.labels, 
+        choices=CurrencyChoices.choices, 
         default=CurrencyChoices.KGS
     )
     created_at = models.DateTimeField(auto_now_add=True)
