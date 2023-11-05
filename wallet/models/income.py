@@ -27,6 +27,7 @@ class Income(models.Model):
         choices=CurrencyChoices.choices, 
         default=CurrencyChoices.KGS
     )
+    slug = models.SlugField(max_length=150, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     sub_category = models.ForeignKey(SubCategory, 
                                      on_delete=models.CASCADE, 
