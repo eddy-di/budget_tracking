@@ -1,9 +1,15 @@
 from django.db import models
+from django.db.models.query import QuerySet
 
 from .sub_category import SubCategory
 from .wallet import Wallet
 from django.contrib.auth.models import User
 
+
+class SpendingManager(models.Manager):
+    def get_queryset(self) -> QuerySet:
+        return super().get_queryset()\
+                        .filter(currency=Spending.CurrencyChoices.KGS)
 
 class Spending(models.Model):
     class CurrencyChoices(models.IntegerChoices): # this subclass represents Python enum in Django
@@ -38,6 +44,9 @@ class Spending(models.Model):
     member = models.ForeignKey(User, 
                                on_delete=models.CASCADE,
                                related_name='wallet_spendings')
+    
+    objects = models.Manager()
+    spent = SpendingManager()
 
     class Meta:
         # атрибут ordering, сообщает Django, что он должен сортировать результаты по полю creted_at 
