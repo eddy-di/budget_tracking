@@ -35,7 +35,9 @@ class Income(models.Model):
         choices=CurrencyChoices.choices, 
         default=CurrencyChoices.KGS
     )
-    slug = models.SlugField(max_length=150, null=True)
+    slug = models.SlugField(max_length=150,
+                            null=True,
+                            unique_for_date='created_at')
     created_at = models.DateTimeField(auto_now_add=True)
     sub_category = models.ForeignKey(SubCategory, 
                                      on_delete=models.CASCADE, 
@@ -67,4 +69,7 @@ class Income(models.Model):
 
     def get_absolute_url(self):
         return reverse('wallet:earning_detail',
-                       args=[self.id])
+                       args=[self.created_at.year,
+                             self.created_at.month,
+                             self.created_at.day,
+                             self.slug])

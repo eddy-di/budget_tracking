@@ -10,10 +10,13 @@ def spending_list(request):
                   'spending/list.html',
                   {'spending': spending})
 
-def spending_detail(request, id):
+def spending_detail(request, year, month, day, spent):
     spending = get_object_or_404(Spending,
-                                 id=id,
-                                 currency=Spending.CurrencyChoices.KGS)
+                                 currency=Spending.CurrencyChoices.KGS,
+                                 slug=spent,
+                                 created_at__year=year,
+                                 created_at__month=month,
+                                 created_at__day=day)
     
     return render(request, 
                   'spending/detail.html',
@@ -25,10 +28,13 @@ def income_list(request):
                   'income/list.html',
                   {'earning': earning})
 
-def income_detail(request, id):
+def income_detail(request, year, month, day, earned):
     earning = get_object_or_404(Income,
-                                 id=id,
-                                 currency=Income.CurrencyChoices.KGS)
+                                 currency=Income.CurrencyChoices.KGS,
+                                 slug=earned,
+                                 created_at__year=year,
+                                 created_at__month=month,
+                                 created_at__day=day)
     
     return render(request, 
                   'income/detail.html',
