@@ -1,0 +1,11 @@
+{% extends "wallet/base.html" %}
+
+{% block title %}{{ earning.amount }}{% endblock %}
+
+{% block content %}
+    <h1>{{ earning.amount }}</h1>
+    <p class="date">
+        Earned on {{ earning.created_at }} by {{ earning.member }}
+    </p>
+    {{ earning.created_at | linebreaks }}
+{% endblock %}

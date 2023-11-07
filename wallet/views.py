@@ -20,9 +20,9 @@ def spending_detail(request, id):
                   {'spending': spending})
 
 def income_list(request):
-    earning = Income.earned.all()
+    earning = Income.objects.all()
     return render(request, 
-                  'income/earned/list.html',
+                  'income/list.html',
                   {'earning': earning})
 
 def income_detail(request, id):
@@ -31,5 +31,5 @@ def income_detail(request, id):
                                  currency=Income.CurrencyChoices.KGS)
     
     return render(request, 
-                  'income/earned/detail.html',
+                  'income/detail.html',
                   {'earning': earning})

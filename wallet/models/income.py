@@ -1,5 +1,6 @@
 from django.db import models
 from django.db.models.query import QuerySet
+from django.urls import reverse
 
 from .sub_category import SubCategory
 from .wallet import Wallet
@@ -62,3 +63,8 @@ class Income(models.Model):
         
     def __str__(self):
         return f'{self.amount} {self.currency} - {self.created_at}'
+    
+
+    def get_absolute_url(self):
+        return reverse('wallet:earning_detail',
+                       args=[self.id])

@@ -1,0 +1,17 @@
+{% extends 'wallet/base.html' %}
+
+{% block title %}Income List{% endblock %}
+
+{% block content %}
+    <h1>Income List</h1>
+    {% for obj in earning %}
+        <h2>
+            <a href="{{ obj.get_absolute_url }}">
+                {{ obj.amount }}, {{ obj.wallet }}
+            </a>
+        </h2>
+        <p class="date">
+            Earned on {{obj.created_at}} by {{obj.member}}
+        </p>
+    {% endfor %}
+{% endblock %}
