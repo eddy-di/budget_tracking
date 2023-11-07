@@ -1,0 +1,17 @@
+{% extends 'wallet/base.html' %}
+
+{% block title %}Spending List{% endblock %}
+
+{% block content %}
+    <h1>Spending List</h1>
+    {% for obj in spending %}
+        <h2>
+            <a href="{% url 'wallet:spending_detail' obj.id %}">
+                {{ obj.amount }}
+            </a>
+        </h2>
+        <p class="date">
+            Spent on {{obj.created_at}} by {{obj.member}}
+        </p>
+    {% endfor %}
+{% endblock %}

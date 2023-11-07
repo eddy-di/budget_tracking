@@ -11,6 +11,7 @@ class SpendingManager(models.Manager):
         return super().get_queryset()\
                         .filter(currency=Spending.CurrencyChoices.KGS)
 
+
 class Spending(models.Model):
     class CurrencyChoices(models.IntegerChoices): # this subclass represents Python enum in Django
         # in shell is you type from wallet.models.spending import Spending and then

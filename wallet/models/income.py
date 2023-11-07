@@ -1,8 +1,15 @@
 from django.db import models
+from django.db.models.query import QuerySet
 
 from .sub_category import SubCategory
 from .wallet import Wallet
 from django.contrib.auth.models import User
+
+
+class IncomeManager(models.Manager):
+    def get_queryset(self) -> QuerySet:
+        return super().get_queryset()\
+                        .filter(currency=Income.CurrencyChoices.KGS)
 
 
 class Income(models.Model):
@@ -38,6 +45,9 @@ class Income(models.Model):
     member = models.ForeignKey(User, 
                                on_delete=models.CASCADE,
                                related_name='wallet_incomes')
+    
+    objects = models.Manager()
+    earned = IncomeManager()
 
     class Meta:
         # атрибут ordering, сообщает Django, что он должен сортировать результаты по полю creted_at 

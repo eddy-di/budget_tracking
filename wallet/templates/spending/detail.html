@@ -1,0 +1,11 @@
+{% extends "wallet/base.html" %}
+
+{% block title %}{{ spending.amount }}{% endblock %}
+
+{% block content %}
+    <h1>{{ spending.amount }}</h1>
+    <p class="date">
+        Spent on {{ spending.created_at }} by {{ spending.member }}
+    </p>
+    {{ spending.created_at | linebreaks }}
+{% endblock %}
