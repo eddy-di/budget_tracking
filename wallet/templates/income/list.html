@@ -14,5 +14,5 @@
             Earned on {{obj.created_at}} by {{obj.member}}
         </p>
     {% endfor %}
-    {% include 'pagination.html' with page=earning %}
+    {% include 'pagination.html' with page=page_obj %}
 {% endblock %}
