@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
@@ -108,7 +109,7 @@ def spending_share(request, spending_id):
                       f"{spending.amount}"
             message = f"Look at {spending.amount} at {spending_url}\n\n" \
                       f"{cd['name']}\'s comments: {cd['comments']}"
-            send_mail(subject, message, 'eddy.di.fint@gmail.com', 
+            send_mail(subject, message, os.environ.get('EMAIL_HOST_USER'), 
                       [cd['to']])
             sent = True
     else:
