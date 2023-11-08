@@ -8,4 +8,9 @@
         Spent on {{ spending.created_at }} by {{ spending.member }}
     </p>
     {{ spending.created_at | linebreaks }}
+    <p>
+        <a href="{% url 'wallet:spending_share' spending.id %}">
+            Share
+        </a>
+    </p>
 {% endblock %}

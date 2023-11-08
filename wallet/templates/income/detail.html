@@ -8,4 +8,9 @@
         Earned on {{ earning.created_at }} by {{ earning.member }}
     </p>
     {{ earning.created_at | linebreaks }}
+    <p>
+        <a href="{% url 'wallet:income_share' earning.id %}">
+            Share
+        </a>
+    </p>
 {% endblock %}
