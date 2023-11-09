@@ -7,13 +7,21 @@ app_name = 'wallet'
 
 urlpatterns = [
     # representation of wallet spending
-    path('spending', views.spending_list, name='spending_list'),
+    path('spending', views.SpendingListView.as_view(), name='spending_list'),
     path('spending/<int:year>/<int:month>/<int:day>/<slug:spent>', 
          views.spending_detail, 
          name='spending_detail'),
+    path('spending/<int:spending_id>/share/',
+         views.spending_share, name='spending_share'),
+    path('spending/<int:spending_id>/comment/',
+         views.spending_comment, name='spending_comment'),
     # representation of wallet earning
-    path('earning', views.income_list, name='earning_list'),
+    path('earning', views.IncomeListView.as_view(), name='earning_list'),
     path('earning/<int:year>/<int:month>/<int:day>/<slug:earned>',
          views.income_detail, 
          name='earning_detail'),
+    path('earning/<int:earning_id>/share/',
+         views.income_share, name='income_share'),
+    path('earning/<int:earning_id>/comment/',
+         views.income_comment, name='earning_comment'),
 ]
