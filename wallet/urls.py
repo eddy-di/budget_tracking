@@ -21,7 +21,8 @@ urlpatterns = [
     # path(),
     
     # representation of wallet earning
-    path('earning', views.IncomeListView.as_view(), name='earning_list'),
+    # path('earning', views.IncomeListView.as_view(), name='earning_list'),
+    path('earning', views.income_list, name='earning_list'),
     path('earning/<int:year>/<int:month>/<int:day>/<slug:earned>',
          views.income_detail, 
          name='earning_detail'),
@@ -29,4 +30,6 @@ urlpatterns = [
          views.income_share, name='income_share'),
     path('earning/<int:earning_id>/comment/',
          views.income_comment, name='earning_comment'),
+    path('earning/tag/<slug:tag_slug>/',
+         views.income_list, name='earning_list_by_tag'),
 ]
