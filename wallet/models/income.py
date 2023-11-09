@@ -5,6 +5,7 @@ from django.urls import reverse
 from .sub_category import SubCategory
 from .wallet import Wallet
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 
 class IncomeManager(models.Manager):
@@ -51,6 +52,8 @@ class Income(models.Model):
     
     objects = models.Manager()
     earned = IncomeManager()
+
+    tags = TaggableManager()
 
     class Meta:
         # атрибут ordering, сообщает Django, что он должен сортировать результаты по полю creted_at 

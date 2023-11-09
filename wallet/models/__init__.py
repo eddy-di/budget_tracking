@@ -6,3 +6,4 @@ from .sub_category import SubCategory
 from django.contrib.auth.models import User
 from .comment_income import IncomeComment
 from .comment_spending import SpendingComment
+from taggit.managers import TaggableManager

@@ -4,15 +4,27 @@
 
 {% block content %}
     <h1>Spending List</h1>
+    {% if tag %}
+        <h2>Spendings tagged with "{{ tag.name }}"</h2>
+    {% endif %}
     {% for obj in spending %}
         <h2>
             <a href="{{ obj.get_absolute_url }}">
                 {{ obj.amount }}, {{ obj.wallet }}
             </a>
         </h2>
+        <p class="tags">
+            Tags:
+            {% for tag in obj.tags.all %}
+                <a href="{% url 'wallet:spending_list_by_tag' tag.slug %}">
+                    {{tag.name}}
+                </a>
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
         <p class="date">
             Spent on {{obj.created_at}} by {{obj.member}}
         </p>
     {% endfor %}
-    {% include 'pagination.html' with page=page_obj %}
+    {% include 'pagination.html' with page=spending %}
 {% endblock %}

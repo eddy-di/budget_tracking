@@ -10,36 +10,42 @@ from .models.spending import Spending
 from .models.comment_spending import SpendingComment
 from .models.comment_income import IncomeComment
 from .forms import EmailSpendingForm, SpendingCommentForm, IncomeCommentForm
+from taggit.models import Tag
 
 from django.views.decorators.http import require_POST
 
 
 
-class SpendingListView(ListView):
-    """
-    Alternative way of representing the list of spendings
-    """
-    model = Spending
-    # queryset = Spending.objects.all()
-    context_object_name = 'spending'
-    paginate_by = 5
-    template_name = 'spending/list.html'
+# class SpendingListView(ListView):
+    # """
+    # Alternative way of representing the list of spendings
+    # """
+    # model = Spending
+    # # queryset = Spending.objects.all()
+    # context_object_name = 'spending'
+    # paginate_by = 5
+    # template_name = 'spending/list.html'
 
-# def spending_list(request):
-    # spending_list = Spending.objects.all()
-    # # paginating 5 elements in one page
-    # paginator = Paginator(spending_list, 5)
-    # page_number = request.GET.get('page', 1)
-    # try:
-        # spending = paginator.page(page_number)
-    # except PageNotAnInteger:
-        # spending = paginator.page(1)
-    # except EmptyPage:
-        # spending = paginator.page(paginator.num_pages)
-# 
-    # return render(request, 
-                #   'spending/list.html',
-                #   {'spending': spending})
+def spending_list(request, tag_slug=None):
+    spending_list = Spending.objects.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        spending_list = spending_list.filter(tags__in=[tag])
+    # paginating 5 elements in one page
+    paginator = Paginator(spending_list, 5)
+    page_number = request.GET.get('page', 1)
+    try:
+        spending = paginator.page(page_number)
+    except PageNotAnInteger:
+        spending = paginator.page(1)
+    except EmptyPage:
+        spending = paginator.page(paginator.num_pages)
+
+    return render(request, 
+                  'spending/list.html',
+                  {'spending': spending,
+                   'tag': tag})
 
 
 @require_POST

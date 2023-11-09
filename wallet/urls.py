@@ -7,7 +7,8 @@ app_name = 'wallet'
 
 urlpatterns = [
     # representation of wallet spending
-    path('spending', views.SpendingListView.as_view(), name='spending_list'),
+    # path('spending', views.SpendingListView.as_view(), name='spending_list'),
+    path('spending', views.spending_list, name='spending_list'),
     path('spending/<int:year>/<int:month>/<int:day>/<slug:spent>', 
          views.spending_detail, 
          name='spending_detail'),
@@ -15,6 +16,10 @@ urlpatterns = [
          views.spending_share, name='spending_share'),
     path('spending/<int:spending_id>/comment/',
          views.spending_comment, name='spending_comment'),
+    path('spending/tag/<slug:tag_slug>/',
+         views.spending_list, name='spending_list_by_tag'),
+    # path(),
+    
     # representation of wallet earning
     path('earning', views.IncomeListView.as_view(), name='earning_list'),
     path('earning/<int:year>/<int:month>/<int:day>/<slug:earned>',
