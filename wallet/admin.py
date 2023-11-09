@@ -5,6 +5,8 @@ from .models.income import Income
 from .models.category import Category
 from .models.wallet import Wallet
 from .models.sub_category import SubCategory
+from .models.comment_income import IncomeComment
+from .models.comment_spending import SpendingComment
 # Register your models here.
 
 
@@ -52,3 +54,17 @@ class SubCategoryAdmin(admin.ModelAdmin):
     list_filter = ['sub_category_name', 'category_name']
     search_fields = ['sub_category_name', 'category_name']
     ordering = ['sub_category_name', 'category_name']
+
+
+@admin.register(SpendingComment)
+class SpendingCommentAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'spending', 'created', 'active']
+    list_filter = ['active', 'created', 'updated']
+    search_fields = ['name', 'email', 'body']
+
+
+@admin.register(IncomeComment)
+class IncomeCommentAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email', 'earning', 'created', 'active']
+    list_filter = ['active', 'created', 'updated']
+    search_fields = ['name', 'email', 'body']

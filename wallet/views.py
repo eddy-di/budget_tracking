@@ -7,7 +7,12 @@ from django.core.mail import send_mail
 
 from .models.income import Income
 from .models.spending import Spending
-from .forms import EmailSpendingForm
+from .models.comment_spending import SpendingComment
+from .models.comment_income import IncomeComment
+from .forms import EmailSpendingForm, SpendingCommentForm, IncomeCommentForm
+
+from django.views.decorators.http import require_POST
+
 
 
 class SpendingListView(ListView):
@@ -36,6 +41,46 @@ class SpendingListView(ListView):
                 #   'spending/list.html',
                 #   {'spending': spending})
 
+
+@require_POST
+def spending_comment(request, spending_id):
+    spending = get_object_or_404(Spending,
+                                 id=spending_id,
+                                 currency=Spending.CurrencyChoices.KGS)
+    comment = None
+    # comment being sent
+    form = SpendingCommentForm(data=request.POST)
+    if form.is_valid():
+        # create object of class SpendingComment, without saving it in db
+        comment = form.save(commit=False)
+        # # assign spending to comment
+        comment.spending = spending
+        # # save comment in db
+        comment.save()
+    
+    return render(request, 'spending/comment.html',
+                            {'spending': spending,
+                             'form': form,
+                             'comment':comment})
+
+
+@require_POST
+def income_comment(request, earning_id):
+    earning = get_object_or_404(Income,
+                                id=earning_id,
+                                currency=Income.CurrencyChoices.KGS)
+    comment = None
+    form = IncomeCommentForm(data=request.POST)
+    if form.is_valid():
+        comment = form.save(commit=False)
+        comment.earning = earning
+        comment.save()
+    return render(request, 'income/comment.html',
+                            {'earning':earning,
+                             'form': form,
+                             'comment': comment})
+
+
 def spending_detail(request, year, month, day, spent):
     spending = get_object_or_404(Spending,
                                  currency=Spending.CurrencyChoices.KGS,
@@ -43,10 +88,16 @@ def spending_detail(request, year, month, day, spent):
                                  created_at__year=year,
                                  created_at__month=month,
                                  created_at__day=day)
+    # number of active comments to this spending
+    comments = spending.spending_comment.filter(active=True) # comments maybe need to change to spending_comment
+    # form for comments
+    form = SpendingCommentForm()
     
     return render(request, 
                   'spending/detail.html',
-                  {'spending': spending})
+                  {'spending': spending,
+                   'comments': comments,
+                   'form': form})
 
 
 class IncomeListView(ListView):
@@ -83,9 +134,14 @@ def income_detail(request, year, month, day, earned):
                                  created_at__month=month,
                                  created_at__day=day)
     
+    comments = earning.earning_comment.filter(active=True)
+    form = IncomeCommentForm()
+    
     return render(request, 
                   'income/detail.html',
-                  {'earning': earning})
+                  {'earning': earning,
+                   'comments': comments,
+                   'form': form})
 
 
 def spending_share(request, spending_id):
@@ -149,4 +205,5 @@ def income_share(request, earning_id):
     return render(request, 'income/share.html', {'earning': earning,
                                                   'form': form,
                                                   'sent': sent})
+
 
