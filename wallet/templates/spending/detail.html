@@ -13,6 +13,16 @@
             Share
         </a>
     </p>
+
+    <h2>Similar spendings</h2>
+    {% for obj in similar_spendings %}
+        <p>
+            <a href="{{ obj.get_absolute_url }}">{{ obj.amount }}</a>
+        </p>
+    {% empty %}
+        There are no similar spendings yet.
+    {% endfor %}
+
     {% with comments.count as total_comments %}
         <h2>
             {{ total_comments }} comment{{ total_comments|pluralize }}

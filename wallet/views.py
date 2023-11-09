@@ -4,6 +4,7 @@ from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
 from django.views.generic import ListView
 from django.core.mail import send_mail
+from django.db.models import Count
 
 from .models.income import Income
 from .models.spending import Spending
@@ -13,7 +14,6 @@ from .forms import EmailSpendingForm, SpendingCommentForm, IncomeCommentForm
 from taggit.models import Tag
 
 from django.views.decorators.http import require_POST
-
 
 
 # class SpendingListView(ListView):
@@ -99,11 +99,19 @@ def spending_detail(request, year, month, day, spent):
     # form for comments
     form = SpendingCommentForm()
     
+    # list of similar spendings
+    spending_tags_ids = spending.tags.values_list('id', flat=True)
+    similar_spendings = Spending.objects.filter(tags__in=spending_tags_ids)\
+                                           .exclude(id=spending.id)
+    similar_spendings = similar_spendings.annotate(same_tags=Count('tags'))\
+                                         .order_by('-same_tags', '-created_at')[:5]
+    
     return render(request, 
                   'spending/detail.html',
                   {'spending': spending,
                    'comments': comments,
-                   'form': form})
+                   'form': form,
+                   'similar_spendings': similar_spendings})
 
 
 # class IncomeListView(ListView):
@@ -147,12 +155,19 @@ def income_detail(request, year, month, day, earned):
     
     comments = earning.earning_comment.filter(active=True)
     form = IncomeCommentForm()
+
+    earning_tags_ids = earning.tags.values_list('id', flat=True)
+    similar_earnings = Income.objects.filter(tags__in=earning_tags_ids)\
+                                           .exclude(id=earning.id)
+    similar_earnings = similar_earnings.annotate(same_tags=Count('tags'))\
+                                         .order_by('-same_tags', '-created_at')[:5]
     
     return render(request, 
                   'income/detail.html',
                   {'earning': earning,
                    'comments': comments,
-                   'form': form})
+                   'form': form,
+                   'similar_earnings': similar_earnings})
 
 
 def spending_share(request, spending_id):
