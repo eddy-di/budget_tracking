@@ -1,3 +1,5 @@
+{% load spending_tags %}
+{% load earnings_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -12,9 +14,15 @@
         {% block content %}
         {% endblock %}
     </div>
-    <div>
+    <div id="sidebar">
         <h2>Wallet</h2>
-        <p>This is {{ wallet.name }} wallet</p>
+            <p>This is my wallet.
+                Registered {% total_spendings %} spendings so far and {% total_earnings %} earnings.
+            </p>
+        <h3>Latest spendings</h3>
+            {% show_latest_spendings 3 %}
+        <h3>Latest earnings</h3>
+            {% show_latest_earnings 3 %}
     </div>
 </body>
 </html>

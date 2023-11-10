@@ -8,6 +8,7 @@ from django.db.models import Count
 
 from .models.income import Income
 from .models.spending import Spending
+from .models.wallet import Wallet
 from .models.comment_spending import SpendingComment
 from .models.comment_income import IncomeComment
 from .forms import EmailSpendingForm, SpendingCommentForm, IncomeCommentForm
