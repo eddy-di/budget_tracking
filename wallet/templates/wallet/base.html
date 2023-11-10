@@ -21,8 +21,26 @@
             </p>
         <h3>Latest spendings</h3>
             {% show_latest_spendings 3 %}
+        <h4>Most commented spendings</h4>
+            {% get_most_commented_spendings as most_commented_spendings %}
+            <ul>
+                {% for obj in most_commented_spendings %}
+                <li>
+                    <a href="{{ obj.get_absolute_url }}">{{ obj.amount }}</a>
+                </li>
+                {% endfor %}
+            </ul>
         <h3>Latest earnings</h3>
             {% show_latest_earnings 3 %}
+        <h4>Most commented earnings</h4>
+            {% get_most_commented_earnings as most_commented_earnings %}
+            <ul>
+                {% for obj in most_commented_earnings %}
+                <li>
+                    <a href="{{ obj.get_absolute_url }}">{{ obj.amount }}</a>
+                </li>
+                {% endfor %}
+            </ul>
     </div>
 </body>
 </html>
