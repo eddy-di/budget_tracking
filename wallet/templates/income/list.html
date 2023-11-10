@@ -10,7 +10,7 @@
     {% for obj in earning %}
         <h2>
             <a href="{{ obj.get_absolute_url }}">
-                {{ obj.amount }}, {{ obj.wallet }}
+                {{ obj.amount }} came from {{ obj.sub_category }}
             </a>
         </h2>
         <p class="tags">

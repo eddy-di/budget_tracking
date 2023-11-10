@@ -26,10 +26,15 @@
             <ul>
                 {% for obj in most_commented_spendings %}
                 <li>
-                    <a href="{{ obj.get_absolute_url }}">{{ obj.amount }}</a>
+                    <a href="{{ obj.get_absolute_url }}">{{ obj.amount }} {{ obj.sub_category }}</a>
                 </li>
                 {% endfor %}
             </ul>
+        <p>
+            <a href="{% url 'wallet:spending_feed' %}">
+                Subscribe to my spendings RSS feed
+            </a>
+        </p>
         <h3>Latest earnings</h3>
             {% show_latest_earnings 3 %}
         <h4>Most commented earnings</h4>
@@ -37,10 +42,15 @@
             <ul>
                 {% for obj in most_commented_earnings %}
                 <li>
-                    <a href="{{ obj.get_absolute_url }}">{{ obj.amount }}</a>
+                    <a href="{{ obj.get_absolute_url }}">{{ obj.amount }} {{ obj.sub_category }}</a>
                 </li>
                 {% endfor %}
             </ul>
+        <p>
+            <a href="{% url 'wallet:earning_feed' %}">
+                Subscribe to my earnings RSS feed
+            </a>
+        </p>
     </div>
 </body>
 </html>

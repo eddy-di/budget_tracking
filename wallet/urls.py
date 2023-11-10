@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .feeds import LatestSpendingsFeed, LatestEarningsFeed
 
 
 app_name = 'wallet'
@@ -18,7 +19,7 @@ urlpatterns = [
          views.spending_comment, name='spending_comment'),
     path('spending/tag/<slug:tag_slug>/',
          views.spending_list, name='spending_list_by_tag'),
-    # path(),
+    path('spending/feed/', LatestSpendingsFeed(), name='spending_feed'),
     
     # representation of wallet earning
     # path('earning', views.IncomeListView.as_view(), name='earning_list'),
@@ -32,4 +33,5 @@ urlpatterns = [
          views.income_comment, name='earning_comment'),
     path('earning/tag/<slug:tag_slug>/',
          views.income_list, name='earning_list_by_tag'),
+    path('earning/feed/', LatestEarningsFeed(), name='earning_feed'),
 ]

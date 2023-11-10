@@ -3,7 +3,7 @@
 {% block title %}{{ spending.amount }}{% endblock %}
 
 {% block content %}
-    <h1>{{ spending.amount }}</h1>
+    <h1>{{ spending.amount }} {{ spending.sub_category }}</h1>
     <p class="date">
         Spent on {{ spending.created_at }} by {{ spending.member }}
     </p>
