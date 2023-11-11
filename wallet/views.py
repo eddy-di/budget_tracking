@@ -94,7 +94,7 @@ def spending_detail(request, year, month, day, spent):
                                  slug=spent,
                                  created_at__year=year,
                                  created_at__month=month,
-                                 created_at__day=day)
+                                 created_at__day=day,)
     # number of active comments to this spending
     comments = spending.spending_comment.filter(active=True) # comments maybe need to change to spending_comment
     # form for comments

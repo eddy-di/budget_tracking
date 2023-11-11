@@ -10,7 +10,7 @@ urlpatterns = [
     # representation of wallet spending
     # path('spending', views.SpendingListView.as_view(), name='spending_list'),
     path('spending', views.spending_list, name='spending_list'),
-    path('spending/<int:year>/<int:month>/<int:day>/<slug:spent>', 
+    path('spending/<slug:spent>/<int:year>/<int:month>/<int:day>', 
          views.spending_detail, 
          name='spending_detail'),
     path('spending/<int:spending_id>/share/',
@@ -24,7 +24,7 @@ urlpatterns = [
     # representation of wallet earning
     # path('earning', views.IncomeListView.as_view(), name='earning_list'),
     path('earning', views.income_list, name='earning_list'),
-    path('earning/<int:year>/<int:month>/<int:day>/<slug:earned>',
+    path('earning/<slug:earned>/<int:year>/<int:month>/<int:day>',
          views.income_detail, 
          name='earning_detail'),
     path('earning/<int:earning_id>/share/',

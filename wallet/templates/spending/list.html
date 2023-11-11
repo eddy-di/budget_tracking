@@ -1,4 +1,5 @@
 {% extends 'wallet/base.html' %}
+{% load spending_tags %}
 
 {% block title %}Spending List{% endblock %}
 
@@ -13,6 +14,7 @@
                 {{ obj.amount }} spent on {{ obj.sub_category }}
             </a>
         </h2>
+        {{ obj.comment|markdown|truncatewords_html:30 }}
         <p class="tags">
             Tags:
             {% for tag in obj.tags.all %}

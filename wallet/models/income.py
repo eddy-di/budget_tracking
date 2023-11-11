@@ -32,6 +32,7 @@ class Income(models.Model):
         TRY = 8, 'TRY'
 
     amount = models.DecimalField(decimal_places=2, max_digits=12)
+    comment = models.TextField(null=True, blank=True) # part where the text for the spending or income can be provided if necessary
     currency = models.PositiveSmallIntegerField(
         choices=CurrencyChoices.choices, 
         default=CurrencyChoices.KGS
@@ -72,7 +73,7 @@ class Income(models.Model):
 
     def get_absolute_url(self):
         return reverse('wallet:earning_detail',
-                       args=[self.created_at.year,
+                       args=[self.slug, 
+                             self.created_at.year,
                              self.created_at.month,
-                             self.created_at.day,
-                             self.slug])
+                             self.created_at.day])
