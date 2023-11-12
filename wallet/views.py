@@ -5,13 +5,14 @@ from django.core.paginator import Paginator, EmptyPage,\
 from django.views.generic import ListView
 from django.core.mail import send_mail
 from django.db.models import Count
+from django.contrib.postgres.search import SearchVector
 
 from .models.income import Income
 from .models.spending import Spending
 from .models.wallet import Wallet
 from .models.comment_spending import SpendingComment
 from .models.comment_income import IncomeComment
-from .forms import EmailSpendingForm, SpendingCommentForm, IncomeCommentForm
+from .forms import EmailSpendingForm, SpendingCommentForm, IncomeCommentForm, SearchForm
 from taggit.models import Tag
 
 from django.views.decorators.http import require_POST
@@ -234,3 +235,44 @@ def income_share(request, earning_id):
                                                   'sent': sent})
 
 
+
+def spending_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        print('pass 1st if')
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Spending.objects.annotate(
+                search=SearchVector('comment', 'sub_category'),
+            ).filter(search=query)
+            print('pass 2nd if')
+
+    return render(request, 
+                  'spending/search.html',
+                  {'form': form,
+                   'query': query,
+                   'results': results})
+
+
+def earning_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            results = Income.objects.annotate(
+                search=SearchVector('comment', 'sub_category')
+            ).filter(search=query)
+
+    return render(request,
+                  'income/search.html',
+                  {'form': form,
+                   'query': query,
+                   'results': results})
