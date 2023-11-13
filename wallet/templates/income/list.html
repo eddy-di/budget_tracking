@@ -1,18 +1,32 @@
 {% extends 'wallet/base.html' %}
+{% load earnings_tags %}
 
 {% block title %}Income List{% endblock %}
 
 {% block content %}
     <h1>Income List</h1>
+    {% if tag %}
+        <h2>Earnings tagged with "{{ tag.name }}"</h2>
+    {% endif %}
     {% for obj in earning %}
         <h2>
             <a href="{{ obj.get_absolute_url }}">
-                {{ obj.amount }}, {{ obj.wallet }}
+                {{ obj.amount }} came from {{ obj.sub_category }}
             </a>
         </h2>
+        {{ obj.comment|markdown|truncatewords_html:30 }}
+        <p class="tags">
+            Tags:
+            {% for tag in obj.tags.all %}
+                <a href="{% url 'wallet:earning_list_by_tag' tag.slug %}">
+                    {{ tag.name }}
+                </a>
+                {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
         <p class="date">
             Earned on {{obj.created_at}} by {{obj.member}}
         </p>
     {% endfor %}
-    {% include 'pagination.html' with page=page_obj %}
+    {% include 'pagination.html' with page=earning %}
 {% endblock %}

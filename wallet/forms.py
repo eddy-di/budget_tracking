@@ -20,3 +20,7 @@ class IncomeCommentForm(forms.ModelForm):
     class Meta:
         model = IncomeComment
         fields = ['name', 'email', 'body']
+
+
+class SearchForm(forms.Form):
+    query = forms.CharField()

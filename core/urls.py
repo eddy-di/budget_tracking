@@ -15,8 +15,19 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap
+from wallet.sitemaps import SpendingSitemap, IncomeSitemap
+
+
+sitemaps = {
+    'spendings': SpendingSitemap,
+    'earnings': IncomeSitemap,
+}
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('wallet/', include('wallet.urls', namespace='wallet')),
+    path('sitemaps.xml', sitemap, {'sitemaps': sitemaps},
+         name='django.contrib.sitemaps.views.sitemap'),
+    # path(),
 ]

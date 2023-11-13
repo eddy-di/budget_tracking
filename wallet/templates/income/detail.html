@@ -1,18 +1,29 @@
 {% extends "wallet/base.html" %}
+{% load earnings_tags %}
 
 {% block title %}{{ earning.amount }}{% endblock %}
 
 {% block content %}
-    <h1>{{ earning.amount }}</h1>
+    <h1>{{ earning.amount }} {{ earning.sub_category }}</h1>
     <p class="date">
         Earned on {{ earning.created_at }} by {{ earning.member }}
     </p>
-    {{ earning.created_at | linebreaks }}
+    {{ earning.comment|markdown|truncatewords_html:30 }}
     <p>
         <a href="{% url 'wallet:income_share' earning.id %}">
             Share
         </a>
     </p>
+
+    <h2>Similar earnings</h2>
+    {% for obj in similar_earnings %}
+        <p>
+            <a href="{{ obj.get_absolute_url }}">{{ obj.amount }}</a>
+        </p>
+    {% empty %}
+        There are no similar earnings yet.
+    {% endfor %}
+
     {% with comments.count as total_comments %}
         <h2>
             {{ total_comments }} comment{{ total_comments|pluralize }}

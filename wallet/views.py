@@ -4,42 +4,51 @@ from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
 from django.views.generic import ListView
 from django.core.mail import send_mail
+from django.db.models import Count
+from django.contrib.postgres.search import SearchVector, \
+                                           SearchQuery, SearchRank
 
 from .models.income import Income
 from .models.spending import Spending
+from .models.wallet import Wallet
 from .models.comment_spending import SpendingComment
 from .models.comment_income import IncomeComment
-from .forms import EmailSpendingForm, SpendingCommentForm, IncomeCommentForm
+from .forms import EmailSpendingForm, SpendingCommentForm, IncomeCommentForm, SearchForm
+from taggit.models import Tag
 
 from django.views.decorators.http import require_POST
 
 
+# class SpendingListView(ListView):
+    # """
+    # Alternative way of representing the list of spendings
+    # """
+    # model = Spending
+    # # queryset = Spending.objects.all()
+    # context_object_name = 'spending'
+    # paginate_by = 5
+    # template_name = 'spending/list.html'
 
-class SpendingListView(ListView):
-    """
-    Alternative way of representing the list of spendings
-    """
-    model = Spending
-    # queryset = Spending.objects.all()
-    context_object_name = 'spending'
-    paginate_by = 5
-    template_name = 'spending/list.html'
+def spending_list(request, tag_slug=None):
+    spending_list = Spending.objects.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        spending_list = spending_list.filter(tags__in=[tag])
+    # paginating 5 elements in one page
+    paginator = Paginator(spending_list, 5)
+    page_number = request.GET.get('page', 1)
+    try:
+        spending = paginator.page(page_number)
+    except PageNotAnInteger:
+        spending = paginator.page(1)
+    except EmptyPage:
+        spending = paginator.page(paginator.num_pages)
 
-# def spending_list(request):
-    # spending_list = Spending.objects.all()
-    # # paginating 5 elements in one page
-    # paginator = Paginator(spending_list, 5)
-    # page_number = request.GET.get('page', 1)
-    # try:
-        # spending = paginator.page(page_number)
-    # except PageNotAnInteger:
-        # spending = paginator.page(1)
-    # except EmptyPage:
-        # spending = paginator.page(paginator.num_pages)
-# 
-    # return render(request, 
-                #   'spending/list.html',
-                #   {'spending': spending})
+    return render(request, 
+                  'spending/list.html',
+                  {'spending': spending,
+                   'tag': tag})
 
 
 @require_POST
@@ -87,44 +96,57 @@ def spending_detail(request, year, month, day, spent):
                                  slug=spent,
                                  created_at__year=year,
                                  created_at__month=month,
-                                 created_at__day=day)
+                                 created_at__day=day,)
     # number of active comments to this spending
     comments = spending.spending_comment.filter(active=True) # comments maybe need to change to spending_comment
     # form for comments
     form = SpendingCommentForm()
     
+    # list of similar spendings
+    spending_tags_ids = spending.tags.values_list('id', flat=True)
+    similar_spendings = Spending.objects.filter(tags__in=spending_tags_ids)\
+                                           .exclude(id=spending.id)
+    similar_spendings = similar_spendings.annotate(same_tags=Count('tags'))\
+                                         .order_by('-same_tags', '-created_at')[:5]
+    
     return render(request, 
                   'spending/detail.html',
                   {'spending': spending,
                    'comments': comments,
-                   'form': form})
+                   'form': form,
+                   'similar_spendings': similar_spendings})
 
 
-class IncomeListView(ListView):
-    """
-    Alternative way of representing the list of income
-    """
-    model = Income
-    context_object_name = 'earning'
-    paginate_by = 5
-    template_name = 'income/list.html'
+# class IncomeListView(ListView):
+    # """
+    # Alternative way of representing the list of income
+    # """
+    # model = Income
+    # context_object_name = 'earning'
+    # paginate_by = 5
+    # template_name = 'income/list.html'
 
 
-# def income_list(request):
-    # earning_list = Income.objects.all()
-    # # paginating 5 elements in one page
-    # paginator = Paginator(earning_list, 5)
-    # page_number = request.GET.get('page', 1)
-    # try:
-        # earning = paginator.page(page_number)
-    # except PageNotAnInteger:
-        # earning = paginator.page(1)
-    # except EmptyPage:
-        # earning = paginator.page(paginator.num_pages)
-# 
-    # return render(request, 
-                #   'income/list.html',
-                #   {'earning': earning})
+def income_list(request, tag_slug=None):
+    earning_list = Income.objects.all()
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        earning_list = earning_list.filter(tags__in=[tag])
+    # paginating 5 elements in one page
+    paginator = Paginator(earning_list, 5)
+    page_number = request.GET.get('page', 1)
+    try:
+        earning = paginator.page(page_number)
+    except PageNotAnInteger:
+        earning = paginator.page(1)
+    except EmptyPage:
+        earning = paginator.page(paginator.num_pages)
+
+    return render(request, 
+                  'income/list.html',
+                  {'earning': earning,
+                   'tag': tag})
 
 def income_detail(request, year, month, day, earned):
     earning = get_object_or_404(Income,
@@ -136,12 +158,19 @@ def income_detail(request, year, month, day, earned):
     
     comments = earning.earning_comment.filter(active=True)
     form = IncomeCommentForm()
+
+    earning_tags_ids = earning.tags.values_list('id', flat=True)
+    similar_earnings = Income.objects.filter(tags__in=earning_tags_ids)\
+                                           .exclude(id=earning.id)
+    similar_earnings = similar_earnings.annotate(same_tags=Count('tags'))\
+                                         .order_by('-same_tags', '-created_at')[:5]
     
     return render(request, 
                   'income/detail.html',
                   {'earning': earning,
                    'comments': comments,
-                   'form': form})
+                   'form': form,
+                   'similar_earnings': similar_earnings})
 
 
 def spending_share(request, spending_id):
@@ -207,3 +236,50 @@ def income_share(request, earning_id):
                                                   'sent': sent})
 
 
+def spending_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            search_vector = SearchVector('comment', 'sub_category')
+            search_query = SearchQuery(query)
+            results = Spending.objects.annotate(
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query)
+            ).filter(search=search_query).order_by('-rank')
+
+
+    return render(request, 
+                  'spending/search.html',
+                  {'form': form,
+                   'query': query,
+                   'results': results})
+
+
+def earning_search(request):
+    form = SearchForm()
+    query = None
+    results = []
+
+    if 'query' in request.GET:
+        form = SearchForm(request.GET)
+
+        if form.is_valid():
+            query = form.cleaned_data['query']
+            search_vector = SearchVector('comment', 'sub_category')
+            search_query = SearchQuery(query)
+            results = Income.objects.annotate(
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query)
+            ).filter(search=search_query).order_by('-rank')
+
+    return render(request,
+                  'income/search.html',
+                  {'form': form,
+                   'query': query,
+                   'results': results})

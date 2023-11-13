@@ -12,24 +12,24 @@ from .models.comment_spending import SpendingComment
 
 @admin.register(Spending)
 class SpendingAdmin(admin.ModelAdmin):
-    list_display = ['amount', 'currency', 'created_at', 'sub_category', 'member']
+    list_display = ['amount', 'currency', 'created_at', 'sub_category', 'member', 'slug', 'comment']
     list_filter = ['amount', 'created_at', 'sub_category', 'member']
-    search_fields = ['amount', 'created_at']
+    search_fields = ['amount', 'created_at', 'comment']
     prepopulated_fields = {'slug': ('currency', 'amount', 'sub_category', 'wallet')}
     raw_id_fields = ['member']
     date_hierarchy = 'created_at'
-    ordering = ['created_at']
+    ordering = ['created_at', 'currency']
 
 
 @admin.register(Income)
 class IncomeAdmin(admin.ModelAdmin):
-    list_display = ['amount', 'currency', 'created_at', 'sub_category', 'member']
+    list_display = ['amount', 'currency', 'created_at', 'sub_category', 'member', 'slug', 'comment']
     list_filter = ['amount', 'created_at', 'sub_category', 'member']
-    search_fields = ['amount', 'created_at']
+    search_fields = ['amount', 'created_at', 'comment']
     prepopulated_fields = {'slug': ('currency', 'amount', 'sub_category', 'wallet')}
     raw_id_fields = ['member']
     date_hierarchy = 'created_at'
-    ordering = ['created_at']
+    ordering = ['created_at', 'currency']
 
 
 @admin.register(Category)

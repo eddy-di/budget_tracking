@@ -5,6 +5,7 @@ from django.urls import reverse
 from .sub_category import SubCategory
 from .wallet import Wallet
 from django.contrib.auth.models import User
+from taggit.managers import TaggableManager
 
 
 class SpendingManager(models.Manager):
@@ -31,6 +32,7 @@ class Spending(models.Model):
         TRY = 8, 'TRY'
 
     amount = models.DecimalField(decimal_places=2, max_digits=12)
+    comment = models.TextField(null=True, blank=True) # part where the text for the spending or income can be provided if necessary
     currency = models.PositiveSmallIntegerField(
         choices=CurrencyChoices.choices, 
         default=CurrencyChoices.KGS
@@ -52,6 +54,8 @@ class Spending(models.Model):
     objects = models.Manager()
     spent = SpendingManager()
 
+    tags = TaggableManager()
+
     class Meta:
         # атрибут ordering, сообщает Django, что он должен сортировать результаты по полю creted_at 
         # дефис указывает на обратный хронологический порядок (от нового к старому), 
@@ -69,7 +73,7 @@ class Spending(models.Model):
     
     def get_absolute_url(self):
         return reverse('wallet:spending_detail',
-                       args=[self.created_at.year,
+                       args=[self.slug, 
+                             self.created_at.year,
                              self.created_at.month,
-                             self.created_at.day,
-                             self.slug])
+                             self.created_at.day])

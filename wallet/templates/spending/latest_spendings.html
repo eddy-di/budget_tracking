@@ -1,0 +1,7 @@
+<ul>
+    {% for obj in latest_spendings %}
+        <li>
+            <a href="{{ obj.get_absolute_url }}">{{ obj.amount }} {{ obj.sub_category }}</a>
+        </li>
+    {% endfor %}
+</ul>
