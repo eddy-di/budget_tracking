@@ -5,7 +5,8 @@ from django.core.paginator import Paginator, EmptyPage,\
 from django.views.generic import ListView
 from django.core.mail import send_mail
 from django.db.models import Count
-from django.contrib.postgres.search import SearchVector
+from django.contrib.postgres.search import SearchVector, \
+                                           SearchQuery, SearchRank
 
 from .models.income import Income
 from .models.spending import Spending
@@ -235,7 +236,6 @@ def income_share(request, earning_id):
                                                   'sent': sent})
 
 
-
 def spending_search(request):
     form = SearchForm()
     query = None
@@ -243,13 +243,16 @@ def spending_search(request):
 
     if 'query' in request.GET:
         form = SearchForm(request.GET)
-        print('pass 1st if')
+
         if form.is_valid():
             query = form.cleaned_data['query']
+            search_vector = SearchVector('comment', 'sub_category')
+            search_query = SearchQuery(query)
             results = Spending.objects.annotate(
-                search=SearchVector('comment', 'sub_category'),
-            ).filter(search=query)
-            print('pass 2nd if')
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query)
+            ).filter(search=search_query).order_by('-rank')
+
 
     return render(request, 
                   'spending/search.html',
@@ -265,11 +268,15 @@ def earning_search(request):
 
     if 'query' in request.GET:
         form = SearchForm(request.GET)
+
         if form.is_valid():
             query = form.cleaned_data['query']
+            search_vector = SearchVector('comment', 'sub_category')
+            search_query = SearchQuery(query)
             results = Income.objects.annotate(
-                search=SearchVector('comment', 'sub_category')
-            ).filter(search=query)
+                search=search_vector,
+                rank=SearchRank(search_vector, search_query)
+            ).filter(search=search_query).order_by('-rank')
 
     return render(request,
                   'income/search.html',
