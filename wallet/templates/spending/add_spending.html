@@ -1,0 +1,12 @@
+{% extends 'wallet/base.html' %}
+
+{% block title %}Add new spending{% endblock %}
+
+{% block content %}
+    <h1>Add new spending</h1>
+    <form method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Add spending"></p>
+    </form>
+{% endblock %}

@@ -1,5 +1,5 @@
 from django import forms
-from .models.comment_spending import SpendingComment
+from .models.comment_spending import SpendingComment, Spending
 from .models.comment_income import IncomeComment
 
 

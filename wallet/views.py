@@ -2,7 +2,7 @@ import os
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView
 from django.core.mail import send_mail
 from django.db.models import Count
 from django.contrib.postgres.search import SearchVector, \
@@ -283,3 +283,15 @@ def earning_search(request):
                   {'form': form,
                    'query': query,
                    'results': results})
+
+
+class AddSpendingView(CreateView):
+    model = Spending
+    template_name = 'spending/add_spending.html'
+    fields = ['amount', 'currency', 'comment', 'sub_category', 'wallet', 'member', 'tags']
+
+
+class AddEarningView(CreateView):
+    model = Income
+    template_name = 'income/add_earning.html'
+    fields = ['amount', 'currency', 'comment', 'sub_category', 'wallet', 'member', 'tags']

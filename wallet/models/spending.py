@@ -1,6 +1,7 @@
 from django.db import models
 from django.db.models.query import QuerySet
 from django.urls import reverse
+from django.utils.text import slugify 
 
 from .sub_category import SubCategory
 from .wallet import Wallet
@@ -67,6 +68,7 @@ class Spending(models.Model):
             models.Index(fields=['-created_at'])
             ]
         
+        
     def __str__(self):
         return f'{self.amount} {self.currency} - {self.created_at}'
     
@@ -77,3 +79,9 @@ class Spending(models.Model):
                              self.created_at.year,
                              self.created_at.month,
                              self.created_at.day])
+    
+
+    def save(self, *args, **kwargs):
+        slug_str = f'{self.currency}-{self.amount}-{self.sub_category.id}-{self.wallet.id}'
+        self.slug = slugify(slug_str)
+        super(Spending, self).save(*args, **kwargs)
