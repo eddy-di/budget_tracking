@@ -7,6 +7,7 @@ from django.core.mail import send_mail
 from django.db.models import Count
 from django.contrib.postgres.search import SearchVector, \
                                            SearchQuery, SearchRank
+from django.db.models import Sum
 
 from .models.income import Income
 from .models.spending import Spending
@@ -295,3 +296,13 @@ class AddEarningView(CreateView):
     model = Income
     template_name = 'income/add_earning.html'
     fields = ['amount', 'currency', 'comment', 'sub_category', 'wallet', 'member', 'tags']
+
+
+def wallet_info(request):
+    spending_sum = Spending.objects.aggregate(Sum('amount'))['amount__sum']
+    earning_sum = Income.objects.aggregate(Sum('amount'))['amount__sum']
+
+    return render(request, 
+                  'wallet/wallet.html',
+                  {'spending_sum': spending_sum,
+                   'earning_sum': earning_sum})

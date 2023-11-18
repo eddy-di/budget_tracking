@@ -1,6 +1,6 @@
 from django import template
 from ..models.spending import Spending
-from django.db.models import Count
+from django.db.models import Count, Sum
 from django.utils.safestring import mark_safe
 import markdown
 
@@ -29,3 +29,8 @@ def get_most_commented_spendings(count=5):
 @register.filter(name='markdown')
 def markdown_format(text):
     return mark_safe(markdown.markdown(text))
+
+
+@register.simple_tag
+def spending_sum():
+    return Spending.objects.aggregate(Sum('amount'))['amount__sum']

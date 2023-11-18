@@ -15,9 +15,12 @@
         {% endblock %}
     </div>
     <div id="sidebar">
-        <h2>Wallet</h2>
-            <p>This is my wallet.
-                Registered {% total_spendings %} spendings so far and {% total_earnings %} earnings.
+        <h2>Wallet info</h2>
+            <p>
+                Total of {% total_earnings %} earnings is {% earning_sum %}.
+            </p>
+            <p>
+                Total of {% total_spendings %} spendings is {% spending_sum %}.
             </p>
         <h3>Latest spendings</h3>
             {% show_latest_spendings 3 %}

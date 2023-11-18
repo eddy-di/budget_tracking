@@ -7,6 +7,7 @@ app_name = 'wallet'
 
 
 urlpatterns = [
+    path('', views.wallet_info, name='wallet_info'),
     # representation of wallet spending
     # path('spending', views.SpendingListView.as_view(), name='spending_list'),
     path('spending', views.spending_list, name='spending_list'),
