@@ -7,3 +7,4 @@ from django.contrib.auth.models import User
 from .comment_income import IncomeComment
 from .comment_spending import SpendingComment
 from taggit.managers import TaggableManager
+from .user_wallet import UserWallet
