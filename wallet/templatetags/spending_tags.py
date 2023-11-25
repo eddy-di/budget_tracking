@@ -10,6 +10,7 @@ register = template.Library()
 
 @register.simple_tag
 def total_spendings():
+
     return Spending.objects.count()
 
 

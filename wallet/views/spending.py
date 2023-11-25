@@ -1,7 +1,8 @@
 from wallet.models.spending import Spending
 from wallet.forms import EmailSpendingForm, SpendingCommentForm, SearchForm
+from wallet.models.wallet import Wallet
 
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import redirect, render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
 from taggit.models import Tag
@@ -12,6 +13,7 @@ from django.core.mail import send_mail
 import os
 from django.contrib.postgres.search import SearchVector, \
                                            SearchQuery, SearchRank
+from django.http import Http404
 
 
 
@@ -27,26 +29,33 @@ from django.contrib.postgres.search import SearchVector, \
 
 
 
-def spending_list(request, tag_slug=None):
-    spending_list = Spending.objects.all()
-    tag = None
-    if tag_slug:
-        tag = get_object_or_404(Tag, slug=tag_slug)
-        spending_list = spending_list.filter(tags__in=[tag])
-    # paginating 5 elements in one page
-    paginator = Paginator(spending_list, 5)
-    page_number = request.GET.get('page', 1)
-    try:
-        spending = paginator.page(page_number)
-    except PageNotAnInteger:
-        spending = paginator.page(1)
-    except EmptyPage:
-        spending = paginator.page(paginator.num_pages)
+def spending_list(request, wallet_id, tag_slug=None):
+    user = request.user # checks if the user is logged in
 
-    return render(request, 
-                  'spending/list.html',
-                  {'spending': spending,
-                   'tag': tag})
+    wallet = Wallet.objects.get(user=user, id=wallet_id) # checks the m2m for user and wallet compatibility
+
+    try:
+        spending_list = Spending.objects.filter(wallet_id=wallet_id)
+        tag = None
+        if tag_slug:
+            tag = get_object_or_404(Tag, slug=tag_slug)
+            spending_list = spending_list.filter(tags__in=[tag])
+        # paginating 5 elements in one page
+        paginator = Paginator(spending_list, 5)
+        page_number = request.GET.get('page', 1)
+        try:
+            spending = paginator.page(page_number)
+        except PageNotAnInteger:
+            spending = paginator.page(1)
+        except EmptyPage:
+            spending = paginator.page(paginator.num_pages)
+
+        return render(request, 
+                      'spending/list.html',
+                      {'spending': spending,
+                       'tag': tag})
+    except Wallet.DoesNotExist:
+        return Http404
 
 
 
@@ -73,32 +82,35 @@ def spending_comment(request, spending_id):
 
 
 
-def spending_detail(request, year, month, day, spent):
-    spending = get_object_or_404(Spending,
-                                 currency=Spending.CurrencyChoices.KGS,
-                                 slug=spent,
-                                 created_at__year=year,
-                                 created_at__month=month,
-                                 created_at__day=day,)
-    # number of active comments to this spending
-    comments = spending.spending_comment.filter(active=True) # comments maybe need to change to spending_comment
-    # form for comments
-    form = SpendingCommentForm()
-    
-    # list of similar spendings
-    spending_tags_ids = spending.tags.values_list('id', flat=True)
-    similar_spendings = Spending.objects.filter(tags__in=spending_tags_ids)\
-                                           .exclude(id=spending.id)
-    similar_spendings = similar_spendings.annotate(same_tags=Count('tags'))\
-                                         .order_by('-same_tags', '-created_at')[:5]
-    
-    return render(request, 
-                  'spending/detail.html',
-                  {'spending': spending,
-                   'comments': comments,
-                   'form': form,
-                   'similar_spendings': similar_spendings})
+def spending_detail(request, wallet_id, spending_id):
+    user = request.user # checks if the user is logged in
 
+    wallet = Wallet.objects.get(user=user, id=wallet_id) # checks the m2m for user and wallet compatibility
+
+    try:
+        spending = get_object_or_404(Spending,
+                                     currency=Spending.CurrencyChoices.KGS,
+                                     id=spending_id)
+        # number of active comments to this spending
+        comments = spending.spending_comment.filter(active=True) # comments maybe need to change to spending_comment
+        # form for comments
+        form = SpendingCommentForm()
+
+        # list of similar spendings
+        spending_tags_ids = spending.tags.values_list('id', flat=True)
+        similar_spendings = Spending.objects.filter(tags__in=spending_tags_ids)\
+                                               .exclude(id=spending.id)
+        similar_spendings = similar_spendings.annotate(same_tags=Count('tags'))\
+                                             .order_by('-same_tags', '-created_at')[:5]
+
+        return render(request, 
+                      'spending/detail.html',
+                      {'spending': spending,
+                       'comments': comments,
+                       'form': form,
+                       'similar_spendings': similar_spendings})
+    except Wallet.DoesNotExist:
+        return Http404
 
 
 def spending_share(request, spending_id):
@@ -127,7 +139,7 @@ def spending_share(request, spending_id):
             sent = True
     else:
         form = EmailSpendingForm()
-    
+        
     return render(request, 'spending/share.html', {'spending': spending,
                                                   'form': form,
                                                   'sent': sent})

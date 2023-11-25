@@ -1,4 +1,5 @@
 import os
+from django.http import Http404
 from django.shortcuts import render, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
@@ -15,6 +16,7 @@ from wallet.models.comment_spending import SpendingComment
 from wallet.models.comment_income import IncomeComment
 from wallet.forms import EmailSpendingForm, IncomeCommentForm, SearchForm
 from taggit.models import Tag
+from wallet.models.wallet import Wallet
 
 from django.views.decorators.http import require_POST
 
@@ -31,26 +33,33 @@ from django.views.decorators.http import require_POST
 
 
 
-def income_list(request, tag_slug=None):
-    earning_list = Income.objects.all()
-    tag = None
-    if tag_slug:
-        tag = get_object_or_404(Tag, slug=tag_slug)
-        earning_list = earning_list.filter(tags__in=[tag])
-    # paginating 5 elements in one page
-    paginator = Paginator(earning_list, 5)
-    page_number = request.GET.get('page', 1)
-    try:
-        earning = paginator.page(page_number)
-    except PageNotAnInteger:
-        earning = paginator.page(1)
-    except EmptyPage:
-        earning = paginator.page(paginator.num_pages)
+def income_list(request, wallet_id, tag_slug=None):
+    user = request.user # checks if the user is logged in
 
-    return render(request, 
-                  'income/list.html',
-                  {'earning': earning,
-                   'tag': tag})
+    wallet = Wallet.objects.get(user=user, id=wallet_id) # # checks the m2m for user and wallet compatibility
+
+    try:
+        earning_list = Income.objects.filter(wallet_id=wallet_id)
+        tag = None
+        if tag_slug:
+            tag = get_object_or_404(Tag, slug=tag_slug)
+            earning_list = earning_list.filter(tags__in=[tag])
+        # paginating 5 elements in one page
+        paginator = Paginator(earning_list, 5)
+        page_number = request.GET.get('page', 1)
+        try:
+            earning = paginator.page(page_number)
+        except PageNotAnInteger:
+            earning = paginator.page(1)
+        except EmptyPage:
+            earning = paginator.page(paginator.num_pages)
+
+        return render(request, 
+                      'income/list.html',
+                      {'earning': earning,
+                       'tag': tag})
+    except wallet.DoesNotExist:
+        return Http404
 
 
 
@@ -72,29 +81,36 @@ def income_comment(request, earning_id):
 
 
 
-def income_detail(request, year, month, day, earned):
-    earning = get_object_or_404(Income,
-                                 currency=Income.CurrencyChoices.KGS,
-                                 slug=earned,
-                                 created_at__year=year,
-                                 created_at__month=month,
-                                 created_at__day=day)
-    
-    comments = earning.earning_comment.filter(active=True)
-    form = IncomeCommentForm()
+def income_detail(request, wallet_id, year, month, day, earned):
+    user = request.user # checks if the user is logged in
 
-    earning_tags_ids = earning.tags.values_list('id', flat=True)
-    similar_earnings = Income.objects.filter(tags__in=earning_tags_ids)\
-                                           .exclude(id=earning.id)
-    similar_earnings = similar_earnings.annotate(same_tags=Count('tags'))\
-                                         .order_by('-same_tags', '-created_at')[:5]
-    
-    return render(request, 
-                  'income/detail.html',
-                  {'earning': earning,
-                   'comments': comments,
-                   'form': form,
-                   'similar_earnings': similar_earnings})
+    wallet = Wallet.objects.get(user=user, id=wallet_id) # # checks the m2m for user and wallet compatibility
+
+    try:
+        earning = get_object_or_404(Income,
+                                    currency=Income.CurrencyChoices.KGS,
+                                    slug=earned,
+                                    created_at__year=year,
+                                    created_at__month=month,
+                                    created_at__day=day)
+
+        comments = earning.earning_comment.filter(active=True)
+        form = IncomeCommentForm()
+
+        earning_tags_ids = earning.tags.values_list('id', flat=True)
+        similar_earnings = Income.objects.filter(tags__in=earning_tags_ids)\
+                                               .exclude(id=earning.id)
+        similar_earnings = similar_earnings.annotate(same_tags=Count('tags'))\
+                                             .order_by('-same_tags', '-created_at')[:5]
+
+        return render(request, 
+                      'income/detail.html',
+                      {'earning': earning,
+                       'comments': comments,
+                       'form': form,
+                       'similar_earnings': similar_earnings})
+    except Wallet.DoesNotExist:
+        return Http404
 
 
 

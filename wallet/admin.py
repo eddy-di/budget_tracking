@@ -46,6 +46,7 @@ class WaletAdmin(admin.ModelAdmin):
     list_filter = ['name']
     search_fields = ['name']
     ordering = ['name']
+    filter_horizontal = ['user']
 
 
 @admin.register(SubCategory)

@@ -1,4 +1,4 @@
-{% extends 'wallet/base.html' %}
+{% extends 'base.html' %}
 {% load spending_tags %}
 
 {% block title %}Spending List{% endblock %}
@@ -10,7 +10,7 @@
     {% endif %}
     {% for obj in spending %}
         <h2>
-            <a href="{{ obj.get_absolute_url }}">
+            <a href="{% url 'wallet:spending_detail' wallet_id=obj.wallet.id spending_id=obj.id %}">
                 {{ obj.amount }} spent on {{ obj.sub_category }}
             </a>
         </h2>

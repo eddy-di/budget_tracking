@@ -1,4 +1,4 @@
-{% extends "wallet/base.html" %}
+{% extends 'base.html' %}
 {% load spending_tags %}
 
 {% block title %}{{ spending.amount }}{% endblock %}
@@ -10,15 +10,13 @@
     </p>
     {{ spending.comment|markdown|truncatewords_html:30 }}
     <p>
-        <a href="{% url 'wallet:spending_share' spending.id %}">
-            Share
-        </a>
+        
     </p>
 
     <h2>Similar spendings</h2>
     {% for obj in similar_spendings %}
         <p>
-            <a href="{{ obj.get_absolute_url }}">{{ obj.amount }}</a>
+            <a href="{% url 'wallet:spending_detail' wallet_id=obj.wallet.id spending_id=obj.id %}">{{ obj.amount }}</a>
         </p>
     {% empty %}
         There are no similar spendings yet.

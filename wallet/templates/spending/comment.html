@@ -1,11 +1,11 @@
-{% extends 'wallet/base.html' %}
+{% extends 'base.html' %}
 
 {% block title %}Add a comment{% endblock %}
 
 {% block content %}
     {% if comment %}
         <h2>Your comment has been added.</h2>
-        <p><a href="{{ spending.get_absolute_url }}">Back to the spending</a></p>
+        <p><a href="{% url 'wallet:spending_detail' wallet_id=spending.wallet.id spending_id=spending.id %}">Back to the spending</a></p>
     {% else %}
         {% include "spending/includes/comment_form.html" %}
     {% endif %}

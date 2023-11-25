@@ -75,7 +75,8 @@ class Income(models.Model):
 
     def get_absolute_url(self):
         return reverse('wallet:earning_detail',
-                       args=[self.slug, 
+                       args=[self.wallet_id,
+                             self.slug, 
                              self.created_at.year,
                              self.created_at.month,
                              self.created_at.day])

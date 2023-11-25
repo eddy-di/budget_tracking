@@ -1,20 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add new wallet</title>
-</head>
-<body>
-    {% block title %}Add new wallet{% endblock %}
-    
-    {% block content %}
-        <h1>Add new wallet</h1>
-        <form method="POST">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <p><input type="submit" value="Add wallet"></p>
-        </form>
-    {% endblock %}
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Add new wallet{% endblock %}
+
+{% block content %}
+    <h1>Add new wallet</h1>
+    <form method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Add wallet"></p>
+    </form>
+{% endblock %}
