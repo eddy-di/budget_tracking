@@ -10,7 +10,9 @@
     </p>
     {{ spending.comment|markdown|truncatewords_html:30 }}
     <p>
-        
+        <a href="{% url 'wallet:spending_share' wallet_id=spending.wallet.id spending_id=spending.id %}">
+            Share
+        </a>
     </p>
 
     <h2>Similar spendings</h2>

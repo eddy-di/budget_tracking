@@ -81,6 +81,12 @@ class Spending(models.Model):
                              self.created_at.day])
     
 
+    def get_detail_url(self):
+        return reverse('wallet:spending_detail',
+                       args=[self.wallet_id, 
+                             self.id])
+    
+
     def save(self, *args, **kwargs):
         slug_str = f'{self.currency}-{self.amount}-{self.sub_category.id}-{self.wallet.id}'
         self.slug = slugify(slug_str)

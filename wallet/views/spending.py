@@ -113,7 +113,11 @@ def spending_detail(request, wallet_id, spending_id):
         return Http404
 
 
-def spending_share(request, spending_id):
+def spending_share(request, wallet_id, spending_id):
+    user = request.user # checks if the user is logged in
+
+    wallet = Wallet.objects.get(user=user, id=wallet_id) # checks the m2m for user and wallet compatibility
+
     # get spending from its id
     spending = get_object_or_404(Spending,
                                  id=spending_id,
@@ -129,7 +133,7 @@ def spending_share(request, spending_id):
             cd = form.cleaned_data
             # ... send email
             spending_url = request.build_absolute_uri(
-                spending.get_absolute_url())
+                spending.get_detail_url())
             subject = f"{cd['name']} recommends you to look at " \
                       f"{spending.amount}"
             message = f"Look at {spending.amount} at {spending_url}\n\n" \
