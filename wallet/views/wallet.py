@@ -1,21 +1,26 @@
+from django.http import Http404
 from wallet.models.spending import Spending
 from wallet.models.income import Income
 from wallet.models.wallet import Wallet
+from django.contrib.auth.models import User
 
 
 from django.db.models import Sum
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, CreateView
 
-def wallet_index(request):
+def wallet_list(request): # has to show all the available wallets that the user is assigned to
     user = request.user
 
-    wallet = Wallet.objects.filter(user=user)
+    wallets = Wallet.objects.filter(user=user).all()
 
-    if wallet:
-        return render(request, 'wallet/wallet_index.html', {'wallet': wallet})
+    # wallet_url = request.build_absolute_uri(wallet.get_detail_url())
+
+    if wallets:
+        return render(request, 'wallet/wallet_index.html', {'wallets': wallets})
     else:
-        add_link = 'wallet/add.html'
+        return Http404
+
 
 
 
@@ -25,7 +30,9 @@ def wallet_index(request):
 def wallet_detail(request, wallet_id):
     user = request.user
 
-    wallet = Wallet.objects.filter(user=user, id=wallet_id).first()
+    # wallet = Wallet.objects.filter(user=user, id=wallet_id).first()
+
+    wallet = Wallet.objects.get(id=wallet_id)
 
     if wallet:
         spending_sum = Spending.objects.aggregate(Sum('amount'))['amount__sum']

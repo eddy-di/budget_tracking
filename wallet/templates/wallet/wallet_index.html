@@ -4,5 +4,11 @@
 
 {% block content %}
 <h1>Wallets</h1>
-<h3><a href="wallet_detail.html">{{ wallet.name }}</a></h3>
+    {% for obj in wallets %}
+        <h2>
+            <a href="{% url 'wallet:wallet_info' obj.id %}">
+                {{obj.name}}
+            </a>
+        </h2>
+    {% endfor %}
 {% endblock %}

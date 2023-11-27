@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from django.utils.text import slugify
 from django.contrib.auth.models import User
 
@@ -14,3 +15,8 @@ class Wallet(models.Model):
         if not self.slug:
             self.slug = slugify(self.name)
         return super().save(*args, **kwargs)
+    
+    def get_detail_url(self):
+        return reverse('wallet:wallet_index',
+                       args=[self.id,
+                             self.user.id])
