@@ -14,23 +14,15 @@ def wallet_list(request): # has to show all the available wallets that the user 
 
     wallets = Wallet.objects.filter(user=user).all()
 
-    # wallet_url = request.build_absolute_uri(wallet.get_detail_url())
-
     if wallets:
         return render(request, 'wallet/wallet_index.html', {'wallets': wallets})
     else:
         return Http404
 
 
-
-
-    # wallet = Wallet.objects.filter(user=user, id=wallet_id).first()
-
-
 def wallet_detail(request, wallet_id):
     user = request.user
 
-    # wallet = Wallet.objects.filter(user=user, id=wallet_id).first()
     try:
         wallet = Wallet.objects.get(id=wallet_id)
 

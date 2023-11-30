@@ -19,6 +19,16 @@
         Difference: {{ difference }}
     </h2>
     
+    <h4>
+        <a href="{% url 'wallet:spending_list' wallet_id=wallet.id %}">
+            Spendings
+        </a>
+    </h4>
+    <h4>
+        <a href="{% url 'wallet:earning_list' wallet_id=wallet.id %}">
+            Earnings
+        </a>
+    </h4>
     {% endif %}
 {% endblock %}
 
