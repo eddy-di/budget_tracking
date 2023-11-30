@@ -31,12 +31,11 @@ def wallet_detail(request, wallet_id):
     user = request.user
 
     # wallet = Wallet.objects.filter(user=user, id=wallet_id).first()
+    try:
+        wallet = Wallet.objects.get(id=wallet_id)
 
-    wallet = Wallet.objects.get(id=wallet_id)
-
-    if wallet:
-        spending_sum = Spending.objects.aggregate(Sum('amount'))['amount__sum']
-        earning_sum = Income.objects.aggregate(Sum('amount'))['amount__sum']
+        spending_sum = Spending.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
+        earning_sum = Income.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
         difference = earning_sum - spending_sum
 
         return render(request, 
@@ -46,7 +45,7 @@ def wallet_detail(request, wallet_id):
                        'difference': difference,
                        'wallet': wallet,
                        'user': user})
-    else:
+    except Wallet.DoesNotExist:
         return render(request, 'wallet/wallet_not_found.html')
 
 
