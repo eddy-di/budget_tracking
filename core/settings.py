@@ -144,3 +144,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 SITE_ID = 1
+
+
+# 
+
+LOGIN_REDIRECT_URL = '/wallet/'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
