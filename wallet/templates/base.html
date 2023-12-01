@@ -7,14 +7,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}{% endblock %}</title>
-    <link href="{% static 'css/wallet.css' %}" rel="stylesheet">
+    <link href="{% static 'account:css/base.css' %}" rel="stylesheet">
 </head>
 <body>
     <div id="content">
         {% block content %}
         {% endblock %}
     </div>
-    <div id="sidebar">
+    <!-- <div id="sidebar">
         <h2><a href="">Wallet info</a></h2>
             <p style="color: MediumSeaGreen;">
                 Total of {% total_earnings %} earnings is {% earning_sum %}.
@@ -54,6 +54,6 @@
                 Subscribe to my earnings RSS feed
             </a>
         </p>
-    </div>
+    </div> -->
 </body>
 </html>

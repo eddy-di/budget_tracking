@@ -14,13 +14,13 @@ def total_earnings():
 
 
 @register.inclusion_tag('income/latest_incomes.html')
-def show_latest_earnings(count=5):
+def show_latest_earnings(count=3):
     latest_earnings = Income.objects.order_by('-created_at')[:count]
     return {'latest_earnings': latest_earnings}
 
 
 @register.simple_tag
-def get_most_commented_earnings(count=5):
+def get_most_commented_earnings(count=3):
     return Income.objects.annotate(
         total_comments=Count('earning_comment')
     ).order_by('-total_comments')[:count]
