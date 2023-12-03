@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
-from .forms import LoginForm
+from .forms import LoginForm, UserRegistrationForm
 
 def user_login(request):
     if request.method == 'POST':
@@ -33,3 +33,22 @@ def wallet(request):
     return render(request, 
                   'wallet/wallet_index.html', 
                   {'section': 'wallet'})
+
+
+def register(request):
+    if request.method == "POST":
+        user_form = UserRegistrationForm(request.POST)
+        
+        if user_form.is_valid():
+            new_user = user_form.save(commit=False) # create new user obj but not commit to db
+            new_user.set_password(user_form.cleaned_data['password']) # set password to user obj
+            new_user.save() # save user obj in db
+            return render(request, 
+                          'account/register_done.html', 
+                          {'new_user': new_user})
+        
+    else:
+        user_form = UserRegistrationForm()
+    return render(request, 
+                  'account/register.html', 
+                  {'user_form': user_form})
