@@ -4,6 +4,12 @@
 
 {% block content %}
 <h1>Wallets</h1>
+    <p>
+        Welcome to your wallets page. 
+        <br>
+        You can <a href="{% url 'account:edit' %}">edit your profile</a> 
+        or <a href="{% url 'account:password_change' %}">change your password</a>.
+    </p>
     {% for obj in wallets %}
         <h2>
             <a href="{% url 'wallet:wallet_info' obj.id %}">
