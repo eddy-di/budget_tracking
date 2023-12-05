@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Login required{% endblock %}
+
+{% block content %}
+    <h1>You must be logged in to access this page.</h1>
+    <p>
+        Please <a href="{% url 'account:login' %}">log in</a> to continue using website.
+    </p>
+{% endblock %}

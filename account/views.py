@@ -79,3 +79,7 @@ def edit(request):
                   'account/edit.html', 
                   {'user_form': user_form, 
                    'profile_form': profile_form})
+
+
+def redirect_to_login(request):
+    return render(request, 'account/redirect_to_login.html')
