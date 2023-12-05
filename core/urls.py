@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
 from wallet.sitemaps import SpendingSitemap, IncomeSitemap
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 sitemaps = {
@@ -32,3 +34,8 @@ urlpatterns = [
          name='django.contrib.sitemaps.views.sitemap'),
     # path(),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, 
+                          document_root=settings.MEDIA_ROOT)
