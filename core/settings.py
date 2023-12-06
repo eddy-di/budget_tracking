@@ -165,6 +165,7 @@ AUTHENTICATION_BACKENDS = [
     'account.authentication.EmailAuthBackend',
     'social_core.backends.facebook.FacebookOAuth2',
     'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.google.GoogleOAuth2',
 ]
 
 # login_required used on apps
@@ -178,3 +179,6 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET') # С
 
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY') # Ключ API Twitter
 SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET') # Секрет API Twitter
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_KEY') # ИД клиента Google
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET') # Секрет клиента Google
