@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-iq@t6svz=h+mpg-d!2#(wm@xl9i33ejdx6^%g=z5zu6a9jf&wq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
 
 
 # Application definition
@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.sitemaps',
     'django.contrib.postgres',
+    'social_django',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -161,8 +163,14 @@ LOGOUT_URL = 'account:logout'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
+    'social_core.backends.facebook.FacebookOAuth2',
 ]
 
 # login_required used on apps
 
 WALLET_REQUIRE_LOGIN_MIDDLEWARE = '/wallet/'
+
+# configurations for social-auth
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY') # ИД приложения Facebook
+SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET') # Секрет приложения Facebook
