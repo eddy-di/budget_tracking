@@ -1,6 +1,6 @@
 import os
 from django.http import Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.core.paginator import Paginator, EmptyPage,\
                                   PageNotAnInteger
 from django.views.generic import ListView, CreateView
@@ -14,9 +14,11 @@ from wallet.models.income import Income
 from wallet.models.spending import Spending
 from wallet.models.comment_spending import SpendingComment
 from wallet.models.comment_income import IncomeComment
-from wallet.forms import EmailSpendingForm, IncomeCommentForm, SearchForm
+from wallet.forms import EmailSpendingForm, IncomeCommentForm, SearchForm, EarningAddForm
 from taggit.models import Tag
 from wallet.models.wallet import Wallet
+from django.contrib import messages
+from django.contrib.auth.models import User
 
 from django.views.decorators.http import require_POST
 
@@ -57,7 +59,8 @@ def income_list(request, wallet_id, tag_slug=None):
         return render(request, 
                       'income/list.html',
                       {'earning': earning,
-                       'tag': tag})
+                       'tag': tag,
+                       'wallet': wallet})
     except wallet.DoesNotExist:
         return Http404
 
@@ -175,3 +178,26 @@ class AddEarningView(CreateView):
     model = Income
     template_name = 'income/add_earning.html'
     fields = ['amount', 'currency', 'comment', 'sub_category', 'wallet', 'member', 'tags']
+
+
+def add_earning(request, wallet_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    user = User.objects.get(id=request.user.id)
+
+    if request.method == 'POST':
+        form = EarningAddForm(request.POST)
+        
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.member = user
+            instance.wallet = wallet
+            instance.save()
+
+            messages.success(request, 'Earning saved successfully.') # success message
+        else: 
+            messages.error(request, 'Error saving earning.') # error message
+
+        return redirect('wallet:earning_list', wallet_id=wallet_id)
+    else:
+        form = EarningAddForm()
+    return render(request, 'spending/add_spending.html', {'form': form})

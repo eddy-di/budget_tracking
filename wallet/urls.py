@@ -26,7 +26,7 @@ urlpatterns = [
         views.spending.spending_list, name='spending_list_by_tag'),
     path('spending/feed/', LatestSpendingsFeed(), name='spending_feed'),
     path('spending/search/', views.spending.spending_search, name='spending_search'),
-    path('spending/add/', views.spending.AddSpendingView.as_view(), name='add_spending'),
+    path('<int:wallet_id>/spending/add/', views.spending.add_spending, name='add_spending'),
     
 
     # representation of wallet earning
@@ -43,5 +43,5 @@ urlpatterns = [
         views.earning.income_list, name='earning_list_by_tag'),
     path('earning/feed/', LatestEarningsFeed(), name='earning_feed'),
     path('earning/search/', views.earning.earning_search, name='earning_search'),
-    path('earning/add/', views.earning.AddEarningView.as_view(), name='add_earning'),
+    path('<int:wallet_id>/earning/add/', views.earning.add_earning, name='add_earning'),
 ]

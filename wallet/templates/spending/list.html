@@ -29,4 +29,9 @@
         </p>
     {% endfor %}
     {% include 'pagination.html' with page=spending %}
+    <p>
+        <a href="{% url 'wallet:add_spending' wallet_id=wallet.id %}">
+            Add spending
+        </a>
+    </p>
 {% endblock %}

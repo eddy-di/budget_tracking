@@ -18,7 +18,7 @@
     <h2 style="color: tomato;">
         Difference: {{ difference }}
     </h2>
-    
+    {% endif %}
     <h4>
         <a href="{% url 'wallet:spending_list' wallet_id=wallet.id %}">
             Spendings
@@ -29,7 +29,6 @@
             Earnings
         </a>
     </h4>
-    {% endif %}
 {% endblock %}
 
 

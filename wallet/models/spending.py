@@ -87,7 +87,7 @@ class Spending(models.Model):
                              self.id])
     
 
-    def save(self, *args, **kwargs):
-        slug_str = f'{self.currency}-{self.amount}-{self.sub_category.id}-{self.wallet.id}'
-        self.slug = slugify(slug_str)
-        super(Spending, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+        # slug_str = f'{self.currency}-{self.amount}-{self.sub_category.id}-{self.wallet.id}'
+        # self.slug = slugify(slug_str)
+        # super(Spending, self).save(*args, **kwargs)

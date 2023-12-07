@@ -1,6 +1,6 @@
 from django import forms
 from .models.comment_spending import SpendingComment, Spending
-from .models.comment_income import IncomeComment
+from .models.comment_income import IncomeComment, Income
 from .models.wallet import Wallet
 
 
@@ -31,3 +31,17 @@ class WalletAddForm(forms.ModelForm):
     class Meta:
         model = Wallet
         fields = ['name']
+
+
+class SpendingAddForm(forms.ModelForm):
+    class Meta:
+        model = Spending
+        exclude = ['member', 'wallet']
+        fields = ['amount', 'currency', 'comment', 'sub_category']
+
+
+class EarningAddForm(forms.ModelForm):
+    class Meta:
+        model = Income
+        exclude = ['member', 'wallet']
+        fields = ['amount', 'currency', 'comment', 'sub_category']

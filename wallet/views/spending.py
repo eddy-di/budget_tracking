@@ -1,5 +1,6 @@
 from wallet.models.spending import Spending
-from wallet.forms import EmailSpendingForm, SpendingCommentForm, SearchForm
+from django.contrib.auth.models import User
+from wallet.forms import EmailSpendingForm, SpendingCommentForm, SearchForm, SpendingAddForm
 from wallet.models.wallet import Wallet
 
 from django.shortcuts import redirect, render, get_object_or_404
@@ -14,6 +15,7 @@ import os
 from django.contrib.postgres.search import SearchVector, \
                                            SearchQuery, SearchRank
 from django.http import Http404
+from django.contrib import messages
 
 
 
@@ -32,7 +34,7 @@ from django.http import Http404
 def spending_list(request, wallet_id, tag_slug=None):
     user = request.user # checks if the user is logged in
 
-    wallet = Wallet.objects.get(user=user, id=wallet_id) # checks the m2m for user and wallet compatibility
+    wallet = Wallet.objects.get(user=user, id=wallet_id) 
 
     try:
         spending_list = Spending.objects.filter(wallet_id=wallet_id)
@@ -53,7 +55,8 @@ def spending_list(request, wallet_id, tag_slug=None):
         return render(request, 
                       'spending/list.html',
                       {'spending': spending,
-                       'tag': tag})
+                       'tag': tag,
+                       'wallet': wallet})
     except Wallet.DoesNotExist:
         return Http404
 
@@ -178,5 +181,28 @@ class AddSpendingView(CreateView):
     model = Spending
     template_name = 'spending/add_spending.html'
     fields = ['amount', 'currency', 'comment', 'sub_category', 'wallet', 'member', 'tags']
+
+
+def add_spending(request, wallet_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    user = User.objects.get(id=request.user.id)
+
+    if request.method == 'POST':
+        form = SpendingAddForm(request.POST)
+        
+        if form.is_valid():
+            instance = form.save(commit=False)
+            instance.member = user
+            instance.wallet = wallet
+            instance.save()
+
+            messages.success(request, 'Spending saved successfully.') # success message
+        else: 
+            messages.error(request, 'Error saving spending.') # error message
+
+        return redirect('wallet:spending_list', wallet_id=wallet_id)
+    else:
+        form = SpendingAddForm()
+    return render(request, 'spending/add_spending.html', {'form': form})
 
 
