@@ -197,10 +197,10 @@ def add_spending(request, wallet_id):
             instance.save()
 
             messages.success(request, 'Spending saved successfully.') # success message
+            return redirect('wallet:spending_list', wallet_id=wallet_id)
         else: 
             messages.error(request, 'Error saving spending.') # error message
-
-        return redirect('wallet:spending_list', wallet_id=wallet_id)
+            return render(request, 'spending/add_spending.html', {'form': form})
     else:
         form = SpendingAddForm()
     return render(request, 'spending/add_spending.html', {'form': form})

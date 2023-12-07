@@ -194,10 +194,11 @@ def add_earning(request, wallet_id):
             instance.save()
 
             messages.success(request, 'Earning saved successfully.') # success message
+            return redirect('wallet:earning_list', wallet_id=wallet_id)
         else: 
             messages.error(request, 'Error saving earning.') # error message
+            return render(request, 'spending/add_spending.html', {'form': form})
 
-        return redirect('wallet:earning_list', wallet_id=wallet_id)
     else:
         form = EarningAddForm()
     return render(request, 'spending/add_spending.html', {'form': form})

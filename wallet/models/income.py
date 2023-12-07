@@ -1,7 +1,9 @@
 from django.db import models
 from django.db.models.query import QuerySet
 from django.urls import reverse
-from django.utils.text import slugify 
+from django.utils.text import slugify
+from django.core.validators import MinValueValidator
+from decimal import Decimal
 
 from .sub_category import SubCategory
 from .wallet import Wallet
@@ -32,7 +34,8 @@ class Income(models.Model):
         CNY = 7, 'CNY'
         TRY = 8, 'TRY'
 
-    amount = models.DecimalField(decimal_places=2, max_digits=12)
+    amount = models.DecimalField(decimal_places=2, max_digits=12, 
+                                 validators=[MinValueValidator(Decimal('0.01'))])
     comment = models.TextField(null=True, blank=True) # part where the text for the spending or income can be provided if necessary
     currency = models.PositiveSmallIntegerField(
         choices=CurrencyChoices.choices, 
