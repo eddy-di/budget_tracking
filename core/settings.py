@@ -56,7 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'wallet.middleware.RequireLoginMiddleware',
+    'wallet.middleware.RequireLoginMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -154,8 +154,8 @@ SITE_ID = 1
 
 # redirected urls
 
-LOGIN_REDIRECT_URL = 'account:successful_login'
-# LOGIN_REDIRECT_URL = '/wallet/'
+# LOGIN_REDIRECT_URL = 'account:successful_login' # for testing purposes
+LOGIN_REDIRECT_URL = '/wallet/'
 LOGIN_URL = 'account:login'
 LOGOUT_URL = 'account:logout'
 
@@ -165,7 +165,6 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'account.authentication.EmailAuthBackend',
     'social_core.backends.facebook.FacebookOAuth2',
-    'social_core.backends.twitter.TwitterOAuth',
     'social_core.backends.google.GoogleOAuth2',
 ]
 
