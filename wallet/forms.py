@@ -1,6 +1,7 @@
 from django import forms
 from .models.comment_spending import SpendingComment, Spending
 from .models.comment_income import IncomeComment
+from .models.wallet import Wallet
 
 
 class EmailSpendingForm(forms.Form):
@@ -24,3 +25,9 @@ class IncomeCommentForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     query = forms.CharField()
+
+
+class WalletAddForm(forms.ModelForm):
+    class Meta:
+        model = Wallet
+        fields = ['name']

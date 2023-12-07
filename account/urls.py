@@ -40,4 +40,5 @@ urlpatterns = [
     path('register/', views.register, name='register'),
     path('edit/', views.edit, name='edit'),
     path('redirect/', views.redirect_to_login, name='redirect'),
+    path('successful-login/', views.successful_login, name='successful_login'),
 ]

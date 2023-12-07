@@ -11,10 +11,10 @@ class Wallet(models.Model):
     def __str__(self) -> str:
         return self.name
     
-    def save(self, *args, **kwargs):  # new
-        if not self.slug:
-            self.slug = slugify(self.name)
-        return super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):  # new
+        # if not self.slug:
+            # self.slug = slugify(self.name)
+        # return super().save(*args, **kwargs)
     
     def get_detail_url(self):
         return reverse('wallet:wallet_index',

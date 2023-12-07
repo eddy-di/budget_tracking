@@ -2,11 +2,12 @@ from django.http import Http404
 from wallet.models.spending import Spending
 from wallet.models.income import Income
 from wallet.models.wallet import Wallet
+from wallet.forms import WalletAddForm
 from django.contrib.auth.models import User
 
 
 from django.db.models import Sum
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views.generic import ListView, CreateView
 
 def wallet_list(request): # has to show all the available wallets that the user is assigned to
@@ -41,8 +42,20 @@ def wallet_detail(request, wallet_id):
         return render(request, 'wallet/wallet_not_found.html')
 
 
+def wallet_add(request):
+    if request.method == "POST":
+        form = WalletAddForm(request.POST)
 
-class AddWalletView(CreateView):
-    model = Wallet
-    template_name = 'wallet/add.html'
-    fields = ['name']
+        if form.is_valid():
+            logged_user = request.user
+            instance = form.save(commit=False)
+            instance.save()
+            instance.user.add(logged_user)
+            instance.save()
+
+        return redirect('/wallet/')
+    else:
+        form = WalletAddForm()
+    
+    return render(request, 'wallet/add.html', {'form': form})
+

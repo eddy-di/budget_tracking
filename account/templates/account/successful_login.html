@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block title %}Login success{% endblock %}
+
+{% block content %}
+    <h1>Congratz!!!</h1>
+    <p>
+        Now you can create your <a href="{% url 'wallet:add_wallet' %}">new wallet.</a>
+    </p>
+{% endblock %}

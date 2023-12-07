@@ -83,3 +83,7 @@ def edit(request):
 
 def redirect_to_login(request):
     return render(request, 'account/redirect_to_login.html')
+
+
+def successful_login(request):
+    return render(request, 'account/successful_login.html')

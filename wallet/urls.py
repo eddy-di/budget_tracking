@@ -9,7 +9,7 @@ app_name = 'wallet'
 urlpatterns = [
     path('', views.wallet.wallet_list, name='wallet_list'),
     path('<int:wallet_id>/', views.wallet.wallet_detail, name='wallet_info'),
-    path('<int:wallet_id>/add/', views.wallet.AddWalletView.as_view(), name='add_wallet'),
+    path('add/', views.wallet.wallet_add, name='add_wallet'),
 
 
     # representation of wallet spending
