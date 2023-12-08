@@ -27,6 +27,9 @@ urlpatterns = [
     path('spending/feed/', LatestSpendingsFeed(), name='spending_feed'),
     path('spending/search/', views.spending.spending_search, name='spending_search'),
     path('<int:wallet_id>/spending/add/', views.spending.add_spending, name='add_spending'),
+    path('<int:wallet_id>/spending/<int:spending_id>/update/', 
+         views.spending.update_spending, name='update_spending'),
+    path('<int:wallet_id>/spending/<int:spending_id>/delete/', views.spending.delete_spending, name='delete_spending'),
     
 
     # representation of wallet earning
@@ -44,4 +47,7 @@ urlpatterns = [
     path('earning/feed/', LatestEarningsFeed(), name='earning_feed'),
     path('earning/search/', views.earning.earning_search, name='earning_search'),
     path('<int:wallet_id>/earning/add/', views.earning.add_earning, name='add_earning'),
+    path('<int:wallet_id>/earning/<int:earning_id>/update/', 
+         views.earning.update_earning, name='update_earning'),
+    path('<int:wallet_id>/earning/<int:earning_id>/delete/', views.earning.delete_earning, name='delete_earning'),
 ]

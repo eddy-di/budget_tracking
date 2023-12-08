@@ -14,7 +14,14 @@
             Share
         </a>
     </p>
-
+    <a href="{% url 'wallet:update_earning' wallet_id=earning.wallet.id earning_id=earning.id %}">
+        <button type="button-edit">Update</button>
+    </a>
+    {# <a href="#"><button type="button-delete">Delete</button> </a> #}
+    <form method="post" action="{% url 'wallet:delete_earning' wallet_id=earning.wallet.id earning_id=earning.id %}" onsubmit="return confirm('Are you sure you want to delete this spending?');">
+        {% csrf_token %}
+        <button type="submit" class="button-delete">Delete</button>
+    </form>
     <h2>Similar earnings</h2>
     {% for obj in similar_earnings %}
         <p>

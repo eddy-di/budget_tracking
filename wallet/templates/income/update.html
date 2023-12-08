@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Update {{ earning.amount }} on {{ earning.sub_category }}{% endblock %}
+
+{% block content %}
+    <h1>Update {{ earning.amount }} on {{ earning.sub_category }}</h1>
+    <form method="POST">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <p><input type="submit" value="Update"></p>
+    </form>
+{% endblock %}

@@ -202,3 +202,48 @@ def add_earning(request, wallet_id):
     else:
         form = EarningAddForm()
     return render(request, 'spending/add_spending.html', {'form': form})
+
+
+def update_earning(request, wallet_id, earning_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    earning = get_object_or_404(Income, 
+                                 id=earning_id, 
+                                 wallet=wallet, 
+                                 currency=Spending.CurrencyChoices.KGS)
+
+    if request.method == 'POST':
+        form = EarningAddForm(request.POST, instance=earning)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Earning updated successfully.')
+            return redirect('wallet:earning_list', wallet_id=wallet_id)
+        else:
+            messages.error(request, 'Error updating spending.')
+            return render(request, 'income/update.html', {'form': form})
+    else:
+        form = EarningAddForm(instance=earning)
+
+    return render(request, 
+                  'income/update.html', 
+                  {'form': form, 
+                   'wallet_id': wallet_id,
+                   'earning':earning})
+
+
+def delete_earning(request, wallet_id, earning_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    earning = get_object_or_404(Income, 
+                                 id=earning_id, 
+                                 wallet=wallet, 
+                                 currency=Spending.CurrencyChoices.KGS)
+
+    if request.method == 'POST':
+        earning.delete()
+        messages.success(request, 'Earning deleted successfully.')
+        return redirect('wallet:earning_list', wallet_id=wallet_id)
+
+    return render(request, 
+                  'spending/detail.html', 
+                  {'earning': earning, 
+                   'wallet_id': wallet_id})

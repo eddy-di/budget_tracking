@@ -206,3 +206,47 @@ def add_spending(request, wallet_id):
     return render(request, 'spending/add_spending.html', {'form': form})
 
 
+def update_spending(request, wallet_id, spending_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    spending = get_object_or_404(Spending, 
+                                 id=spending_id, 
+                                 wallet=wallet, 
+                                 currency=Spending.CurrencyChoices.KGS)
+
+    if request.method == 'POST':
+        form = SpendingAddForm(request.POST, instance=spending)
+        
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Spending updated successfully.')
+            return redirect('wallet:spending_list', wallet_id=wallet_id)
+        else:
+            messages.error(request, 'Error updating spending.')
+            return render(request, 'spending/update.html', {'form': form})
+    else:
+        form = SpendingAddForm(instance=spending)
+
+    return render(request, 
+                  'spending/update.html', 
+                  {'form': form, 
+                   'wallet_id': wallet_id,
+                   'spending':spending})
+
+
+def delete_spending(request, wallet_id, spending_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    spending = get_object_or_404(Spending, 
+                                 id=spending_id, 
+                                 wallet=wallet, 
+                                 currency=Spending.CurrencyChoices.KGS)
+
+    if request.method == 'POST':
+        spending.delete()
+        messages.success(request, 'Spending deleted successfully.')
+        return redirect('wallet:spending_list', wallet_id=wallet_id)
+
+    return render(request, 
+                  'spending/detail.html', 
+                  {'spending': spending, 
+                   'wallet_id': wallet_id})
+
