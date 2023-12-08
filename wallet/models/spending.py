@@ -35,7 +35,7 @@ class Spending(models.Model):
         TRY = 8, 'TRY'
 
     amount = models.DecimalField(decimal_places=2, max_digits=12, 
-                                 validators=[MinValueValidator(Decimal('0.01'))])
+                                 validators=[MinValueValidator(Decimal('0.00'))])
     comment = models.TextField(null=True, blank=True) # part where the text for the spending or income can be provided if necessary
     currency = models.PositiveSmallIntegerField(
         choices=CurrencyChoices.choices, 

@@ -3,6 +3,7 @@
 {% block title %}Wallet detail{% endblock %}
 
 {% block content %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <h1>Wallet details for {{ wallet.name }}</h1>
     <h3>
         Total spendings: {{ spending_sum }}
@@ -29,6 +30,37 @@
             Earnings
         </a>
     </h4>
+    <div>
+        <canvas id="myChart" style="width: 500px; height: 500px;"></canvas>
+    </div>
+      
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      
+    <script>
+        const ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Spending', 'Earning'],
+            datasets: [{
+              label: 'Total sum',
+              data: {{ data|safe }},
+              borderWidth: 1,
+              backgroundColor: ['#FF6384', '#36A2EB'],
+              hoverBackgroundColor: ['#FF6384', '#36A2EB'],
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+    </script>
+      
 {% endblock %}
 
 

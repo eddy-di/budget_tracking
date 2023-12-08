@@ -31,13 +31,18 @@ def wallet_detail(request, wallet_id):
         earning_sum = Income.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
         difference = earning_sum - spending_sum
 
+        data = [str(spending_sum), str(earning_sum)]
+        # labels = ['Spendings', 'Earnings']
+
         return render(request, 
                       'wallet/wallet_detail.html',
                       {'spending_sum': spending_sum,
                        'earning_sum': earning_sum,
                        'difference': difference,
                        'wallet': wallet,
-                       'user': user})
+                       'user': user,
+                       'data': data,
+                       }) # 'labels': labels
     except Wallet.DoesNotExist:
         return render(request, 'wallet/wallet_not_found.html')
 
