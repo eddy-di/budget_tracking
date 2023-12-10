@@ -5,8 +5,8 @@
 {% block content %}
     <h1>Add new earning</h1>
     <form method="POST">
-        {{ form.as_p }}
         {% csrf_token %}
+        {{ form.as_p }}
         <p><input type="submit" value="Add earning"></p>
     </form>
 {% endblock %}

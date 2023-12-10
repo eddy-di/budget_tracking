@@ -16,6 +16,7 @@ from django.contrib.postgres.search import SearchVector, \
                                            SearchQuery, SearchRank
 from django.http import Http404
 from django.contrib import messages
+from wallet.models.sub_category import SubCategory
 
 
 
@@ -185,15 +186,16 @@ class AddSpendingView(CreateView):
 
 def add_spending(request, wallet_id):
     wallet = Wallet.objects.get(id=wallet_id)
-    user = User.objects.get(id=request.user.id)
 
     if request.method == 'POST':
         form = SpendingAddForm(request.POST)
         
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.member = user
+            instance.member = request.user
             instance.wallet = wallet
+            instance.category = form.cleaned_data['category']
+            instance.sub_category = form.cleaned_data['sub_category']
             instance.save()
 
             messages.success(request, 'Spending saved successfully.') # success message
@@ -204,6 +206,28 @@ def add_spending(request, wallet_id):
     else:
         form = SpendingAddForm()
     return render(request, 'spending/add_spending.html', {'form': form})
+
+
+def get_subcategories(request, wallet_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    category_id = request.GET.get('category')
+    subcategories = SubCategory.objects.filter(category_id=category_id)
+    return render(request, 
+                  'spending/sub_category_dropdown.html', 
+                  {'subcategories': subcategories, 'wallet': wallet})
+
+
+def update_subcategories(request, wallet_id, spending_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    spending = get_object_or_404(Spending, 
+                                 id=spending_id, 
+                                 wallet=wallet, 
+                                 currency=Spending.CurrencyChoices.KGS)
+    category_id = request.GET.get('category')
+    subcategories = SubCategory.objects.filter(category_id=category_id)
+    return render(request, 
+                  'spending/sub_category_dropdown.html', 
+                  {'subcategories': subcategories, 'wallet': wallet, 'spending': spending})
 
 
 def update_spending(request, wallet_id, spending_id):
@@ -217,7 +241,13 @@ def update_spending(request, wallet_id, spending_id):
         form = SpendingAddForm(request.POST, instance=spending)
         
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.member = request.user
+            instance.wallet = wallet
+            instance.category = form.cleaned_data['category']
+            instance.sub_category = form.cleaned_data['sub_category']
+            instance.save()
+
             messages.success(request, 'Spending updated successfully.')
             return redirect('wallet:spending_list', wallet_id=wallet_id)
         else:

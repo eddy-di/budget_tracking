@@ -7,6 +7,7 @@ from decimal import Decimal
 
 from .sub_category import SubCategory
 from .wallet import Wallet
+from .category import Category
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
@@ -45,6 +46,9 @@ class Income(models.Model):
                             null=True,
                             unique_for_date='created_at')
     created_at = models.DateTimeField(auto_now_add=True)
+    category = models.ForeignKey(Category, 
+                                 on_delete=models.CASCADE, 
+                                 null=True)
     sub_category = models.ForeignKey(SubCategory, 
                                      on_delete=models.CASCADE, 
                                      null=True)

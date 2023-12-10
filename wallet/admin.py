@@ -51,10 +51,10 @@ class WaletAdmin(admin.ModelAdmin):
 
 @admin.register(SubCategory)
 class SubCategoryAdmin(admin.ModelAdmin):
-    list_display = ['sub_category_name', 'category_name']
-    list_filter = ['sub_category_name', 'category_name']
-    search_fields = ['sub_category_name', 'category_name']
-    ordering = ['sub_category_name', 'category_name']
+    list_display = ['sub_category_name', 'category']
+    list_filter = ['sub_category_name', 'category']
+    search_fields = ['sub_category_name', 'category']
+    ordering = ['sub_category_name', 'category']
 
 
 @admin.register(SpendingComment)

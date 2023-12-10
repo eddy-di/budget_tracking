@@ -19,6 +19,7 @@ from taggit.models import Tag
 from wallet.models.wallet import Wallet
 from django.contrib import messages
 from django.contrib.auth.models import User
+from wallet.models.sub_category import SubCategory
 
 from django.views.decorators.http import require_POST
 
@@ -189,7 +190,9 @@ def add_earning(request, wallet_id):
         
         if form.is_valid():
             instance = form.save(commit=False)
-            instance.member = user
+            instance.category = form.cleaned_data['category']
+            instance.sub_category = form.cleaned_data['sub_category']
+            instance.member = request.user
             instance.wallet = wallet
             instance.save()
 
@@ -204,6 +207,15 @@ def add_earning(request, wallet_id):
     return render(request, 'spending/add_spending.html', {'form': form})
 
 
+def get_subcategories(request, wallet_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    category_id = request.GET.get('category')
+    subcategories = SubCategory.objects.filter(category_id=category_id)
+    return render(request, 
+                  'income/sub_category_dropdown.html', 
+                  {'subcategories': subcategories, 'wallet': wallet})
+
+
 def update_earning(request, wallet_id, earning_id):
     wallet = Wallet.objects.get(id=wallet_id)
     earning = get_object_or_404(Income, 
@@ -215,7 +227,13 @@ def update_earning(request, wallet_id, earning_id):
         form = EarningAddForm(request.POST, instance=earning)
         
         if form.is_valid():
-            form.save()
+            instance = form.save(commit=False)
+            instance.member = request.user
+            instance.wallet = wallet
+            instance.category = form.cleaned_data['category']
+            instance.sub_category = form.cleaned_data['sub_category']
+            instance.save()
+
             messages.success(request, 'Earning updated successfully.')
             return redirect('wallet:earning_list', wallet_id=wallet_id)
         else:
@@ -229,6 +247,19 @@ def update_earning(request, wallet_id, earning_id):
                   {'form': form, 
                    'wallet_id': wallet_id,
                    'earning':earning})
+
+
+def update_subcategories(request, wallet_id, earning_id):
+    wallet = Wallet.objects.get(id=wallet_id)
+    earning = get_object_or_404(Income, 
+                                 id=earning_id, 
+                                 wallet=wallet, 
+                                 currency=Spending.CurrencyChoices.KGS)
+    category_id = request.GET.get('category')
+    subcategories = SubCategory.objects.filter(category_id=category_id)
+    return render(request, 
+                  'income/sub_category_dropdown.html', 
+                  {'subcategories': subcategories, 'wallet': wallet, 'earning': earning})
 
 
 def delete_earning(request, wallet_id, earning_id):

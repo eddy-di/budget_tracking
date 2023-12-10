@@ -7,6 +7,7 @@ from decimal import Decimal
 
 from .sub_category import SubCategory
 from .wallet import Wallet
+from .category import Category
 from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
@@ -45,6 +46,9 @@ class Spending(models.Model):
                             null=True,
                             unique_for_date='created_at')
     created_at = models.DateTimeField(auto_now_add=True)
+    category = models.ForeignKey(Category, 
+                                 on_delete=models.CASCADE, 
+                                 null=True)
     sub_category = models.ForeignKey(SubCategory, 
                                      on_delete=models.CASCADE, 
                                      null=True)
@@ -73,15 +77,15 @@ class Spending(models.Model):
         
         
     def __str__(self):
-        return f'{self.amount} {self.currency} - {self.created_at}'
+        return f'{self.amount}-{self.sub_category}-{self.currency}-{self.created_at}'
     
     
-    def get_absolute_url(self):
-        return reverse('wallet:spending_detail',
-                       args=[self.slug, 
-                             self.created_at.year,
-                             self.created_at.month,
-                             self.created_at.day])
+    # def get_absolute_url(self):
+        # return reverse('wallet:spending_detail',
+                    #    args=[self.slug, 
+                            #  self.created_at.year,
+                            #  self.created_at.month,
+                            #  self.created_at.day])
     
 
     def get_detail_url(self):
@@ -90,7 +94,7 @@ class Spending(models.Model):
                              self.id])
     
 
-    # def save(self, *args, **kwargs):
-        # slug_str = f'{self.currency}-{self.amount}-{self.sub_category.id}-{self.wallet.id}'
-        # self.slug = slugify(slug_str)
-        # super(Spending, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        slug_str = f'{self.currency}-{self.amount}-{self.sub_category}-{self.wallet.id}'
+        self.slug = slugify(slug_str)
+        super(Spending, self).save(*args, **kwargs)
