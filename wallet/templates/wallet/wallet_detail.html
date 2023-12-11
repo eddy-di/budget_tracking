@@ -1,39 +1,48 @@
 {% extends 'base.html' %}
 
-{% block title %}Wallet detail{% endblock %}
-
 {% block content %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <h1>Wallet details for {{ wallet.name }}</h1>
-    <h3>
-        Total spendings: {{ spending_sum }}
-    </h3>
-    <h3>
-        Total earnings: {{ earning_sum }}
-    </h3>
-    {% if difference > 0 %}
-    <h2 style="color: MediumSeaGreen;">
-        Difference: {{ difference }}
-    </h2>
-    {% else %}
-    <h2 style="color: tomato;">
-        Difference: {{ difference }}
-    </h2>
-    {% endif %}
-    <h4>
-        <a href="{% url 'wallet:spending_list' wallet_id=wallet.id %}">
-            Spendings
-        </a>
-    </h4>
-    <h4>
-        <a href="{% url 'wallet:earning_list' wallet_id=wallet.id %}">
-            Earnings
-        </a>
-    </h4>
-    <div>
-        <canvas id="myChart" style="width: 500px; height: 500px;"></canvas>
-    </div>
-      
+      <div class="wallet_info" style="float: left;">
+        <p>
+            Total spendings: {{ spending_sum }}
+        </p>
+        <p>
+            Total earnings: {{ earning_sum }}
+        </p>
+        {% if difference > 0 %}
+          <p style="color: MediumSeaGreen;">
+            Difference: {{ difference }}
+          </p>
+        {% else %}
+          <p style="color: tomato;">
+            Difference: {{ difference }}
+          </p>
+        {% endif %}
+        <p>
+          <a href="{% url 'wallet:spending_list' wallet_id=wallet.id %}">
+              Spendings
+          </a>
+        </p>
+        <p>
+          <a href="{% url 'wallet:earning_list' wallet_id=wallet.id %}">
+              Earnings
+          </a>
+        </p>
+      </div>
+      <div class="wallet_doughnut_chart_info">
+          <canvas id="myChart"></canvas>
+      </div>
+      <div class="wallet_info" style="background-color: rgb(153, 29, 224);">
+        <p>
+          some info
+        </p>
+      </div>
+      <div class="wallet_info" style="background-color: rgb(12, 126, 120);">
+        <p>
+          some info 2
+        </p>
+      </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       
     <script>
@@ -48,13 +57,13 @@
               data: {{ data|safe }},
               borderWidth: 1,
               backgroundColor: ['#FF6384', '#36A2EB'],
-              hoverBackgroundColor: ['#FF6384', '#36A2EB'],
+              hoverBackgroundColor: ['#F54165', '#1D97E9'],
             }]
           },
           options: {
-            scales: {
-              y: {
-                beginAtZero: true
+            plugins: {
+              legend: {
+                position: 'bottom'
               }
             }
           }
