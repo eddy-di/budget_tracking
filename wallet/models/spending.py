@@ -77,7 +77,7 @@ class Spending(models.Model):
         
         
     def __str__(self):
-        return f'{self.amount}-{self.sub_category}-{self.currency}-{self.created_at}'
+        return f'{self.amount}-{self.category}-{self.sub_category}'
     
     
     # def get_absolute_url(self):
@@ -94,7 +94,7 @@ class Spending(models.Model):
                              self.id])
     
 
-    def save(self, *args, **kwargs):
-        slug_str = f'{self.currency}-{self.amount}-{self.sub_category}-{self.wallet.id}'
-        self.slug = slugify(slug_str)
-        super(Spending, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+        # slug_str = f'{self.currency}-{self.amount}-{self.sub_category}-{self.wallet.id}'
+        # self.slug = slugify(slug_str)
+        # super(Spending, self).save(*args, **kwargs)

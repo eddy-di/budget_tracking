@@ -6,6 +6,11 @@
 .wallet_doughnut_chart_info {
     color: lightgray;
     float: left;
+    max-width: 50%;
+}
+.wallet_bar_chart_info {
+    color: lightgray;
+    float: left;
     width: 50%;
 }
 .main-wallet-info:after {
@@ -14,12 +19,12 @@
     clear: both;
 }
 @media screen and (max-width: 900) {
-    .wallet_info, .wallet_chart_info {
+    .wallet_info, .wallet_doughnut_chart_info, .wallet_bar_chart_info {
         width: 50%;
     }
 }
 @media screen and (max-width: 600px) {
-    .wallet_info, .wallet_chart_info {
+    .wallet_info, .wallet_doughnut_chart_info, .wallet_bar_chart_info {
         width: 100%;
     }
 }

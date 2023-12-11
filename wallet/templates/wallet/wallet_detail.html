@@ -33,17 +33,12 @@
       <div class="wallet_doughnut_chart_info">
           <canvas id="myChart"></canvas>
       </div>
-      <div class="wallet_info" style="background-color: rgb(153, 29, 224);">
-        <p>
-          some info
-        </p>
+      <div class="wallet_info">
+        <canvas id="mySpendingsBarChart"></canvas>
       </div>
-      <div class="wallet_info" style="background-color: rgb(12, 126, 120);">
-        <p>
-          some info 2
-        </p>
+      <div class="wallet_info">
+        <canvas id="myEarningsBarChart"></canvas>
       </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
       
     <script>
         const ctx = document.getElementById('myChart');
@@ -63,11 +58,75 @@
           options: {
             plugins: {
               legend: {
-                position: 'bottom'
+                position: 'right'
               }
             }
           }
         });
+    </script>
+
+    <script>
+      const ctx_1 = document.getElementById('mySpendingsBarChart');
+
+      new Chart(ctx_1, {
+        type: 'bar',
+        data: {
+          labels: {{ labels_spendings_category|safe }},
+          datasets: [{
+            label: 'null',
+            data: {{ data_spendings_category|safe }},
+            borderWidth: 1,
+            backgroundColor: ['#FF6384'],
+            hoverBackgroundColor: ['#F54165']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'left',
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      })
+    </script>
+
+    <script>
+      const ctx_2 = document.getElementById('myEarningsBarChart')
+
+      new Chart(ctx_2, {
+        type: 'bar',
+        data: {
+          labels: {{ labels_earnings_subcategory|safe }},
+          datasets: [{
+            label: 'Earnings',
+            data: {{ data_earnings_subcategory|safe }},
+            borderWidth: 1,
+            backgroundColor: ['#36A2EB'],
+            hoverBackgroundColor: ['#1D97E9']
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'left',
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      })
     </script>
       
 {% endblock %}
