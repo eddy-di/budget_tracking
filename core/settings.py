@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.postgres',
     'social_django',
     'django_extensions',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -194,3 +195,10 @@ SOCIAL_AUTH_PIPELINE = [
 'social_core.pipeline.social_auth.load_extra_data',
 'social_core.pipeline.user.user_details',
 ]
+
+REST_FRAMEWORK = {
+    'COERCE_DECIMAL_TO_STRING': False,
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ]
+}

@@ -46,7 +46,7 @@
         new Chart(ctx, {
           type: 'doughnut',
           data: {
-            labels: ['Spending', 'Earning'],
+            labels: ['Spendings', 'Earnings'],
             datasets: [{
               label: 'Total sum',
               data: {{ data|safe }},
@@ -73,7 +73,7 @@
         data: {
           labels: {{ labels_spendings_category|safe }},
           datasets: [{
-            label: 'null',
+            label: 'Spendings',
             data: {{ data_spendings_category|safe }},
             borderWidth: 1,
             backgroundColor: ['#ff7675'],
