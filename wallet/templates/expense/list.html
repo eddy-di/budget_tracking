@@ -8,6 +8,11 @@
     {% if tag %}
         <h2>Expenses tagged with "{{ tag.name }}"</h2>
     {% endif %}
+    <a href="{% url 'wallet:add_expense' wallet_id=wallet.id %}">
+        <button class="button">
+            Add expense
+        </button>
+    </a>
     {% for obj in expense %}
         <h2>
             <a href="{% url 'wallet:expense_detail' wallet_id=obj.wallet.id expense_id=obj.id %}">
@@ -29,9 +34,7 @@
         </p>
     {% endfor %}
     {% include 'pagination.html' with page=expense %}
-    <p>
-        <a href="{% url 'wallet:add_expense' wallet_id=wallet.id %}">
-            Add expense
-        </a>
-    </p>
+
+    
+
 {% endblock %}

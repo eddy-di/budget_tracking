@@ -200,11 +200,11 @@ def add_income(request, wallet_id):
             return redirect('wallet:income_list', wallet_id=wallet_id)
         else: 
             messages.error(request, 'Error saving income.') # error message
-            return render(request, 'expense/add_expense.html', {'form': form})
+            return render(request, 'income/add_income.html', {'form': form})
 
     else:
         form = IncomeAddForm()
-    return render(request, 'expense/add_expense.html', {'form': form})
+    return render(request, 'income/add_income.html', {'form': form})
 
 
 def get_subcategories(request, wallet_id):
