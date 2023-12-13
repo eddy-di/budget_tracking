@@ -12,14 +12,14 @@ from django.contrib.auth.models import User
 from taggit.managers import TaggableManager
 
 
-class IncomeManager(models.Manager):
+class ExpenseManager(models.Manager):
     def get_queryset(self) -> QuerySet:
         return super().get_queryset()\
-                        .filter(currency=Income.CurrencyChoices.KGS)
+                        .filter(currency=Expense.CurrencyChoices.KGS)
 
 
-class Income(models.Model):
-    class CurrencyChoices(models.IntegerChoices):# this subclass represents Python enum in Django
+class Expense(models.Model):
+    class CurrencyChoices(models.IntegerChoices): # this subclass represents Python enum in Django
         # in shell is you type from wallet.models.expense import Expense and then
         # Expense.CurrencyChoices.choices stores -> [(1, 'KGS'), (2, 'USD'), (3, 'RUB'), (4, 'KZT'), (5, 'EUR'), (6, 'GBP'), (7, 'CNY'), (8, 'TRY')] 
         # Expense.CurrencyChoices.labels -> ['KGS', 'USD', 'RUB', 'KZT', 'EUR', 'GBP', 'CNY', 'TRY'] 
@@ -42,7 +42,7 @@ class Income(models.Model):
         choices=CurrencyChoices.choices, 
         default=CurrencyChoices.KGS
     )
-    slug = models.SlugField(max_length=150,
+    slug = models.SlugField(max_length=150, 
                             null=True,
                             unique_for_date='created_at')
     created_at = models.DateTimeField(auto_now_add=True)
@@ -57,10 +57,10 @@ class Income(models.Model):
                                null=True)
     member = models.ForeignKey(User, 
                                on_delete=models.CASCADE,
-                               related_name='wallet_incomes')
+                               related_name='wallet_expenses')
     
     objects = models.Manager()
-    earned = IncomeManager()
+    spent = ExpenseManager()
 
     tags = TaggableManager()
 
@@ -69,7 +69,7 @@ class Income(models.Model):
         # дефис указывает на обратный хронологический порядок (от нового к старому), 
         # указанный порядок будет применяться для запросов к базе данных
         ordering = ['-created_at']
-        # Указанная опция позволяет определять в модели индексы базы данных, которые могут содержать одно 
+        # опция indexes позволяет определять в модели индексы базы данных, которые могут содержать одно 
         # или несколько полей в возрастающем либо убывающем порядке, или функциональные выражения и функции базы данных.
         indexes = [
             models.Index(fields=['-created_at'])
@@ -77,19 +77,24 @@ class Income(models.Model):
         
         
     def __str__(self):
-        return f'{self.amount} {self.currency} - {self.created_at}'
+        return f'{self.amount}-{self.category}-{self.sub_category}'
+    
+    
+    # def get_absolute_url(self):
+        # return reverse('wallet:expense_detail',
+                    #    args=[self.slug, 
+                            #  self.created_at.year,
+                            #  self.created_at.month,
+                            #  self.created_at.day])
     
 
-    def get_absolute_url(self):
-        return reverse('wallet:income_detail',
-                       args=[self.wallet_id,
-                             self.slug, 
-                             self.created_at.year,
-                             self.created_at.month,
-                             self.created_at.day])
+    def get_detail_url(self):
+        return reverse('wallet:expense_detail',
+                       args=[self.wallet_id, 
+                             self.id])
     
 
-    def save(self, *args, **kwargs):
-        slug_str = f'{self.currency}-{self.amount}-{self.sub_category.id}-{self.wallet.id}'
-        self.slug = slugify(slug_str)
-        super(Income, self).save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+        # slug_str = f'{self.currency}-{self.amount}-{self.sub_category}-{self.wallet.id}'
+        # self.slug = slugify(slug_str)
+        # super(Expense, self).save(*args, **kwargs)

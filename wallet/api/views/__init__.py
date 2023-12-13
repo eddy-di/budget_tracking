@@ -1,3 +1,3 @@
-from .spending import SpendingDetailView, SpendingListView
-from .earning import EarningDetailView, EarningListView
+from .expense import ExpenseDetailView, ExpenseListView
+from .income import IncomeDetailView, IncomeListView
 from .wallet import WalletDetailView, WalletListView

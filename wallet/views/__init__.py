@@ -1,3 +1,3 @@
-from .spending import spending_comment, spending_detail, send_mail, spending_list, spending_search, spending_share, add_spending, update_spending, delete_spending
-from .earning import income_comment, income_detail, send_mail, income_list, earning_search, income_share, add_earning, update_earning, delete_earning
+from .expense import expense_comment, expense_detail, send_mail, expense_list, expense_search, expense_share, add_expense, update_expense, delete_expense
+from .income import income_comment, income_detail, send_mail, income_list, income_search, income_share, add_income, update_income, delete_income
 from .wallet import wallet_detail, wallet_add, wallet_list 

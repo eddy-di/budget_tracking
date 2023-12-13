@@ -5,10 +5,10 @@
     <h1>Wallet details for {{ wallet.name }}</h1>
       <div class="wallet_info" style="float: left;">
         <p>
-            Total spendings: {{ spending_sum }}
+            Total expenses: {{ expense_sum }}
         </p>
         <p>
-            Total earnings: {{ earning_sum }}
+            Total incomes: {{ income_sum }}
         </p>
         {% if difference > 0 %}
           <p style="color: MediumSeaGreen;">
@@ -20,13 +20,13 @@
           </p>
         {% endif %}
         <p>
-          <a href="{% url 'wallet:spending_list' wallet_id=wallet.id %}">
-              Spendings
+          <a href="{% url 'wallet:expense_list' wallet_id=wallet.id %}">
+              Expenses
           </a>
         </p>
         <p>
-          <a href="{% url 'wallet:earning_list' wallet_id=wallet.id %}">
-              Earnings
+          <a href="{% url 'wallet:income_list' wallet_id=wallet.id %}">
+              Incomes
           </a>
         </p>
       </div>
@@ -34,10 +34,10 @@
           <canvas id="myChart"></canvas>
       </div>
       <div class="wallet_info">
-        <canvas id="mySpendingsBarChart"></canvas>
+        <canvas id="myExpensesBarChart"></canvas>
       </div>
       <div class="wallet_info">
-        <canvas id="myEarningsBarChart"></canvas>
+        <canvas id="myIncomesBarChart"></canvas>
       </div>
       
     <script>
@@ -46,7 +46,7 @@
         new Chart(ctx, {
           type: 'doughnut',
           data: {
-            labels: ['Spendings', 'Earnings'],
+            labels: ['Expenses', 'Incomes'],
             datasets: [{
               label: 'Total sum',
               data: {{ data|safe }},
@@ -66,15 +66,15 @@
     </script>
 
     <script>
-      const ctx_1 = document.getElementById('mySpendingsBarChart');
+      const ctx_1 = document.getElementById('myExpensesBarChart');
 
       new Chart(ctx_1, {
         type: 'bar',
         data: {
-          labels: {{ labels_spendings_category|safe }},
+          labels: {{ labels_expenses_category|safe }},
           datasets: [{
-            label: 'Spendings',
-            data: {{ data_spendings_category|safe }},
+            label: 'Expenses',
+            data: {{ data_expenses_category|safe }},
             borderWidth: 1,
             backgroundColor: ['#ff7675'],
             hoverBackgroundColor: ['#d63031']
@@ -98,15 +98,15 @@
     </script>
 
     <script>
-      const ctx_2 = document.getElementById('myEarningsBarChart')
+      const ctx_2 = document.getElementById('myIncomesBarChart')
 
       new Chart(ctx_2, {
         type: 'bar',
         data: {
-          labels: {{ labels_earnings_subcategory|safe }},
+          labels: {{ labels_incomes_subcategory|safe }},
           datasets: [{
-            label: 'Earnings',
-            data: {{ data_earnings_subcategory|safe }},
+            label: 'Incomes',
+            data: {{ data_incomes_subcategory|safe }},
             borderWidth: 1,
             backgroundColor: ['#7bed9f'],
             hoverBackgroundColor: ['#2ed573']

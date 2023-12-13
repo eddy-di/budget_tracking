@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Add a comment{% endblock %}
+
+{% block content %}
+    {% if comment %}
+        <h2>Your comment has been added.</h2>
+        <p><a href="{% url 'wallet:expense_detail' wallet_id=expense.wallet.id expense_id=expense.id %}">Back to the expense</a></p>
+    {% else %}
+        {% include "expense/includes/comment_form.html" %}
+    {% endif %}
+{% endblock %}

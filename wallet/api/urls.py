@@ -5,13 +5,13 @@ from . import views
 app_name = 'wallet'
 
 urlpatterns = [
-    # spendings
-    path('spendings', views.SpendingListView.as_view(), name='spending_list'),
-    path('spendings/<pk>/', views.SpendingDetailView.as_view(), name='spending_detail'),
+    # expenses
+    path('expenses', views.ExpenseListView.as_view(), name='expense_list'),
+    path('expenses/<pk>/', views.ExpenseDetailView.as_view(), name='expense_detail'),
 
-    # earnings
-    path('earnings', views.EarningListView.as_view(), name='earning_list'),
-    path('earnings/<pk>/', views.EarningDetailView.as_view(), name='earning_detail'),
+    # incomes
+    path('incomes', views.IncomeListView.as_view(), name='income_list'),
+    path('incomes/<pk>/', views.IncomeDetailView.as_view(), name='income_detail'),
 
     # wallet
     path('wallets', views.WalletListView.as_view(), name='wallet_list'),

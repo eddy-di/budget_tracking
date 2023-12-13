@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load expense_tags %}
+
+
+{% block title %}{{ expense.amount }} on {{ expense.sub_category }}{% endblock %}
+
+{% block content %}
+    <h1>{{ expense.amount }} {{ expense.sub_category }}</h1>
+    <p class="date">
+        Spent on {{ expense.created_at }} by {{ expense.member }}
+    </p>
+    {{ expense.comment|markdown|truncatewords_html:30 }}
+    <p>
+        <a href="{% url 'wallet:expense_share' wallet_id=expense.wallet.id expense_id=expense.id %}">
+            Share
+        </a>
+    </p>
+    <a href="{% url 'wallet:update_expense' wallet_id=expense.wallet.id expense_id=expense.id %}">
+        <button type="button-edit">Update</button>
+    </a>
+    {# <a href="#"><button type="button-delete">Delete</button> </a> #}
+    <form method="post" action="{% url 'wallet:delete_expense' wallet_id=expense.wallet.id expense_id=expense.id %}" onsubmit="return confirm('Are you sure you want to delete this expense?');">
+        {% csrf_token %}
+        <button type="submit" class="button-delete">Delete</button>
+    </form>
+    <h2>Similar expenses</h2>
+    {% for obj in similar_expenses %}
+        <p>
+            <a href="{% url 'wallet:expense_detail' wallet_id=obj.wallet.id expense_id=obj.id %}">{{ obj.amount }}</a>
+        </p>
+    {% empty %}
+        There are no similar expenses yet.
+    {% endfor %}
+
+    {% with comments.count as total_comments %}
+        <h2>
+            {{ total_comments }} comment{{ total_comments|pluralize }}
+        </h2>
+    {% endwith %}
+    {% for comment in comments %}
+        <div class="comment">
+            <p class="info">
+                Comment {{ forloop.counter }} by {{ comment.name }}
+                {{ comment.created }}
+            </p>
+            {{ comment.body|linebreaks }}
+        </div>
+    {% empty %}
+        <p>There are no comments.</p>
+    {% endfor %}
+    {% include "expense/includes/comment_form.html" %}
+{% endblock %}

@@ -16,14 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.contrib.sitemaps.views import sitemap
-from wallet.sitemaps import SpendingSitemap, IncomeSitemap
+from wallet.sitemaps import ExpenseSitemap, IncomeSitemap
 from django.conf import settings
 from django.conf.urls.static import static
 
 
 sitemaps = {
-    'spendings': SpendingSitemap,
-    'earnings': IncomeSitemap,
+    'expenses': ExpenseSitemap,
+    'incomes': IncomeSitemap,
 }
 
 urlpatterns = [

@@ -1,11 +1,11 @@
 from django.db import models
-from .income import Income
+from .expense import Expense
 
 
-class IncomeComment(models.Model):
-    income = models.ForeignKey(Income,
+class ExpenseComment(models.Model):
+    expense = models.ForeignKey(Expense,
                                  on_delete=models.CASCADE,
-                                 related_name='income_comment')
+                                 related_name='expense_comment')
     name = models.CharField(max_length=80)
     email = models.EmailField()
     body = models.TextField()
@@ -20,4 +20,4 @@ class IncomeComment(models.Model):
         ]
 
     def __str__(self) -> str:
-        return f'Comment by {self.name} on {self.income}'
+        return f'Comment by {self.name} on {self.expense}'

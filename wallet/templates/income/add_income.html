@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}Add new income{% endblock %}
+
+{% block content %}
+    <h1>Add new income</h1>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="Add income"></p>
+    </form>
+{% endblock %}

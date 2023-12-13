@@ -1,5 +1,5 @@
 from django.http import Http404
-from wallet.models.spending import Spending
+from wallet.models.expense import Expense
 from wallet.models.income import Income
 from wallet.models.wallet import Wallet
 from wallet.models.category  import Category
@@ -31,55 +31,55 @@ def wallet_detail(request, wallet_id):
     try:
         wallet = Wallet.objects.get(id=wallet_id)
 
-        spending_sum = Spending.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
-        earning_sum = Income.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
-        difference = earning_sum - spending_sum
+        expense_sum = Expense.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
+        income_sum = Income.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
+        difference = income_sum - expense_sum
 
-        data = [str(spending_sum), str(earning_sum)]
-        # labels = ['Spendings', 'Earnings']
-        spendings = Spending.objects.filter(wallet=wallet).values_list('amount', 'category__category_name', 'sub_category__sub_category_name')
-        earnings = Income.objects.filter(wallet=wallet).values_list('amount', 'category__category_name', 'sub_category__sub_category_name')
-        spendings_categories_d = {}
-        # getting spending sums based on categories and summing them by amount
-        for i in list(spendings):
-            if i[1] not in spendings_categories_d:
-                spendings_categories_d[i[1]] = i[0]
+        data = [str(expense_sum), str(income_sum)]
+        # labels = ['Expenses', 'Incomes']
+        expenses = Expense.objects.filter(wallet=wallet).values_list('amount', 'category__name', 'sub_category__name')
+        incomes = Income.objects.filter(wallet=wallet).values_list('amount', 'category__name', 'sub_category__name')
+        expenses_categories_d = {}
+        # getting expense sums based on categories and summing them by amount
+        for i in list(expenses):
+            if i[1] not in expenses_categories_d:
+                expenses_categories_d[i[1]] = i[0]
             else:
-                spendings_categories_d[i[1]] += i[0]
-        # getting spending sums based on sub_categories and summing them by amount
-        spendings_subcats_d = {}
-        for i in list(spendings):
-            if i[2] not in spendings_subcats_d:
-                spendings_subcats_d[i[2]] = i[0]
+                expenses_categories_d[i[1]] += i[0]
+        # getting expense sums based on sub_categories and summing them by amount
+        expenses_subcats_d = {}
+        for i in list(expenses):
+            if i[2] not in expenses_subcats_d:
+                expenses_subcats_d[i[2]] = i[0]
             else:
-                spendings_subcats_d[i[2]] += i[0]
-        # getting earning sums based on categories and summing them by amount
-        earning_subcategories_d = {}
-        for i in list(earnings):
-            if i[2] not in earning_subcategories_d:
-                earning_subcategories_d[i[2]] = i[0]
+                expenses_subcats_d[i[2]] += i[0]
+        # getting income sums based on categories and summing them by amount
+        income_subcategories_d = {}
+        for i in list(incomes):
+            if i[2] not in income_subcategories_d:
+                income_subcategories_d[i[2]] = i[0]
             else:
-                earning_subcategories_d[i[2]] += i[0]
+                income_subcategories_d[i[2]] += i[0]
         
-        data_spendings_category = [ str(v) for v in spendings_categories_d.values() ]
-        labels_spendings_category = [k for k in spendings_categories_d.keys()]
+        data_expenses_category = [ str(v) for v in expenses_categories_d.values() ]
+        labels_expenses_category = [k for k in expenses_categories_d.keys()]
 
-        data_earnings_subcategory = [ str(v) for v in earning_subcategories_d.values() ]
-        labels_earnings_subcategory = [k for k in earning_subcategories_d.keys()]
+        data_incomes_subcategory = [ str(v) for v in income_subcategories_d.values() ]
+        labels_incomes_subcategory = [k for k in income_subcategories_d.keys()]
 
 
         return render(request, 
                       'wallet/wallet_detail.html',
-                      {'spending_sum': spending_sum,
-                       'earning_sum': earning_sum,
+                      {'expense_sum': expense_sum,
+                       'income_sum': income_sum,
                        'difference': difference,
                        'wallet': wallet,
                        'user': user,
                        'data': data,
-                       'data_spendings_category': data_spendings_category,
-                       'labels_spendings_category': labels_spendings_category,
-                       'data_earnings_subcategory': data_earnings_subcategory,
-                       'labels_earnings_subcategory': labels_earnings_subcategory
+                       'data_expenses_category': data_expenses_category,
+                       'labels_expenses_category': labels_expenses_category,
+                       'data_incomes_subcategory': data_incomes_subcategory,
+                       'labels_incomes_subcategory': labels_incomes_subcategory
                        }) # 'labels': labels
     except Wallet.DoesNotExist:
         return render(request, 'wallet/wallet_not_found.html')

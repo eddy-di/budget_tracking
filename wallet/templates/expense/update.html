@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 
-{% block title %}Update {{ income.amount }} on {{ income.sub_category }}{% endblock %}
+{% block title %}Update {{ expense.amount }} on {{ expense.sub_category }}{% endblock %}
 
 {% block content %}
-    <h1>Update {{ income.amount }} on {{ income.sub_category }}</h1>
+    <h1>Update {{ expense.amount }} on {{ expense.sub_category }}</h1>
     <form method="POST">
         {{ form.as_p }}
         {% csrf_token %}

@@ -1,34 +1,34 @@
 {% extends 'base.html' %}
-{% load earnings_tags %}
+{% load incomes_tags %}
 
-{% block title %}{{ earning.amount }}{% endblock %}
+{% block title %}{{ income.amount }}{% endblock %}
 
 {% block content %}
-    <h1>{{ earning.amount }} {{ earning.sub_category }}</h1>
+    <h1>{{ income.amount }} {{ income.sub_category }}</h1>
     <p class="date">
-        Earned on {{ earning.created_at }} by {{ earning.member }}
+        Earned on {{ income.created_at }} by {{ income.member }}
     </p>
-    {{ earning.comment|markdown|truncatewords_html:30 }}
+    {{ income.comment|markdown|truncatewords_html:30 }}
     <p>
-        <a href="{% url 'wallet:income_share' earning.id %}">
+        <a href="{% url 'wallet:income_share' income.id %}">
             Share
         </a>
     </p>
-    <a href="{% url 'wallet:update_earning' wallet_id=earning.wallet.id earning_id=earning.id %}">
+    <a href="{% url 'wallet:update_income' wallet_id=income.wallet.id income_id=income.id %}">
         <button type="button-edit">Update</button>
     </a>
     {# <a href="#"><button type="button-delete">Delete</button> </a> #}
-    <form method="post" action="{% url 'wallet:delete_earning' wallet_id=earning.wallet.id earning_id=earning.id %}" onsubmit="return confirm('Are you sure you want to delete this spending?');">
+    <form method="post" action="{% url 'wallet:delete_income' wallet_id=income.wallet.id income_id=income.id %}" onsubmit="return confirm('Are you sure you want to delete this expense?');">
         {% csrf_token %}
         <button type="submit" class="button-delete">Delete</button>
     </form>
-    <h2>Similar earnings</h2>
-    {% for obj in similar_earnings %}
+    <h2>Similar incomes</h2>
+    {% for obj in similar_incomes %}
         <p>
             <a href="{{ obj.get_absolute_url }}">{{ obj.amount }}</a>
         </p>
     {% empty %}
-        There are no similar earnings yet.
+        There are no similar incomes yet.
     {% endfor %}
 
     {% with comments.count as total_comments %}

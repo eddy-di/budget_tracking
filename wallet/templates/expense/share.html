@@ -1,15 +1,15 @@
 {% extends 'base.html' %}
 
-{% block title %}Share income{% endblock %}
+{% block title %}Share expense{% endblock %}
 
 {% block content %}
     {% if sent %}
         <h1>E-mail sent successfully</h1>
         <p>
-            '{{ income.amount }} was successfully sent to {{ form.cleaned_data.to }}.'
+            '{{ expense.amount }} was successfully sent to {{ form.cleaned_data.to }}.'
         </p>
     {% else %}
-        <h1>Share "{{ income.amount }} by e-mail"</h1>
+        <h1>Share "{{ expense.amount }} by e-mail"</h1>
         <form method="post">
             {{ form.as_p }}
             {% csrf_token %}

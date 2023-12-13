@@ -1,5 +1,5 @@
-{% load spending_tags %}
-{% load earnings_tags %}
+{% load expense_tags %}
+{% load incomes_tags %}
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
@@ -17,41 +17,41 @@
     <!-- <div id="sidebar">
         <h2><a href="">Wallet info</a></h2>
             <p style="color: MediumSeaGreen;">
-                Total of {% total_earnings %} earnings is {% earning_sum %}.
+                Total of {% total_incomes %} incomes is {% income_sum %}.
             </p>
             <p style="color: tomato;">
-                Total of {% total_spendings %} spendings is {% spending_sum %}.
+                Total of {% total_expenses %} expenses is {% expense_sum %}.
             </p>
-        <h3>Latest spendings</h3>
-            {% show_latest_spendings 3 %}
-        <h4>Most commented spendings</h4>
-            {% get_most_commented_spendings as most_commented_spendings %}
+        <h3>Latest expenses</h3>
+            {% show_latest_expenses 3 %}
+        <h4>Most commented expenses</h4>
+            {% get_most_commented_expenses as most_commented_expenses %}
             <ul>
-                {% for obj in most_commented_spendings %}
+                {% for obj in most_commented_expenses %}
                 <li>
-                    <a href="{% url 'wallet:spending_detail' wallet_id=obj.wallet.id spending_id=obj.id %}">{{ obj.amount }} {{ obj.sub_category }}</a>
+                    <a href="{% url 'wallet:expense_detail' wallet_id=obj.wallet.id expense_id=obj.id %}">{{ obj.amount }} {{ obj.sub_category }}</a>
                 </li>
                 {% endfor %}
             </ul>
         <p>
-            <a href="{% url 'wallet:spending_feed' %}">
-                Subscribe to my spendings RSS feed
+            <a href="{% url 'wallet:expense_feed' %}">
+                Subscribe to my expenses RSS feed
             </a>
         </p>
-        <h3>Latest earnings</h3>
-            {% show_latest_earnings 3 %}
-        <h4>Most commented earnings</h4>
-            {% get_most_commented_earnings as most_commented_earnings %}
+        <h3>Latest incomes</h3>
+            {% show_latest_incomes 3 %}
+        <h4>Most commented incomes</h4>
+            {% get_most_commented_incomes as most_commented_incomes %}
             <ul>
-                {% for obj in most_commented_earnings %}
+                {% for obj in most_commented_incomes %}
                 <li>
                     <a href="{{ obj.get_absolute_url }}">{{ obj.amount }} {{ obj.sub_category }}</a>
                 </li>
                 {% endfor %}
             </ul>
         <p>
-            <a href="{% url 'wallet:earning_feed' %}">
-                Subscribe to my earnings RSS feed
+            <a href="{% url 'wallet:income_feed' %}">
+                Subscribe to my incomes RSS feed
             </a>
         </p>
     </div> -->

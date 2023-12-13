@@ -1,7 +1,0 @@
-<ul>
-    {% for obj in latest_spendings %}
-        <li>
-            <a href="{% url 'wallet:spending_detail' wallet_id=obj.wallet.id spending_id=obj.id %}">{{ obj.amount }} {{ obj.sub_category }}</a>
-        </li>
-    {% endfor %}
-</ul>

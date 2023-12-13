@@ -3,7 +3,7 @@ const ctx = document.getElementById('myChart');
     new Chart(ctx, {
       type: 'doughnut',
       data: {
-        labels: ['Spending', 'Earning'],
+        labels: ['Expense', 'Income'],
         datasets: [{
           label: 'Total sum',
           data: {{ data|safe }},

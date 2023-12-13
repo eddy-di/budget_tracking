@@ -2,18 +2,18 @@ import markdown
 from django.contrib.syndication.views import Feed
 # from django.template.defaultfilters import truncatewords_html
 from django.urls import reverse_lazy
-from .models.spending import Spending
+from .models.expense import Expense
 from .models.income import Income
 
 
-class LatestSpendingsFeed(Feed):
-    title = 'My spendings'
-    link = reverse_lazy('wallet:spending_list')
-    description = 'New spendings of the wallet'
+class LatestExpensesFeed(Feed):
+    title = 'My expenses'
+    link = reverse_lazy('wallet:expense_list')
+    description = 'New expenses of the wallet'
 
 
     def items(self):
-        return Spending.objects.all()[:5]
+        return Expense.objects.all()[:5]
     
 
     def item_amount(self, item):
@@ -24,10 +24,10 @@ class LatestSpendingsFeed(Feed):
         return item.created_at
     
 
-class LatestEarningsFeed(Feed):
-    title = 'My earnings'
+class LatestIncomesFeed(Feed):
+    title = 'My incomes'
     link = reverse_lazy('wallet:income_list')
-    description = 'New earnings of the wallet'
+    description = 'New incomes of the wallet'
 
 
     def items(self):
