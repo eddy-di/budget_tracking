@@ -1,21 +1,31 @@
 {% extends 'base.html' %}
-
 {% block content %}
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
     <h1>Wallet details for {{ wallet.name }}</h1>
+      <div>
+        <p>Filter by date</p>
+        <p>From:<input id="datepicker_from" name="datepicker_from"></p>
+        <p>To:<input id="datepicker_to" name="datepicker_to"></p>
+        <button id="filterButton">Filter</button>
+        <button id="resetButton">Reset</button>
+      </div>
       <div class="wallet_info" style="float: left;">
-        <p>
+        <p id="totalExpenses">
             Total expenses: {{ expense_sum }}
         </p>
-        <p>
+        <p id="totalIncomes">
             Total incomes: {{ income_sum }}
         </p>
         {% if difference > 0 %}
-          <p style="color: MediumSeaGreen;">
+          <p style="color: MediumSeaGreen;" id="difference">
             Difference: {{ difference }}
           </p>
         {% else %}
-          <p style="color: tomato;">
+          <p style="color: tomato;" id="difference">
             Difference: {{ difference }}
           </p>
         {% endif %}
@@ -30,6 +40,7 @@
           </a>
         </p>
       </div>
+
       <div class="wallet_doughnut_chart_info">
           <canvas id="myChart"></canvas>
       </div>
@@ -41,34 +52,45 @@
       </div>
       
     <script>
-        const ctx = document.getElementById('myChart');
+      // initial textual info
+      var initialExpensesSum = {{ expense_sum|safe }};
+      var initialIncomesSum = {{ income_sum|safe }};
+      var initialDifference = {{ difference|safe }};
+      // initial data for doughnut
+      var initialDoughnutData = {{ data|safe }};
+      // initial data for expenses bar
+      var initialExpensesLabelsBar = {{ labels_expenses_category|safe }};
+      var initialExpensesDataBar = {{ data_expenses_category|safe }};
+      // initial data for incomes bar
+      var initialIncomesLabelsBar = {{ labels_incomes_subcategory|safe }};
+      var initialIncomesDataBar = {{ data_incomes_subcategory|safe }}; 
+
+      var ctx = document.getElementById('myChart');
       
-        new Chart(ctx, {
-          type: 'doughnut',
-          data: {
-            labels: ['Expenses', 'Incomes'],
-            datasets: [{
-              label: 'Total sum',
-              data: {{ data|safe }},
-              borderWidth: 1,
-              backgroundColor: ['#ff7675', '#7bed9f'],
-              hoverBackgroundColor: ['#d63031', '#2ed573'],
-            }]
-          },
-          options: {
-            plugins: {
-              legend: {
-                position: 'right'
-              }
+      var doughnut = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Expenses', 'Incomes'],
+          datasets: [{
+            label: 'Total sum',
+            data: {{ data|safe }},
+            borderWidth: 1,
+            backgroundColor: ['#ff7675', '#7bed9f'],
+            hoverBackgroundColor: ['#d63031', '#2ed573'],
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              position: 'right'
             }
           }
-        });
-    </script>
+        }
+      });
 
-    <script>
-      const ctx_1 = document.getElementById('myExpensesBarChart');
+      var ctx_1 = document.getElementById('myExpensesBarChart');
 
-      new Chart(ctx_1, {
+      var expensesBar = new Chart(ctx_1, {
         type: 'bar',
         data: {
           labels: {{ labels_expenses_category|safe }},
@@ -94,13 +116,11 @@
             }
           }
         }
-      })
-    </script>
+      });
 
-    <script>
-      const ctx_2 = document.getElementById('myIncomesBarChart')
+      var ctx_2 = document.getElementById('myIncomesBarChart');
 
-      new Chart(ctx_2, {
+      var incomesBar = new Chart(ctx_2, {
         type: 'bar',
         data: {
           labels: {{ labels_incomes_subcategory|safe }},
@@ -126,9 +146,95 @@
             }
           }
         }
-      })
-    </script>
+      });
+
+      // Initialize flatpickr for date inputs
+      flatpickr("#datepicker_from", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+      });
+    
+      flatpickr("#datepicker_to", {
+        enableTime: true,
+        dateFormat: "Y-m-d H:i",
+      });
+
+      var filteredDoughnutData = [];
+
+      // Attach an event listener to the button to trigger the filter
+      document.getElementById('filterButton').addEventListener('click', function() {
+        var datepickerFrom = document.getElementById('datepicker_from').value;
+        var datepickerTo = document.getElementById('datepicker_to').value;
+
+        // Extract the wallet_id
+        var walletId = {{ wallet.id|safe }};
       
+        // Perform AJAX request to the Django view
+        $.ajax({
+          type: 'POST',
+          url: 'https://mysite.com:8000/wallet/' + walletId + '/filter_by_date/',  // Update with your actual URL
+          data: {
+            'datepicker_from': datepickerFrom,
+            'datepicker_to': datepickerTo,
+            csrfmiddlewaretoken: '{{ csrf_token }}'  // Include CSRF token for security
+          },
+          dataType: 'json',
+          success: function(response) {
+            // updating dougnut charts data
+            doughnut.data.datasets[0].data = response.data;
+            doughnut.update();
+            // updating expense bar chart data and labels
+            expensesBar.data.labels = response.labels_expenses_category;
+            expensesBar.data.datasets[0].data = response.data_expenses_category;
+            expensesBar.update();
+            // updating income bar chart data and labels
+            incomesBar.data.labels = response.labels_incomes_subcategory;
+            incomesBar.data.datasets[0].data = response.data_incomes_subcategory;
+            incomesBar.update();
+            // updating writings
+            document.getElementById('totalExpenses').innerHTML = 'Filtered expenses: ' + response.expense_sum;
+            document.getElementById('totalIncomes').innerHTML = 'Filtered incomes: ' + response.income_sum;
+            var diff = document.getElementById('difference');
+            if (response.difference > 0) {
+              diff.style.color = 'MediumSeaGreen';
+            } else {
+              diff.style.color = 'tomato';
+            }
+            diff.innerHTML = 'Difference: ' + response.difference;
+          },
+          error: function(error) {
+            console.log('Error:', error);
+          }
+        });
+      });
+
+      // reset button logic
+      document.getElementById('resetButton').addEventListener('click', function () {
+        document.getElementById('datepicker_from').value = '';
+        document.getElementById('datepicker_to').value = '';
+        // re-setting textual info
+        document.getElementById('totalExpenses').innerHTML = 'Total expenses: ' + initialExpensesSum;
+        document.getElementById('totalIncomes').innerHTML = 'Total incomes: ' + initialIncomesSum;
+        var diff = document.getElementById('difference');
+        if (initialDifference > 0) {
+          diff.style.color = 'MediumSeaGreen';
+        } else {
+          diff.style.color = 'tomato';
+        }
+        diff.innerHTML = 'Difference: ' + initialDifference;
+        // re-setting doughnut data
+        doughnut.data.datasets[0].data = initialDoughnutData;
+        doughnut.update();
+        // re-setting expenses bar
+        expensesBar.data.labels = initialExpensesLabelsBar;
+        expensesBar.data.datasets[0].data = initialExpensesDataBar;
+        expensesBar.update();
+        // re-setting incomes bar
+        incomesBar.data.labels = initialIncomesLabelsBar;
+        incomesBar.data.datasets[0].data = initialIncomesDataBar;
+        incomesBar.update();
+      });
+    </script>
 {% endblock %}
 
 

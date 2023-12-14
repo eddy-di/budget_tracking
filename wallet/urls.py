@@ -8,8 +8,9 @@ app_name = 'wallet'
 
 urlpatterns = [
     path('', views.wallet.wallet_list, name='wallet_list'),
-    path('<int:wallet_id>/', views.wallet.wallet_detail, name='wallet_info'),
     path('add/', views.wallet.wallet_add, name='add_wallet'),
+    path('<int:wallet_id>/', views.wallet.wallet_detail, name='wallet_info'),
+    path('<int:wallet_id>/filter_by_date/', views.wallet.filter_by_date, name='filter_by_date'),
 
 
     # representation of wallet expense
