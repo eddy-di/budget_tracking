@@ -6,12 +6,19 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
     <h1>Wallet details for {{ wallet.name }}</h1>
-      <div>
-        <p>Filter by date</p>
-        <p>From:<input id="datepicker_from" name="datepicker_from"></p>
-        <p>To:<input id="datepicker_to" name="datepicker_to"></p>
-        <button id="filterButton">Filter</button>
-        <button id="resetButton">Reset</button>
+      <div class="filter-navbar">
+        <div class="navbar-li-input">
+          <input id="datepicker_from" class='filter-input' name="datepicker_from" placeholder="from">
+        </div>
+        <div class="navbar-li-input">
+          <input id="datepicker_to" class='filter-input' name="datepicker_to" placeholder="to">
+        </div>
+        <div class="navbar-li">
+          <button id="filterButton" class="filterButton">Filter</button>
+        </div>
+        <div class="navbar-li">
+          <button id="resetButton">Reset</button>
+        </div>
       </div>
       <div class="wallet_info" style="float: left;">
         <p id="totalExpenses">
@@ -236,5 +243,3 @@
       });
     </script>
 {% endblock %}
-
-
