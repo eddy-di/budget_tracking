@@ -14,8 +14,13 @@ from taggit.managers import TaggableManager
 
 class IncomeManager(models.Manager):
     def get_queryset(self) -> QuerySet:
-        return super().get_queryset()\
-                        .filter(currency=Income.CurrencyChoices.KGS)
+        return super().get_queryset().filter(currency=Income.CurrencyChoices.KGS)
+    
+    def get_filtered(self, wallet_id, date_from, date_to):
+        qs = self.filter(wallet=wallet_id)
+        if date_from and date_to:
+            qs = qs.filter(created_at__range=(date_from, date_to))
+        return qs
 
 
 class Income(models.Model):
@@ -59,8 +64,7 @@ class Income(models.Model):
                                on_delete=models.CASCADE,
                                related_name='wallet_incomes')
     
-    objects = models.Manager()
-    earned = IncomeManager()
+    objects = IncomeManager()
 
     tags = TaggableManager()
 

@@ -14,8 +14,15 @@ from taggit.managers import TaggableManager
 
 class ExpenseManager(models.Manager):
     def get_queryset(self) -> QuerySet:
-        return super().get_queryset()\
-                        .filter(currency=Expense.CurrencyChoices.KGS)
+        return super().get_queryset().filter(currency=Expense.CurrencyChoices.KGS)
+    
+    def get_filtered(self, wallet_id, date_from, date_to):
+        qs = self.filter(wallet=wallet_id)
+        if date_from and date_to:
+            qs = qs.filter(created_at__range=(date_from, date_to))
+        return qs
+    
+
 
 
 class Expense(models.Model):
@@ -59,8 +66,7 @@ class Expense(models.Model):
                                on_delete=models.CASCADE,
                                related_name='wallet_expenses')
     
-    objects = models.Manager()
-    spent = ExpenseManager()
+    objects = ExpenseManager()
 
     tags = TaggableManager()
 

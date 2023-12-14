@@ -122,8 +122,8 @@ def filter_by_date(request, wallet_id):
         date_to = datetime.strptime(date_to_str, '%Y-%m-%d %H:%M').date()
 
         # Perform queryset filtering based on the date range
-        filtered_income_queryset = Income.objects.filter(created_at__range=(date_from, date_to), wallet=wallet_id)
-        filtered_expense_queryset = Expense.objects.filter(created_at__range=(date_from, date_to), wallet=wallet_id)
+        filtered_income_queryset = Income.objects.get_filtered(wallet_id, date_from, date_to)
+        filtered_expense_queryset = Expense.objects.get_filtered(wallet_id, date_from, date_to)
         # return JSON data's
             #for doughnut chart
         filtered_expense_sum = filtered_expense_queryset.aggregate(Sum('amount'))['amount__sum'] or 0
@@ -133,8 +133,8 @@ def filter_by_date(request, wallet_id):
             # end for doungnut
         # for bars
         
-        expenses = Expense.objects.filter(wallet=wallet, created_at__range=(date_from, date_to)).values_list('amount', 'category__name', 'sub_category__name')
-        incomes = Income.objects.filter(wallet=wallet, created_at__range=(date_from, date_to)).values_list('amount', 'category__name', 'sub_category__name')
+        expenses = filtered_expense_queryset.values_list('amount', 'category__name', 'sub_category__name')
+        incomes = filtered_income_queryset.values_list('amount', 'category__name', 'sub_category__name')
 
         expenses_categories_d = {}
             # getting expense sums based on categories and summing them by amount
