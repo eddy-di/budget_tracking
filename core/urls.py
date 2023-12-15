@@ -29,7 +29,9 @@ sitemaps = {
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('account/', include('account.urls', namespace='account')),
-    path('api/', include('wallet.api.urls', namespace='api')),
+    path('wallet-api/', include('wallet.api.urls', namespace='wallet_api')),
+    path('account-api/', include('account.api.urls', namespace='account_api')),
+    path('api-auth/', include('rest_framework.urls')),
     path('social-auth/', include('social_django.urls', namespace='social')),
     path('wallet/', include('wallet.urls', namespace='wallet')),
     path('sitemaps.xml', sitemap, {'sitemaps': sitemaps},

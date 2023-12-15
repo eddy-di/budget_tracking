@@ -6,7 +6,7 @@ from django.contrib.auth.models import User
 class Wallet(models.Model):
     name = models.CharField(max_length=50)
     slug = models.SlugField(max_length=250, null=True, blank=True)
-    user = models.ManyToManyField(User)
+    user = models.ManyToManyField(User, related_name='wallet_users')
 
     def __str__(self) -> str:
         return self.name

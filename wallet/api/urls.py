@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 
 
-app_name = 'wallet'
+app_name = 'wallet-api'
 
 urlpatterns = [
     # expenses
@@ -14,7 +14,7 @@ urlpatterns = [
     path('incomes/<pk>/', views.IncomeDetailView.as_view(), name='income_detail'),
 
     # wallet
-    path('wallets', views.WalletListView.as_view(), name='wallet_list'),
+    path('wallets', views.WalletListCreateView.as_view(), name='wallet_list'),
     path('wallets/<pk>/', views.WalletDetailView.as_view(), name='wallet_detail'),
 
 ]

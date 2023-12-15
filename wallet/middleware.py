@@ -11,7 +11,7 @@ class RequireLoginMiddleware:
         # Process the request before the view is called
         
         if request.user.is_authenticated:
-            has_wallet = request.user.wallet_set.exists() # Check if the user has a wallet            
+            has_wallet = request.user.wallet_users.exists() # Check if the user has a wallet            
             current_view = resolve(request.path_info).url_name # Get the current view            
             exempt_views = ['add_wallet'] # Define views that do not require a wallet check
             if not has_wallet and current_view not in exempt_views:

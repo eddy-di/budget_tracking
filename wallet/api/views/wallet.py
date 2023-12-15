@@ -3,11 +3,11 @@ from wallet.models.wallet import Wallet
 from wallet.api.serializers.wallet import WalletSerializer
 
 
-class WalletListView(generics.ListAPIView):
+class WalletListCreateView(generics.ListCreateAPIView):
     queryset = Wallet.objects.all()
     serializer_class = WalletSerializer
 
 
-class WalletDetailView(generics.RetrieveAPIView):
+class WalletDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Wallet.objects.all()
     serializer_class = WalletSerializer
