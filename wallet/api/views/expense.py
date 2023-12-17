@@ -4,7 +4,7 @@ from wallet.api.serializers.expense import ExpenseSerializer
 
 
 class ExpenseListView(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
 

@@ -7,7 +7,7 @@ app_name = 'wallet-api'
 urlpatterns = [
     # expenses
     path('expenses', views.ExpenseListView.as_view(), name='expense_list'),
-    path('expenses/<pk>/', views.ExpenseDetailView.as_view(), name='expense_detail'),
+    path('expenses/<int:pk>/', views.ExpenseDetailView.as_view(), name='expense_detail'),
 
     # incomes
     path('incomes', views.IncomeListView.as_view(), name='income_list'),
