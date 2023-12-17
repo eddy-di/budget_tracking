@@ -10,6 +10,10 @@ class ExpenseListView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer): # this logic authomatically puts logged user as the one who is creating expense
         serializer.save(member=self.request.user)
+    
+    def get_queryset(self):
+        user = self.request.user
+        return Expense.objects.filter(member=user)
 
 
 class ExpenseDetailView(generics.RetrieveUpdateDestroyAPIView):
