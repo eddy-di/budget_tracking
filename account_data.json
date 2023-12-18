@@ -1,0 +1,11 @@
+[
+    {
+        "model": "account.profile",
+        "pk": 1,
+        "fields": {
+            "user": 3,
+            "date_of_birth": null,
+            "photo": ""
+        }
+    }
+]

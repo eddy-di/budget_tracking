@@ -1,0 +1,2381 @@
+[
+    {
+        "model": "wallet.category",
+        "pk": 1,
+        "fields": {
+            "name": "Income"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 2,
+        "fields": {
+            "name": "Housing"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 3,
+        "fields": {
+            "name": "Home Services"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 4,
+        "fields": {
+            "name": "Utilities"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 5,
+        "fields": {
+            "name": "Household Items"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 6,
+        "fields": {
+            "name": "Food"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 7,
+        "fields": {
+            "name": "Transportation"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 8,
+        "fields": {
+            "name": "Medical/Health"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 9,
+        "fields": {
+            "name": "Insurance"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 10,
+        "fields": {
+            "name": "Kids"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 11,
+        "fields": {
+            "name": "Pets"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 12,
+        "fields": {
+            "name": "Subscriptions/Streaming Services"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 13,
+        "fields": {
+            "name": "Clothing"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 14,
+        "fields": {
+            "name": "Personal Care"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 15,
+        "fields": {
+            "name": "Personal Development"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 16,
+        "fields": {
+            "name": "Financial/Professional Fees"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 17,
+        "fields": {
+            "name": "Recreation/Fun"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 18,
+        "fields": {
+            "name": "Travel"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 19,
+        "fields": {
+            "name": "Technology"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 20,
+        "fields": {
+            "name": "Events / Gifts"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 21,
+        "fields": {
+            "name": "Charitable Giving"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 22,
+        "fields": {
+            "name": "Savings Goals / Investing"
+        }
+    },
+    {
+        "model": "wallet.category",
+        "pk": 23,
+        "fields": {
+            "name": "Debt Payments"
+        }
+    },
+    {
+        "model": "wallet.wallet",
+        "pk": 1,
+        "fields": {
+            "name": "Family",
+            "slug": "family",
+            "user": [
+                1
+            ]
+        }
+    },
+    {
+        "model": "wallet.wallet",
+        "pk": 2,
+        "fields": {
+            "name": "postman wallet",
+            "slug": "postman-wallet",
+            "user": []
+        }
+    },
+    {
+        "model": "wallet.wallet",
+        "pk": 3,
+        "fields": {
+            "name": "postman wallet",
+            "slug": "postman-wallet",
+            "user": []
+        }
+    },
+    {
+        "model": "wallet.wallet",
+        "pk": 4,
+        "fields": {
+            "name": "postman wallet",
+            "slug": "postman-wallet",
+            "user": [
+                2,
+                3
+            ]
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 1,
+        "fields": {
+            "name": "Salary & Wages",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 2,
+        "fields": {
+            "name": "Self-employed income",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 3,
+        "fields": {
+            "name": "Bonus",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 4,
+        "fields": {
+            "name": "Tips",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 5,
+        "fields": {
+            "name": "Tax refund",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 6,
+        "fields": {
+            "name": "Gifts received",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 7,
+        "fields": {
+            "name": "Alimony received",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 8,
+        "fields": {
+            "name": "Child support received",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 9,
+        "fields": {
+            "name": "Rental income",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 10,
+        "fields": {
+            "name": "Dividend income",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 11,
+        "fields": {
+            "name": "Interest earned",
+            "category": 1
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 12,
+        "fields": {
+            "name": "Mortgage/Rent",
+            "category": 2
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 13,
+        "fields": {
+            "name": "Homeowners association (HOA fees)",
+            "category": 2
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 14,
+        "fields": {
+            "name": "Homeowners insurance / Renters insurance",
+            "category": 2
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 15,
+        "fields": {
+            "name": "Property insurance (i.e. jewelry)",
+            "category": 2
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 16,
+        "fields": {
+            "name": "Home repairs / Maintenance",
+            "category": 2
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 17,
+        "fields": {
+            "name": "Property taxes",
+            "category": 2
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 18,
+        "fields": {
+            "name": "Home improvement",
+            "category": 2
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 19,
+        "fields": {
+            "name": "Furnishings",
+            "category": 2
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 20,
+        "fields": {
+            "name": "House cleaning",
+            "category": 3
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 21,
+        "fields": {
+            "name": "Lawn care",
+            "category": 3
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 22,
+        "fields": {
+            "name": "Security system",
+            "category": 3
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 23,
+        "fields": {
+            "name": "Pest control",
+            "category": 3
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 24,
+        "fields": {
+            "name": "Natural gas",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 25,
+        "fields": {
+            "name": "Electricity",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 26,
+        "fields": {
+            "name": "Landline / Home phone",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 27,
+        "fields": {
+            "name": "Mobile phone",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 28,
+        "fields": {
+            "name": "Home internet",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 29,
+        "fields": {
+            "name": "Garbage",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 30,
+        "fields": {
+            "name": "Recycling",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 31,
+        "fields": {
+            "name": "Water",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 32,
+        "fields": {
+            "name": "Central heating",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 33,
+        "fields": {
+            "name": "Cleaning supplies",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 34,
+        "fields": {
+            "name": "Paper products",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 35,
+        "fields": {
+            "name": "Tools",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 36,
+        "fields": {
+            "name": "Toiletries",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 37,
+        "fields": {
+            "name": "Laundry supplies",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 38,
+        "fields": {
+            "name": "Postage",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 39,
+        "fields": {
+            "name": "Furniture",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 40,
+        "fields": {
+            "name": "Home décor",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 41,
+        "fields": {
+            "name": "Pool supplies",
+            "category": 5
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 42,
+        "fields": {
+            "name": "Groceries",
+            "category": 6
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 43,
+        "fields": {
+            "name": "Fast food",
+            "category": 6
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 44,
+        "fields": {
+            "name": "Coffee shops",
+            "category": 6
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 45,
+        "fields": {
+            "name": "Breakfast",
+            "category": 6
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 46,
+        "fields": {
+            "name": "Lunch",
+            "category": 6
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 47,
+        "fields": {
+            "name": "Dinner",
+            "category": 6
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 48,
+        "fields": {
+            "name": "Drinks",
+            "category": 6
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 49,
+        "fields": {
+            "name": "Snacks",
+            "category": 6
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 50,
+        "fields": {
+            "name": "Car payment / lease payments",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 51,
+        "fields": {
+            "name": "Car insurance",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 52,
+        "fields": {
+            "name": "Gas",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 53,
+        "fields": {
+            "name": "Oil change",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 54,
+        "fields": {
+            "name": "Maintenance / Repairs",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 55,
+        "fields": {
+            "name": "Personal property taxes",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 56,
+        "fields": {
+            "name": "Registration",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 57,
+        "fields": {
+            "name": "Public transportation",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 58,
+        "fields": {
+            "name": "Taxi / Ride sharing",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 59,
+        "fields": {
+            "name": "Tolls",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 60,
+        "fields": {
+            "name": "Parking Fees",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 61,
+        "fields": {
+            "name": "Roadside assistance (AAA)",
+            "category": 7
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 62,
+        "fields": {
+            "name": "Health insurance",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 63,
+        "fields": {
+            "name": "Dental insurance",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 64,
+        "fields": {
+            "name": "Vision insurance",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 65,
+        "fields": {
+            "name": "Prescriptions / Medication",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 66,
+        "fields": {
+            "name": "Doctor bills",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 67,
+        "fields": {
+            "name": "Dentist visits",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 68,
+        "fields": {
+            "name": "Hospital bills",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 69,
+        "fields": {
+            "name": "Optometrist",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 70,
+        "fields": {
+            "name": "Glasses, contacts",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 71,
+        "fields": {
+            "name": "Chiropractor visits",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 72,
+        "fields": {
+            "name": "Vitamins/Supplements",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 73,
+        "fields": {
+            "name": "Disability insurance",
+            "category": 9
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 74,
+        "fields": {
+            "name": "Long-term care insurance",
+            "category": 9
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 75,
+        "fields": {
+            "name": "Umbrella policy",
+            "category": 9
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 76,
+        "fields": {
+            "name": "Identity theft",
+            "category": 9
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 77,
+        "fields": {
+            "name": "Tuition",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 78,
+        "fields": {
+            "name": "Daycare",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 79,
+        "fields": {
+            "name": "Babysitter / Nanny",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 80,
+        "fields": {
+            "name": "Diapers, formula – baby necessities",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 81,
+        "fields": {
+            "name": "Summer camp",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 82,
+        "fields": {
+            "name": "School or Extra-curricular activities",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 83,
+        "fields": {
+            "name": "School supplies",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 84,
+        "fields": {
+            "name": "School lunches",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 85,
+        "fields": {
+            "name": "Lessons",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 86,
+        "fields": {
+            "name": "Allowance",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 87,
+        "fields": {
+            "name": "Toys",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 88,
+        "fields": {
+            "name": "Kids discretionary spending",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 89,
+        "fields": {
+            "name": "Child support",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 90,
+        "fields": {
+            "name": "Kids clothing",
+            "category": 10
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 91,
+        "fields": {
+            "name": "Veterinarian visits",
+            "category": 11
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 92,
+        "fields": {
+            "name": "Pet food",
+            "category": 11
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 93,
+        "fields": {
+            "name": "Pet medication (i.e. flea shots, heartworm medication)",
+            "category": 11
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 94,
+        "fields": {
+            "name": "Pet toys/beds",
+            "category": 11
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 95,
+        "fields": {
+            "name": "Pet accessories (leash, collar, etc.)",
+            "category": 11
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 96,
+        "fields": {
+            "name": "Pet grooming",
+            "category": 11
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 97,
+        "fields": {
+            "name": "Pet insurance",
+            "category": 11
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 98,
+        "fields": {
+            "name": "Netflix/Hulu",
+            "category": 12
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 99,
+        "fields": {
+            "name": "Amazon Prime",
+            "category": 12
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 100,
+        "fields": {
+            "name": "Music (Spotify, Pandora)",
+            "category": 12
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 101,
+        "fields": {
+            "name": "Sports TV subscription (like ESPN or Fox Sports)",
+            "category": 12
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 102,
+        "fields": {
+            "name": "Software subscriptions",
+            "category": 12
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 103,
+        "fields": {
+            "name": "Magazines",
+            "category": 12
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 104,
+        "fields": {
+            "name": "Professional Society annual fees",
+            "category": 12
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 105,
+        "fields": {
+            "name": "Work clothing",
+            "category": 13
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 106,
+        "fields": {
+            "name": "Athletic clothing",
+            "category": 13
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 107,
+        "fields": {
+            "name": "Leisure clothing",
+            "category": 13
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 108,
+        "fields": {
+            "name": "Alterations",
+            "category": 13
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 109,
+        "fields": {
+            "name": "Dry cleaning",
+            "category": 13
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 110,
+        "fields": {
+            "name": "Haircuts",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 111,
+        "fields": {
+            "name": "Hair coloring",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 112,
+        "fields": {
+            "name": "Hair products",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 113,
+        "fields": {
+            "name": "Cosmetics",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 114,
+        "fields": {
+            "name": "Nail salon",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 115,
+        "fields": {
+            "name": "Eyebrows",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 116,
+        "fields": {
+            "name": "Massages",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 117,
+        "fields": {
+            "name": "Spa Services",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 118,
+        "fields": {
+            "name": "Grooming",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 119,
+        "fields": {
+            "name": "Gym Membership",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 120,
+        "fields": {
+            "name": "Counseling/Therapy",
+            "category": 14
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 121,
+        "fields": {
+            "name": "Books",
+            "category": 15
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 122,
+        "fields": {
+            "name": "Personal coach",
+            "category": 15
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 123,
+        "fields": {
+            "name": "Self-improvement",
+            "category": 15
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 124,
+        "fields": {
+            "name": "Conferences",
+            "category": 15
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 125,
+        "fields": {
+            "name": "Online courses",
+            "category": 15
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 126,
+        "fields": {
+            "name": "In-person courses",
+            "category": 15
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 127,
+        "fields": {
+            "name": "Financial advisor",
+            "category": 16
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 128,
+        "fields": {
+            "name": "Lawyer / Attorney fees",
+            "category": 16
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 129,
+        "fields": {
+            "name": "Tax professional (CPA, online accounting firm)",
+            "category": 16
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 130,
+        "fields": {
+            "name": "Business consultant",
+            "category": 16
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 131,
+        "fields": {
+            "name": "Movies",
+            "category": 17
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 132,
+        "fields": {
+            "name": "Concerts",
+            "category": 17
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 133,
+        "fields": {
+            "name": "Hobbies/Crafts",
+            "category": 17
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 134,
+        "fields": {
+            "name": "Hosting parties",
+            "category": 17
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 135,
+        "fields": {
+            "name": "Books",
+            "category": 17
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 136,
+        "fields": {
+            "name": "Entertainment",
+            "category": 17
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 137,
+        "fields": {
+            "name": "Sporting Events",
+            "category": 17
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 138,
+        "fields": {
+            "name": "Vacation",
+            "category": 18
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 139,
+        "fields": {
+            "name": "Trips to see family",
+            "category": 18
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 140,
+        "fields": {
+            "name": "Trips for weddings, bachelor/bachelorette parties",
+            "category": 18
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 141,
+        "fields": {
+            "name": "Souvenirs",
+            "category": 18
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 142,
+        "fields": {
+            "name": "Baggage fees",
+            "category": 18
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 143,
+        "fields": {
+            "name": "TSA Precheck or Global Entry",
+            "category": 18
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 144,
+        "fields": {
+            "name": "Mobile phone",
+            "category": 19
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 145,
+        "fields": {
+            "name": "Computer / Computer accessories",
+            "category": 19
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 146,
+        "fields": {
+            "name": "Speaker system",
+            "category": 19
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 147,
+        "fields": {
+            "name": "Wifi mesh system / Wifi extender",
+            "category": 19
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 148,
+        "fields": {
+            "name": "Smart home (Amazon Echo, Fire, Nest, Google)",
+            "category": 19
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 149,
+        "fields": {
+            "name": "Gaming system / Video games / Gaming accessories",
+            "category": 19
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 150,
+        "fields": {
+            "name": "Family birthday gifts",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 151,
+        "fields": {
+            "name": "Friend birthday gifts",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 152,
+        "fields": {
+            "name": "Wedding/wedding shower gifts",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 153,
+        "fields": {
+            "name": "Anniversary gifts",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 154,
+        "fields": {
+            "name": "Baby/baby shower gifts",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 155,
+        "fields": {
+            "name": "Teacher gifts",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 156,
+        "fields": {
+            "name": "Service person gifts (mail carrier, home service, personal assistant)",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 157,
+        "fields": {
+            "name": "Thank you gifts",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 158,
+        "fields": {
+            "name": "Holiday gifts",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 159,
+        "fields": {
+            "name": "Special occasions",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 160,
+        "fields": {
+            "name": "Tithing",
+            "category": 21
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 161,
+        "fields": {
+            "name": "Religious",
+            "category": 21
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 162,
+        "fields": {
+            "name": "Community",
+            "category": 21
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 163,
+        "fields": {
+            "name": "Political",
+            "category": 21
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 164,
+        "fields": {
+            "name": "Non-cash donations (clothing, canned food, electronics, stock, etc.)",
+            "category": 21
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 165,
+        "fields": {
+            "name": "College savings",
+            "category": 22
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 166,
+        "fields": {
+            "name": "Retirement savings",
+            "category": 22
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 167,
+        "fields": {
+            "name": "New car savings",
+            "category": 22
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 168,
+        "fields": {
+            "name": "Health Savings Account/Plan",
+            "category": 22
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 169,
+        "fields": {
+            "name": "Emergency Fund",
+            "category": 22
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 170,
+        "fields": {
+            "name": "Brokerage investments",
+            "category": 22
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 171,
+        "fields": {
+            "name": "Traditional / Roth IRA",
+            "category": 22
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 172,
+        "fields": {
+            "name": "Down payment savings",
+            "category": 22
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 173,
+        "fields": {
+            "name": "Credit card debt",
+            "category": 23
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 174,
+        "fields": {
+            "name": "Student loan debt",
+            "category": 23
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 175,
+        "fields": {
+            "name": "Medical debt",
+            "category": 23
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 176,
+        "fields": {
+            "name": "Personal loans",
+            "category": 23
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 177,
+        "fields": {
+            "name": "Auto loan payments",
+            "category": 23
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 178,
+        "fields": {
+            "name": "Back taxes",
+            "category": 23
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 179,
+        "fields": {
+            "name": "Past due bills",
+            "category": 23
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 180,
+        "fields": {
+            "name": "Alimony",
+            "category": 23
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 181,
+        "fields": {
+            "name": "Family events",
+            "category": 20
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 182,
+        "fields": {
+            "name": "Medical tests / analyzes",
+            "category": 8
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 183,
+        "fields": {
+            "name": "Doorphone",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.subcategory",
+        "pk": 184,
+        "fields": {
+            "name": "Homeowners association",
+            "category": 4
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 1,
+        "fields": {
+            "amount": "8950.00",
+            "comment": "December 1st $ to som",
+            "currency": 1,
+            "slug": "1-8950-1-1",
+            "created_at": "2023-12-13T06:16:08.448Z",
+            "category": 1,
+            "sub_category": 1,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 2,
+        "fields": {
+            "amount": "8900.00",
+            "comment": "second exchange",
+            "currency": 1,
+            "slug": "1-8900-1-1",
+            "created_at": "2023-12-13T07:26:11.705Z",
+            "category": 1,
+            "sub_category": 1,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 3,
+        "fields": {
+            "amount": "4000.00",
+            "comment": "test",
+            "currency": 1,
+            "slug": "1-4000-2-1",
+            "created_at": "2023-12-14T06:16:10.971Z",
+            "category": 1,
+            "sub_category": 2,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 4,
+        "fields": {
+            "amount": "3000.00",
+            "comment": "test income add from api",
+            "currency": 1,
+            "slug": "1-300000-3-1",
+            "created_at": "2023-12-15T13:15:06.907Z",
+            "category": 1,
+            "sub_category": 3,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 5,
+        "fields": {
+            "amount": "100.00",
+            "comment": "postman test for wallet 4",
+            "currency": 1,
+            "slug": "1-10000-1-4",
+            "created_at": "2023-12-18T09:52:38.769Z",
+            "category": 1,
+            "sub_category": 1,
+            "wallet": 4,
+            "member": 2
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 6,
+        "fields": {
+            "amount": "100.00",
+            "comment": "postman test for wallet 4",
+            "currency": 1,
+            "slug": "1-10000-1-4",
+            "created_at": "2023-12-18T09:52:56.837Z",
+            "category": 1,
+            "sub_category": 1,
+            "wallet": 4,
+            "member": 2
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 7,
+        "fields": {
+            "amount": "100.00",
+            "comment": "postman test for wallet 4",
+            "currency": 1,
+            "slug": "1-10000-1-4",
+            "created_at": "2023-12-18T09:54:19.207Z",
+            "category": 1,
+            "sub_category": 1,
+            "wallet": 4,
+            "member": 2
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 10,
+        "fields": {
+            "amount": "300.00",
+            "comment": "test1 income post from postman",
+            "currency": 1,
+            "slug": "1-30000-1-4",
+            "created_at": "2023-12-18T11:12:40.249Z",
+            "category": 1,
+            "sub_category": 1,
+            "wallet": 4,
+            "member": 3
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 11,
+        "fields": {
+            "amount": "301.00",
+            "comment": "test1 income post from postman testing required fields",
+            "currency": 1,
+            "slug": "1-30100-1-4",
+            "created_at": "2023-12-18T12:44:38.838Z",
+            "category": 1,
+            "sub_category": 1,
+            "wallet": 4,
+            "member": 3
+        }
+    },
+    {
+        "model": "wallet.income",
+        "pk": 12,
+        "fields": {
+            "amount": "301.00",
+            "comment": "test1 income post from postman testing required fields",
+            "currency": 1,
+            "slug": "1-30100-1-4",
+            "created_at": "2023-12-18T12:44:49.839Z",
+            "category": 1,
+            "sub_category": 1,
+            "wallet": 4,
+            "member": 3
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 1,
+        "fields": {
+            "amount": "1170.00",
+            "comment": "catan 1st december",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T07:20:31.382Z",
+            "category": 17,
+            "sub_category": 136,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 2,
+        "fields": {
+            "amount": "603.00",
+            "comment": "dec 2",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T07:27:36.775Z",
+            "category": 5,
+            "sub_category": 33,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 3,
+        "fields": {
+            "amount": "669.00",
+            "comment": "dec 3 transport taxi tulpar etc.",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T07:45:57.561Z",
+            "category": 7,
+            "sub_category": 57,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 4,
+        "fields": {
+            "amount": "1000.00",
+            "comment": "kuran okutuu 3rd dec",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T07:51:00.183Z",
+            "category": 20,
+            "sub_category": 181,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 5,
+        "fields": {
+            "amount": "1200.00",
+            "comment": "Friends gathering wife",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T07:52:38.344Z",
+            "category": 17,
+            "sub_category": 136,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 6,
+        "fields": {
+            "amount": "749.00",
+            "comment": "houshold goods",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T07:53:33.515Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 7,
+        "fields": {
+            "amount": "11.00",
+            "comment": "bus",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T07:54:00.855Z",
+            "category": 7,
+            "sub_category": 57,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 8,
+        "fields": {
+            "amount": "260.00",
+            "comment": "taxi",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:14:52.831Z",
+            "category": 7,
+            "sub_category": 58,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 9,
+        "fields": {
+            "amount": "204.00",
+            "comment": "dec 4",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:15:27.112Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 10,
+        "fields": {
+            "amount": "1407.00",
+            "comment": "dec 5",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:15:55.101Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 11,
+        "fields": {
+            "amount": "2000.00",
+            "comment": "joogazyn trash",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:16:41.553Z",
+            "category": 4,
+            "sub_category": 29,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 12,
+        "fields": {
+            "amount": "780.00",
+            "comment": "dec 7",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:17:12.299Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 13,
+        "fields": {
+            "amount": "550.00",
+            "comment": "balance mom",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:17:30.564Z",
+            "category": 4,
+            "sub_category": 27,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 14,
+        "fields": {
+            "amount": "636.00",
+            "comment": "dec 7",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:17:59.237Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 15,
+        "fields": {
+            "amount": "435.00",
+            "comment": "tra",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:18:26.148Z",
+            "category": 7,
+            "sub_category": 58,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 16,
+        "fields": {
+            "amount": "1221.00",
+            "comment": "dec 9",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:18:47.425Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 17,
+        "fields": {
+            "amount": "370.00",
+            "comment": "taxi",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:19:18.144Z",
+            "category": 7,
+            "sub_category": 58,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 18,
+        "fields": {
+            "amount": "1750.00",
+            "comment": "friends gathering wife",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:19:58.167Z",
+            "category": 17,
+            "sub_category": 136,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 19,
+        "fields": {
+            "amount": "848.00",
+            "comment": "dec 10 groceries",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:20:28.000Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 20,
+        "fields": {
+            "amount": "220.00",
+            "comment": "dec 10 taxi",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:20:45.097Z",
+            "category": 7,
+            "sub_category": 58,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 21,
+        "fields": {
+            "amount": "781.00",
+            "comment": "dec 11 groc",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:21:35.838Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 22,
+        "fields": {
+            "amount": "1378.74",
+            "comment": "tests 12/12",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:23:15.270Z",
+            "category": 8,
+            "sub_category": 182,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 23,
+        "fields": {
+            "amount": "636.00",
+            "comment": "dec 13 gro",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T08:23:39.873Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 24,
+        "fields": {
+            "amount": "124.00",
+            "comment": "water",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T12:28:53.731Z",
+            "category": 4,
+            "sub_category": 31,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 25,
+        "fields": {
+            "amount": "85.00",
+            "comment": "garbage",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T12:29:13.004Z",
+            "category": 4,
+            "sub_category": 29,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 26,
+        "fields": {
+            "amount": "890.00",
+            "comment": "heating",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T12:29:41.056Z",
+            "category": 4,
+            "sub_category": 32,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 27,
+        "fields": {
+            "amount": "40.00",
+            "comment": "gas",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T12:30:23.407Z",
+            "category": 4,
+            "sub_category": 24,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 28,
+        "fields": {
+            "amount": "40.00",
+            "comment": "doorphone",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T12:33:15.155Z",
+            "category": 4,
+            "sub_category": 183,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 29,
+        "fields": {
+            "amount": "352.00",
+            "comment": "Homeowners association",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-13T12:33:50.240Z",
+            "category": 4,
+            "sub_category": 184,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 30,
+        "fields": {
+            "amount": "395.00",
+            "comment": "groceries dec 14",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-14T06:08:13.295Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 31,
+        "fields": {
+            "amount": "392.00",
+            "comment": "dec 14",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-15T07:24:33.955Z",
+            "category": 6,
+            "sub_category": 46,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 32,
+        "fields": {
+            "amount": "766.00",
+            "comment": "creating from api transport need to make preform create also put the wallet id",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-15T11:29:14.267Z",
+            "category": 7,
+            "sub_category": 58,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 33,
+        "fields": {
+            "amount": "792.00",
+            "comment": "saving from api dealt with filtering the default wallets for user\r\nNeed to work on auto filtering category and subcategory",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-15T12:02:27.489Z",
+            "category": 6,
+            "sub_category": 42,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 36,
+        "fields": {
+            "amount": "2.00",
+            "comment": "postman create test",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-16T18:28:28.495Z",
+            "category": 2,
+            "sub_category": 13,
+            "wallet": 1,
+            "member": 1
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 37,
+        "fields": {
+            "amount": "100.00",
+            "comment": "postman test for wallet 4",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-18T07:44:38.697Z",
+            "category": 2,
+            "sub_category": 14,
+            "wallet": 4,
+            "member": 2
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 38,
+        "fields": {
+            "amount": "301.00",
+            "comment": "test1 expense post from postman testing required fields",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-18T12:48:56.227Z",
+            "category": 2,
+            "sub_category": 14,
+            "wallet": 4,
+            "member": 3
+        }
+    },
+    {
+        "model": "wallet.expense",
+        "pk": 39,
+        "fields": {
+            "amount": "301.00",
+            "comment": "test1 expense post from postman testing required fields",
+            "currency": 1,
+            "slug": null,
+            "created_at": "2023-12-18T12:49:58.399Z",
+            "category": 2,
+            "sub_category": 14,
+            "wallet": 4,
+            "member": 3
+        }
+    }
+]
