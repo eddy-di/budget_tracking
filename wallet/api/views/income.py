@@ -8,7 +8,7 @@ class IncomeListView(generics.ListCreateAPIView):
     queryset = Income.objects.all()
     serializer_class = IncomeSerializer
 
-    def perform_create(self, serializer): # this logic authomatically puts logged user as the one who is creating expense
+    def perform_create(self, serializer):
         serializer.save(member=self.request.user)
     
     def get_queryset(self):

@@ -10,4 +10,14 @@ class IncomeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Income
-        fields = ['id', 'amount', 'currency', 'comment', 'created_at', 'category', 'sub_category', 'wallet', 'member']
+        fields = [
+            'id', 
+            'amount', 
+            'currency', 
+            'comment', 
+            'created_at', 
+            'category', 
+            'sub_category', 
+            'wallet', 
+            'member'
+                  ]

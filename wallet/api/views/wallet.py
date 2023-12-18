@@ -9,7 +9,7 @@ class WalletListCreateView(generics.ListCreateAPIView):
     serializer_class = WalletSerializer
     permission_classes = [IsAuthenticated]
 
-    def perform_create(self, serializer): # this logic authomatically puts logged user as the one who is creating expense
+    def perform_create(self, serializer):
         serializer.save(user=[self.request.user])
 
     def get_queryset(self):
