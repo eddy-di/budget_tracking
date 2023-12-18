@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, serializers
 from wallet.models.expense import Expense
 from wallet.models.wallet import Wallet
 from wallet.api.permissions import IsUserAssociatedWithWallet
@@ -10,7 +10,15 @@ class ExpenseListView(generics.ListCreateAPIView):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
 
-    def perform_create(self, serializer): # this logic authomatically puts logged user as the one who is creating expense
+    def perform_create(self, serializer):
+        # Ensure required fields are provided in the request data
+        required_fields = {'comment', 'category', 'sub_category'}
+        request_data = self.request.data
+        missing_fields = required_fields - set(request_data.keys())
+
+        if missing_fields:
+            raise serializers.ValidationError(f"Missing required fields: {', '.join(missing_fields)}")
+        
         # Associate the new expense instance with the wallet and the current user
         wallet_id = self.request.data.get('wallet')
         wallet = Wallet.objects.get(pk=wallet_id)

@@ -7,7 +7,16 @@ from .income import IncomeSerializer
 from .expense import ExpenseSerializer
 
 
-class WalletSerializer(serializers.ModelSerializer):
+class WalletListSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
+    # user = serializers.ReadOnlyField(source='user.username')
+
+    class Meta:
+        model = Wallet
+        fields = ['id', 'name', 'slug', 'user']
+    
+
+class WalletDetailSerializer(serializers.ModelSerializer):
     user = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
     # user = serializers.ReadOnlyField(source='user.username')
     incomes = serializers.SerializerMethodField()

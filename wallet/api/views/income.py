@@ -1,4 +1,4 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, serializers
 from wallet.models.income import Income
 from wallet.models.wallet import Wallet
 from wallet.api.permissions import IsUserAssociatedWithWallet
@@ -11,7 +11,14 @@ class IncomeListView(generics.ListCreateAPIView):
     serializer_class = IncomeSerializer
 
     def perform_create(self, serializer):
-        # serializer.save(member=self.request.user)
+        # Ensure required fields are provided in the request data
+        required_fields = {'comment', 'category', 'sub_category'}
+        request_data = self.request.data
+        missing_fields = required_fields - set(request_data.keys())
+
+        if missing_fields:
+            raise serializers.ValidationError(f"Missing required fields: {', '.join(missing_fields)}")
+
         wallet_id = self.request.data.get('wallet')
         wallet = Wallet.objects.get(pk=wallet_id)
         serializer.save(wallet=wallet, member=self.request.user)

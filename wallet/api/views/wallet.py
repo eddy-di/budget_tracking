@@ -1,13 +1,13 @@
 from rest_framework import generics
 from rest_framework.permissions import IsAuthenticated
 from wallet.models.wallet import Wallet
-from wallet.api.serializers.wallet import WalletSerializer
+from wallet.api.serializers.wallet import WalletListSerializer, WalletDetailSerializer
 from wallet.api.permissions import IsUserAssociatedWithWalletDetail
 
 
 class WalletListCreateView(generics.ListCreateAPIView):
     queryset = Wallet.objects.all()
-    serializer_class = WalletSerializer
+    serializer_class = WalletListSerializer
     permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
@@ -21,7 +21,7 @@ class WalletListCreateView(generics.ListCreateAPIView):
 class WalletDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated, IsUserAssociatedWithWalletDetail]
     queryset = Wallet.objects.all()
-    serializer_class = WalletSerializer
+    serializer_class = WalletDetailSerializer
 
     def get_queryset(self):
         user = self.request.user
