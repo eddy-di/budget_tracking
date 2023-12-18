@@ -18,6 +18,7 @@ class WalletListCreateView(generics.ListCreateAPIView):
 
 
 class WalletDetailView(generics.RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticated]
     queryset = Wallet.objects.all()
     serializer_class = WalletSerializer
 
