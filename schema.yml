@@ -1,0 +1,924 @@
+openapi: 3.0.3
+info:
+  title: Budget Tracker Project API
+  version: 1.0.0
+  description: Project with its main goal to help keep track of expenses and incomes
+    for a family or personal wallet. In development phase.
+paths:
+  /account-api/register:
+    post:
+      operationId: account_api_register_create
+      tags:
+      - account-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Register'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Register'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Register'
+          description: ''
+  /account-api/users:
+    get:
+      operationId: account_api_users_list
+      tags:
+      - account-api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+  /account-api/users/{id}/:
+    get:
+      operationId: account_api_users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this user.
+        required: true
+      tags:
+      - account-api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+  /api/token/:
+    post:
+      operationId: api_token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /api/token/verify/:
+    post:
+      operationId: api_token_verify_create
+      description: |-
+        Takes a token and indicates if it is valid.  This view provides no
+        information about a token's fitness for a particular use.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenVerify'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenVerify'
+          description: ''
+  /wallet-api/expenses:
+    get:
+      operationId: wallet_api_expenses_list
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Expense'
+          description: ''
+    post:
+      operationId: wallet_api_expenses_create
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Expense'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Expense'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+          description: ''
+  /wallet-api/expenses/{id}/:
+    get:
+      operationId: wallet_api_expenses_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+          description: ''
+    put:
+      operationId: wallet_api_expenses_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Expense'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Expense'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Expense'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+          description: ''
+    patch:
+      operationId: wallet_api_expenses_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedExpense'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedExpense'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedExpense'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Expense'
+          description: ''
+    delete:
+      operationId: wallet_api_expenses_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /wallet-api/incomes:
+    get:
+      operationId: wallet_api_incomes_list
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Income'
+          description: ''
+    post:
+      operationId: wallet_api_incomes_create
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Income'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Income'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Income'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+          description: ''
+  /wallet-api/incomes/{id}/:
+    get:
+      operationId: wallet_api_incomes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this income.
+        required: true
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+          description: ''
+    put:
+      operationId: wallet_api_incomes_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this income.
+        required: true
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Income'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Income'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Income'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+          description: ''
+    patch:
+      operationId: wallet_api_incomes_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this income.
+        required: true
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedIncome'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedIncome'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedIncome'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Income'
+          description: ''
+    delete:
+      operationId: wallet_api_incomes_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this income.
+        required: true
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /wallet-api/wallets:
+    get:
+      operationId: wallet_api_wallets_list
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/WalletList'
+          description: ''
+    post:
+      operationId: wallet_api_wallets_create
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WalletList'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WalletList'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WalletList'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletList'
+          description: ''
+  /wallet-api/wallets/{id}/:
+    get:
+      operationId: wallet_api_wallets_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this wallet.
+        required: true
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDetail'
+          description: ''
+    put:
+      operationId: wallet_api_wallets_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this wallet.
+        required: true
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WalletDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/WalletDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/WalletDetail'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDetail'
+          description: ''
+    patch:
+      operationId: wallet_api_wallets_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this wallet.
+        required: true
+      tags:
+      - wallet-api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedWalletDetail'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedWalletDetail'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedWalletDetail'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WalletDetail'
+          description: ''
+    delete:
+      operationId: wallet_api_wallets_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this wallet.
+        required: true
+      tags:
+      - wallet-api
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    CurrencyEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      - 6
+      - 7
+      - 8
+      type: integer
+      description: |-
+        * `1` - KGS
+        * `2` - USD
+        * `3` - RUB
+        * `4` - KZT
+        * `5` - EUR
+        * `6` - GBP
+        * `7` - CNY
+        * `8` - TRY
+    Expense:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        amount:
+          type: number
+          format: double
+          maximum: 10000000000
+          minimum: 0.00
+          exclusiveMaximum: true
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          default: 1
+        comment:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        category:
+          type: integer
+        sub_category:
+          type: integer
+        wallet:
+          type: integer
+        member:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          readOnly: true
+      required:
+      - amount
+      - category
+      - created_at
+      - id
+      - member
+      - sub_category
+      - wallet
+    Income:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        amount:
+          type: number
+          format: double
+          maximum: 10000000000
+          minimum: 0.00
+          exclusiveMaximum: true
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          default: 1
+        comment:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        category:
+          type: integer
+        sub_category:
+          type: integer
+        wallet:
+          type: integer
+        member:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          readOnly: true
+      required:
+      - amount
+      - category
+      - created_at
+      - id
+      - member
+      - sub_category
+      - wallet
+    PatchedExpense:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        amount:
+          type: number
+          format: double
+          maximum: 10000000000
+          minimum: 0.00
+          exclusiveMaximum: true
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          default: 1
+        comment:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        category:
+          type: integer
+        sub_category:
+          type: integer
+        wallet:
+          type: integer
+        member:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          readOnly: true
+    PatchedIncome:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        amount:
+          type: number
+          format: double
+          maximum: 10000000000
+          minimum: 0.00
+          exclusiveMaximum: true
+        currency:
+          allOf:
+          - $ref: '#/components/schemas/CurrencyEnum'
+          default: 1
+        comment:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        category:
+          type: integer
+        sub_category:
+          type: integer
+        wallet:
+          type: integer
+        member:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          readOnly: true
+    PatchedWalletDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        slug:
+          type: string
+          nullable: true
+          maxLength: 250
+          pattern: ^[-a-zA-Z0-9_]+$
+        user:
+          type: array
+          items:
+            type: integer
+        incomes:
+          type: string
+          readOnly: true
+        expenses:
+          type: string
+          readOnly: true
+    Register:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        password:
+          type: string
+          writeOnly: true
+        password2:
+          type: string
+          writeOnly: true
+        email:
+          type: string
+          format: email
+        first_name:
+          type: string
+          maxLength: 150
+        last_name:
+          type: string
+          maxLength: 150
+      required:
+      - email
+      - first_name
+      - last_name
+      - password
+      - password2
+      - username
+    TokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - password
+      - refresh
+      - username
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          writeOnly: true
+      required:
+      - access
+      - refresh
+    TokenVerify:
+      type: object
+      properties:
+        token:
+          type: string
+          writeOnly: true
+      required:
+      - token
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        wallet_expenses:
+          type: array
+          items:
+            type: integer
+        wallet_incomes:
+          type: array
+          items:
+            type: integer
+        wallet_users:
+          type: array
+          items:
+            type: integer
+      required:
+      - id
+      - username
+      - wallet_expenses
+      - wallet_incomes
+      - wallet_users
+    WalletDetail:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        slug:
+          type: string
+          nullable: true
+          maxLength: 250
+          pattern: ^[-a-zA-Z0-9_]+$
+        user:
+          type: array
+          items:
+            type: integer
+        incomes:
+          type: string
+          readOnly: true
+        expenses:
+          type: string
+          readOnly: true
+      required:
+      - expenses
+      - id
+      - incomes
+      - name
+      - user
+    WalletList:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        slug:
+          type: string
+          nullable: true
+          maxLength: 250
+          pattern: ^[-a-zA-Z0-9_]+$
+        user:
+          type: array
+          items:
+            type: integer
+      required:
+      - id
+      - name
+      - user
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

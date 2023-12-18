@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -205,9 +206,18 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+    ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Budget Tracker Project API',
+    'DESCRIPTION': 'Project with its main goal to help keep track of expenses and incomes for a family or personal wallet. In development phase.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }
