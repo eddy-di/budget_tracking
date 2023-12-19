@@ -18,7 +18,7 @@ from django.views.generic import ListView, CreateView
 def wallet_list(request): # has to show all the available wallets that the user is assigned to
     user = request.user
 
-    wallets = Wallet.objects.filter(user=user).all()
+    wallets = Wallet.objects.filter(users=user).all()
 
     if wallets:
         return render(request, 'wallet/wallet_index.html', {'wallets': wallets})
@@ -98,7 +98,7 @@ def wallet_add(request):
             logged_user = request.user
             instance = form.save(commit=False)
             instance.save()
-            instance.user.add(logged_user)
+            instance.users.add(logged_user)
             instance.save()
 
         return redirect('/wallet/')

@@ -17,4 +17,8 @@ urlpatterns = [
     path('wallets', views.WalletListCreateView.as_view(), name='wallet_list'),
     path('wallets/<pk>/', views.WalletDetailView.as_view(), name='wallet_detail'),
 
+    # invite
+    path('invite', views.InviteCreateView.as_view(), name='invite'),
+    path('invite/join/', views.join_wallet, name='join_wallet'),
+
 ]

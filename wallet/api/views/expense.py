@@ -26,7 +26,7 @@ class ExpenseListView(generics.ListCreateAPIView):
     
     def get_queryset(self):
         user = self.request.user
-        return Expense.objects.filter(wallet__user=user)
+        return Expense.objects.filter(wallet__users=user)
 
 
 class ExpenseDetailView(generics.RetrieveUpdateDestroyAPIView):

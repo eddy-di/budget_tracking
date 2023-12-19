@@ -26,7 +26,7 @@ class IncomeListView(generics.ListCreateAPIView):
     def get_queryset(self):
         user = self.request.user
         # Show all instances of Income to users associated with the Wallet
-        return Income.objects.filter(wallet__user=user) # member__wallet_users=user,
+        return Income.objects.filter(wallet__users=user) # member__wallet_users=user,
 
 
 class IncomeDetailView(generics.RetrieveUpdateDestroyAPIView):

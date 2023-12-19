@@ -8,3 +8,4 @@ from .comment_income import IncomeComment
 from .comment_expense import ExpenseComment
 from taggit.managers import TaggableManager
 from .user_wallet import UserWallet
+from .invite import Invite

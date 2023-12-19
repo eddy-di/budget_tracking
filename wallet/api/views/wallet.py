@@ -15,7 +15,7 @@ class WalletListCreateView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Wallet.objects.filter(user=user)
+        return Wallet.objects.filter(users=user)
 
 
 class WalletDetailView(generics.RetrieveUpdateDestroyAPIView):
@@ -25,4 +25,4 @@ class WalletDetailView(generics.RetrieveUpdateDestroyAPIView):
 
     def get_queryset(self):
         user = self.request.user
-        return Wallet.objects.filter(user=user)
+        return Wallet.objects.filter(users=user)

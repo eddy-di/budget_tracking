@@ -8,23 +8,23 @@ from .expense import ExpenseSerializer
 
 
 class WalletListSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
+    users = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
     # user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Wallet
-        fields = ['id', 'name', 'slug', 'user']
+        fields = ['id', 'name', 'slug', 'users']
     
 
 class WalletDetailSerializer(serializers.ModelSerializer):
-    user = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
+    users = serializers.PrimaryKeyRelatedField(many=True, queryset=User.objects.all())
     # user = serializers.ReadOnlyField(source='user.username')
     incomes = serializers.SerializerMethodField()
     expenses = serializers.SerializerMethodField()
 
     class Meta:
         model = Wallet
-        fields = ['id', 'name', 'slug', 'user', 'incomes', 'expenses']
+        fields = ['id', 'name', 'slug', 'users', 'incomes', 'expenses']
     
     def get_incomes(self, obj):
         # obj represents the current instance of the Wallet model
