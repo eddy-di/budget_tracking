@@ -7,4 +7,13 @@ class InviteSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Invite
-        fields = ['id', 'token', 'wallet', 'expiration_date', 'user', 'is_deleted']
+        fields = [
+            'id', 
+            'token', 
+            'wallet', 
+            'expiration_date', 
+            'user', 
+            'is_deleted',
+            'email',
+            'generate_link'
+            ]

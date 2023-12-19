@@ -15,35 +15,16 @@ class InviteCreateView(generics.ListCreateAPIView):
     serializer_class = InviteSerializer
     permission_classes = [permissions.IsAuthenticated]
 
+
     @staticmethod
     def generate_unique_token():
         return secrets.token_hex(16)
 
-    # @classmethod
-    # def create_invite_link(cls, wallet):
-        # token = cls.generate_unique_token()
-        # expiration_date = timezone.now() + timezone.timedelta(days=1)
-        # invite_link = cls.objects.create(token=token, wallet=wallet, expiration_date=expiration_date)
-        # return invite_link
-
-    # def create(self, request, *args, **kwargs):
-        # # Get the wallet from the request or however you have it available
-        # wallet = Wallet.objects.get(id=request.data.get('wallet'))
-
-        # # Generate the token
-        # token = self.generate_unique_token()
-
-        # # Add the token to the request data
-        # request.data['token'] = token
-
-        # # Call the base class create method
-        # return super().create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
         # Get the wallet from the request or however you have it available
         wallet = Wallet.objects.get(id=self.request.data.get('wallet'))
-        # Create the invite link for the given wallet using the class method
-        # invite_link = self.create_invite_link(wallet)
+        # Create token to the link
         token = self.generate_unique_token()
         # Create the invite link
         serializer.save(
@@ -51,14 +32,18 @@ class InviteCreateView(generics.ListCreateAPIView):
             wallet=wallet, 
             user=self.request.user
             )
+        
+    
+    def return_link(self):
+        return Response({"link":self.generate_link})
 
 
 
 @api_view(['GET'])
 @login_required
 def join_wallet(request, token):
-    invite_link = Invite.objects.get(token=token, expiration_date__gte=timezone.now())
-    wallet = invite_link.wallet
+    invite = Invite.objects.get(token=token, expiration_date__gte=timezone.now())
+    wallet = invite.wallet
 
     # Check if the user is already in the wallet
     if request.user not in wallet.users.all():

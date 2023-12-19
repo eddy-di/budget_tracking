@@ -39,5 +39,7 @@ class Invite(models.Model):
         self.is_deleted = True
         self.save()
 
-
+    @property
+    def generate_link(self):
+        return f'https://mysite.com:8000/wallet-api/invite/{self.token}'
     
