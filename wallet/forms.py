@@ -4,6 +4,7 @@ from .models.comment_income import IncomeComment, Income
 from .models.wallet import Wallet
 from .models.sub_category import SubCategory
 from .models.category import Category
+from .models.invite import Invite
 
 
 class EmailExpenseForm(forms.Form):
@@ -85,3 +86,18 @@ class IncomeAddForm(forms.ModelForm):
             # If updating an existing expense, set the queryset based on the existing category
             self.initial['category'] = self.instance.category.pk
             self.fields['sub_category'].queryset = self.instance.category.subcategory_set.all()
+
+
+class InviteForm(forms.ModelForm):
+    email = forms.EmailField(label='Email')
+    wallet = forms.ModelChoiceField(queryset=Wallet.objects.none(), label='Your wallets')
+
+    class Meta:
+        model = Invite
+        exclude = ['token', 'expiration_date', 'user', 'is_deleted']
+        fields = ['wallet', 'email']
+
+    def __init__(self, user, *args, **kwargs):
+        super(InviteForm, self).__init__(*args, **kwargs)
+        wallets = Wallet.objects.filter(users=user)
+        self.fields['wallet'].queryset = wallets

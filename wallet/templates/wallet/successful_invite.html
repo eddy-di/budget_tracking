@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}Successful invitation{% endblock %}
+
+{% block content %}
+    <h1>Successful invitation</h1>
+    <p>
+        Congratulations, invitation was sent successfully.
+    </p>
+    <p><a href="{% url 'wallet:wallet_list' %}">Back to wallets</a></p>
+{% endblock %}

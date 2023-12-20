@@ -11,6 +11,8 @@ urlpatterns = [
     path('add/', views.wallet.wallet_add, name='add_wallet'),
     path('<int:wallet_id>/', views.wallet.wallet_detail, name='wallet_info'),
     path('<int:wallet_id>/filter_by_date/', views.wallet.filter_by_date, name='filter_by_date'),
+    path('invite', views.invite_view, name='invite'),
+    path('invite/success/', views.successful_invite, name='successful_invite'),
 
 
     # representation of wallet expense
