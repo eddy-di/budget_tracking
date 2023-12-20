@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}Not your wallet{% endblock %}
+
+{% block content %}
+    <h1>Not your wallet</h1>
+    <p>
+        It appers that you are not part of this wallet or it does not belong to you.
+    </p>
+    <p>
+        Please follow <a href="{% url 'wallet:wallet_list' %}">this link</a> to access your wallets list.
+    </p>
+{% endblock %}

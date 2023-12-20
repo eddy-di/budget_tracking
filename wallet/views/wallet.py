@@ -28,66 +28,69 @@ def wallet_list(request): # has to show all the available wallets that the user 
 
 def wallet_detail(request, wallet_id):
     user = request.user
+    wallet = get_object_or_404(Wallet, id=wallet_id) # Wallet.objects.get(id=wallet_id)
 
-    try:
-        wallet = Wallet.objects.get(id=wallet_id)
-        
-        #Logic for doughtnut chart and the text part
-        expense_sum = Expense.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
-        income_sum = Income.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
-        difference = income_sum - expense_sum
+    if user not in wallet.users.all():
+        # redirect
+        return render(request, 'wallet/not_my_wallet.html')
+    else:
+        try:
+            #Logic for doughtnut chart and the text part
+            expense_sum = Expense.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
+            income_sum = Income.objects.filter(wallet=wallet.id).aggregate(Sum('amount'))['amount__sum'] or 0
+            difference = income_sum - expense_sum
 
-        data = [str(expense_sum), str(income_sum)]
-        # end of Logic for doughtnut chart and the text part
+            data = [str(expense_sum), str(income_sum)]
+            # end of Logic for doughtnut chart and the text part
 
-        # Logic for bar charts
-        expenses = Expense.objects.filter(wallet=wallet).values_list('amount', 'category__name', 'sub_category__name')
-        incomes = Income.objects.filter(wallet=wallet).values_list('amount', 'category__name', 'sub_category__name')
-        expenses_categories_d = {}
-            # getting expense sums based on categories and summing them by amount
-        for i in list(expenses):
-            if i[1] not in expenses_categories_d:
-                expenses_categories_d[i[1]] = i[0]
-            else:
-                expenses_categories_d[i[1]] += i[0]
-            # getting expense sums based on sub_categories and summing them by amount
-        expenses_subcats_d = {}
-        for i in list(expenses):
-            if i[2] not in expenses_subcats_d:
-                expenses_subcats_d[i[2]] = i[0]
-            else:
-                expenses_subcats_d[i[2]] += i[0]
-            # getting income sums based on categories and summing them by amount
-        income_subcategories_d = {}
-        for i in list(incomes):
-            if i[2] not in income_subcategories_d:
-                income_subcategories_d[i[2]] = i[0]
-            else:
-                income_subcategories_d[i[2]] += i[0]
-        
-        data_expenses_category = [ str(v) for v in expenses_categories_d.values() ]
-        labels_expenses_category = [k for k in expenses_categories_d.keys()]
+            # Logic for bar charts
+            expenses = Expense.objects.filter(wallet=wallet).values_list('amount', 'category__name', 'sub_category__name')
+            incomes = Income.objects.filter(wallet=wallet).values_list('amount', 'category__name', 'sub_category__name')
+            expenses_categories_d = {}
+                # getting expense sums based on categories and summing them by amount
+            for i in list(expenses):
+                if i[1] not in expenses_categories_d:
+                    expenses_categories_d[i[1]] = i[0]
+                else:
+                    expenses_categories_d[i[1]] += i[0]
+                # getting expense sums based on sub_categories and summing them by amount
+            expenses_subcats_d = {}
+            for i in list(expenses):
+                if i[2] not in expenses_subcats_d:
+                    expenses_subcats_d[i[2]] = i[0]
+                else:
+                    expenses_subcats_d[i[2]] += i[0]
+                # getting income sums based on categories and summing them by amount
+            income_subcategories_d = {}
+            for i in list(incomes):
+                if i[2] not in income_subcategories_d:
+                    income_subcategories_d[i[2]] = i[0]
+                else:
+                    income_subcategories_d[i[2]] += i[0]
 
-        data_incomes_subcategory = [ str(v) for v in income_subcategories_d.values() ]
-        labels_incomes_subcategory = [k for k in income_subcategories_d.keys()]
-        # end of Logic for bar charts
+            data_expenses_category = [ str(v) for v in expenses_categories_d.values() ]
+            labels_expenses_category = [k for k in expenses_categories_d.keys()]
+
+            data_incomes_subcategory = [ str(v) for v in income_subcategories_d.values() ]
+            labels_incomes_subcategory = [k for k in income_subcategories_d.keys()]
+            # end of Logic for bar charts
 
 
-        return render(request, 
-                      'wallet/wallet_detail.html',
-                      {'expense_sum': expense_sum,
-                       'income_sum': income_sum,
-                       'difference': difference,
-                       'wallet': wallet,
-                       'user': user,
-                       'data': data,
-                       'data_expenses_category': data_expenses_category,
-                       'labels_expenses_category': labels_expenses_category,
-                       'data_incomes_subcategory': data_incomes_subcategory,
-                       'labels_incomes_subcategory': labels_incomes_subcategory
-                       })
-    except Wallet.DoesNotExist:
-        return render(request, 'wallet/wallet_not_found.html')
+            return render(request, 
+                          'wallet/wallet_detail.html',
+                          {'expense_sum': expense_sum,
+                           'income_sum': income_sum,
+                           'difference': difference,
+                           'wallet': wallet,
+                           'user': user,
+                           'data': data,
+                           'data_expenses_category': data_expenses_category,
+                           'labels_expenses_category': labels_expenses_category,
+                           'data_incomes_subcategory': data_incomes_subcategory,
+                           'labels_incomes_subcategory': labels_incomes_subcategory
+                           })
+        except Wallet.DoesNotExist:
+            return render(request, 'wallet/wallet_not_found.html')
 
 
 def wallet_add(request):

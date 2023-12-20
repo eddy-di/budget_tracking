@@ -35,7 +35,7 @@ from wallet.models.sub_category import SubCategory
 def expense_list(request, wallet_id, tag_slug=None):
     user = request.user # checks if the user is logged in
 
-    wallet = Wallet.objects.get(user=user, id=wallet_id) 
+    wallet = Wallet.objects.get(users=user, id=wallet_id) 
 
     try:
         expense_list = Expense.objects.filter(wallet_id=wallet_id)
@@ -87,14 +87,11 @@ def expense_comment(request, expense_id):
 
 
 def expense_detail(request, wallet_id, expense_id):
-    user = request.user # checks if the user is logged in
-
-    wallet = Wallet.objects.get(user=user, id=wallet_id) # checks the m2m for user and wallet compatibility
-
     try:
         expense = get_object_or_404(Expense,
                                      currency=Expense.CurrencyChoices.KGS,
-                                     id=expense_id)
+                                     id=expense_id,
+                                     wallet=wallet_id)
         # number of active comments to this expense
         comments = expense.expense_comment.filter(active=True) # comments maybe need to change to expense_comment
         # form for comments
@@ -120,7 +117,7 @@ def expense_detail(request, wallet_id, expense_id):
 def expense_share(request, wallet_id, expense_id):
     user = request.user # checks if the user is logged in
 
-    wallet = Wallet.objects.get(user=user, id=wallet_id) # checks the m2m for user and wallet compatibility
+    # wallet = Wallet.objects.get(users=user, id=wallet_id) # checks the m2m for user and wallet compatibility
 
     # get expense from its id
     expense = get_object_or_404(Expense,

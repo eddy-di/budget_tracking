@@ -39,7 +39,7 @@ from django.views.decorators.http import require_POST
 def income_list(request, wallet_id, tag_slug=None):
     user = request.user # checks if the user is logged in
 
-    wallet = Wallet.objects.get(user=user, id=wallet_id) # # checks the m2m for user and wallet compatibility
+    wallet = Wallet.objects.get(users=user, id=wallet_id) # # checks the m2m for user and wallet compatibility
 
     try:
         income_list = Income.objects.filter(wallet_id=wallet_id)
@@ -85,18 +85,12 @@ def income_comment(request, income_id):
 
 
 
-def income_detail(request, wallet_id, year, month, day, earned):
-    user = request.user # checks if the user is logged in
-
-    wallet = Wallet.objects.get(user=user, id=wallet_id) # # checks the m2m for user and wallet compatibility
-
+def income_detail(request, wallet_id, income_id):
     try:
         income = get_object_or_404(Income,
                                     currency=Income.CurrencyChoices.KGS,
-                                    slug=earned,
-                                    created_at__year=year,
-                                    created_at__month=month,
-                                    created_at__day=day)
+                                    id=income_id,
+                                    wallet=wallet_id)
 
         comments = income.income_comment.filter(active=True)
         form = IncomeCommentForm()

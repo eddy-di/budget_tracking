@@ -41,7 +41,7 @@ urlpatterns = [
     # representation of wallet income
     # path('income', views.income.IncomeListView.as_view(), name='income_list'),
     path('<int:wallet_id>/income', views.income.income_list, name='income_list'),
-    path('<int:wallet_id>/income/<slug:earned>/<int:year>/<int:month>/<int:day>',
+    path('<int:wallet_id>/income/<int:income_id>/detail/',
         views.income.income_detail, 
         name='income_detail'),
     path('income/<int:income_id>/share/',

@@ -15,7 +15,7 @@
     </a>
     {% for obj in income %}
         <h2>
-            <a href="{{ obj.get_absolute_url }}">
+            <a href="{{ obj.get_detail_url }}">
                 {{ obj.amount }} came from {{ obj.sub_category }}
             </a>
         </h2>

@@ -85,14 +85,6 @@ class Expense(models.Model):
     def __str__(self):
         return f'{self.amount}-{self.category}-{self.sub_category}'
     
-    
-    # def get_absolute_url(self):
-        # return reverse('wallet:expense_detail',
-                    #    args=[self.slug, 
-                            #  self.created_at.year,
-                            #  self.created_at.month,
-                            #  self.created_at.day])
-    
 
     def get_detail_url(self):
         return reverse('wallet:expense_detail',
@@ -100,7 +92,7 @@ class Expense(models.Model):
                              self.id])
     
 
-    # def save(self, *args, **kwargs):
-        # slug_str = f'{self.currency}-{self.amount}-{self.sub_category}-{self.wallet.id}'
-        # self.slug = slugify(slug_str)
-        # super(Expense, self).save(*args, **kwargs)
+    def save(self, *args, **kwargs):
+        slug_str = f'{self.currency}-{self.amount}-{self.sub_category}-{self.wallet.id}'
+        self.slug = slugify(slug_str)
+        super(Expense, self).save(*args, **kwargs)
