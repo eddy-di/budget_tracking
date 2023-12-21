@@ -4,6 +4,7 @@ from django.db.models.query import QuerySet
 from wallet.models.wallet import Wallet
 from django.contrib.auth.models import User
 from django.utils import timezone
+from core.settings import SITE_URL
 
 
 class InviteManager(models.Manager):
@@ -41,5 +42,8 @@ class Invite(models.Model):
 
     @property
     def generate_link(self):
-        return f'https://mysite.com:8000/wallet-api/invite/{self.token}'
+        return f'{SITE_URL}wallet/invite/{self.token}'
+    
+    def __str__(self):
+        return f'Inviting a perosn with {self.email} email'
     

@@ -7,6 +7,7 @@ from .models.wallet import Wallet
 from .models.sub_category import SubCategory
 from .models.comment_income import IncomeComment
 from .models.comment_expense import ExpenseComment
+from .models.invite import Invite
 # Register your models here.
 
 
@@ -69,3 +70,8 @@ class IncomeCommentAdmin(admin.ModelAdmin):
     list_display = ['name', 'email', 'income', 'created', 'active']
     list_filter = ['active', 'created', 'updated']
     search_fields = ['name', 'email', 'body']
+
+
+@admin.register(Invite)
+class InviteAdmin(admin.ModelAdmin):
+    list_display = ['token', 'email', 'wallet', 'expiration_date', 'user', 'is_deleted']

@@ -9,6 +9,7 @@ urlpatterns = [
     # path('login/', views.user_login, name='login'),
 
     path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('login/<str:invite_token>/', views.user_login, name='login_with_token'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
 # 
     # url-адреса смены пароля
@@ -38,6 +39,7 @@ urlpatterns = [
         name='password_reset_complete'),
     # path('', include('django.contrib.auth.urls')),
     path('register/', views.register, name='register'),
+    path('register/<str:invite_token>/', views.register, name='register'),
     path('edit/', views.edit, name='edit'),
     path('redirect/', views.redirect_to_login, name='redirect'),
     path('successful-login/', views.successful_login, name='successful_login'),

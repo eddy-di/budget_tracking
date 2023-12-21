@@ -1,9 +1,12 @@
 import secrets
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.core.mail import send_mail
 from django.contrib import messages
 from django.template.loader import render_to_string
 from django.utils import timezone
+from django.http import HttpResponse
+from django.contrib.auth.models import User
+from wallet.models.wallet import Wallet
 
 from wallet.forms import InviteForm
 from wallet.models.invite import Invite
@@ -50,3 +53,32 @@ def invite_view(request):
 
 def successful_invite(request):
     return render(request, 'wallet/successful_invite.html')
+
+
+def invite_confirmation(request, invite_token):
+    print('start')
+    invite = get_object_or_404(
+        Invite,
+        token=invite_token
+    )
+    print(invite)
+    email = invite.email
+    print(email)
+
+    wallet_users = Wallet.objects.filter(name=invite.wallet).values_list(
+        'users__email',
+        )
+    print(wallet_users)
+    all_users = User.objects.values_list('email')
+    # user = request.user
+
+    if email not in wallet_users:
+        if email not in all_users:
+            print('Not here')
+            return redirect ('account:register', invite_token=invite_token)
+        else:
+            print('not in wallet but in system')
+            return redirect('account:redirect_with_token', invite_token=invite_token)
+
+
+    return HttpResponse('done')

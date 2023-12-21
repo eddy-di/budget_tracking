@@ -154,6 +154,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 
 SITE_ID = 1
+SITE_URL = 'https://mysite.com:8000/'
 
 
 # redirected urls
