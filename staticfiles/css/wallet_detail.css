@@ -1,0 +1,78 @@
+.wallet_info {
+    color: black;
+    float: left;
+    width: 50%;
+}
+.wallet_doughnut_chart_info {
+    color: lightgray;
+    float: left;
+    max-width: 50%;
+}
+.wallet_bar_chart_info {
+    color: lightgray;
+    float: left;
+    width: 50%;
+}
+.main-wallet-info:after {
+    content: '';
+    display: table-column;
+    clear: both;
+}
+@media screen and (max-width: 900) {
+    .wallet_info, .wallet_doughnut_chart_info, .wallet_bar_chart_info {
+        width: 50%;
+    }
+}
+@media screen and (max-width: 600px) {
+    .wallet_info, .wallet_doughnut_chart_info, .wallet_bar_chart_info {
+        width: 100%;
+    }
+}
+.filter-navbar {
+    overflow: hidden;
+}
+.filter-label {
+    margin-right: 5px; 
+    margin-bottom: 0px;
+    align-items: center;
+}
+.filter-input {
+    margin-right: 5px; 
+    margin-bottom: 0; 
+
+}
+.navbar-li {
+    float: left;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+    align-items: center;
+    width: auto;
+}
+.navbar-li-input {
+    float: left;
+    display: inline-block;
+    margin-left: 0px;
+    margin-right: 5px;
+    align-items: center;
+    width: auto;
+    border:1px #363535d1;
+}
+.filter-navbar:after {
+    content: '';
+    display: table-column;
+    clear: both;
+}
+@media screen and (max-width: 900) {
+    .navbar-li {
+        width: 10%;
+    }
+    .navbar-li-input {
+        width: 40%;
+    }
+}
+@media screen and (max-width: 600) {
+    .navbar-li {
+        width: 100%;
+    }
+}

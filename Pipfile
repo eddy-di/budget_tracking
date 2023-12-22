@@ -20,6 +20,7 @@ djangorestframework-simplejwt = "*"
 drf-spectacular = "*"
 gunicorn = "*"
 dj-database-url = "*"
+whitenoise = "*"
 
 [dev-packages]
 
