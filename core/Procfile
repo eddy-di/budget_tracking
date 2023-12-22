@@ -1,1 +1,1 @@
-web: gunicorn budget_tracking.core.wsgi
+web: gunicorn core.wsgi
