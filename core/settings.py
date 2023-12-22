@@ -15,7 +15,7 @@ from pathlib import Path
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 # Quick-start development settings - unsuitable for production
@@ -27,7 +27,7 @@ SECRET_KEY = 'django-insecure-iq@t6svz=h+mpg-d!2#(wm@xl9i33ejdx6^%g=z5zu6a9jf&wq
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['mysite.com', 'localhost', '127.0.0.1', 'budget-traking-b6cc5b495b52.herokuapp.com']
 
 
 # Application definition
@@ -93,7 +93,7 @@ DATABASES = {
         'NAME': 'budget_tracker',
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASSWORD'),
-        "HOST": "localhost",
+        "HOST": "budget-traking-b6cc5b495b52.herokuapp.com",
         "PORT": "5432",
     }
 }
