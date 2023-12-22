@@ -223,6 +223,3 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
-
-import django_on_heroku
-TEST_RUNNER = 'django_on_heroku.HerokuDiscoverRunner'
