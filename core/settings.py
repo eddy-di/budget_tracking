@@ -90,9 +90,10 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASE_URL = os.environ.get('HEROKU_DB_URL')
 
-conn = psycopg2.connect(DATABASE_URL, sslmode='require')
+# conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
 import dj_database_url
+
 DATABASES = {
     # 'default': {
         # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
