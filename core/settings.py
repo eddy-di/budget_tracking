@@ -102,15 +102,15 @@ DATABASES = {
         # "HOST": "budget-traking-b6cc5b495b52.herokuapp.com",
         # "PORT": "5432",
     # }
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'df83ptluaipiod',
-        'USER': os.environ.get('HEROKU_DB_USER'),
-        'PASSWORD': os.environ.get('HEROKU_DB_PASSWORD'), 
-        "HOST": "ec2-35-169-9-79.compute-1.amazonaws.com",
-        "PORT": "5432",
-        "OPTIONS": {'sslmode': 'require'},
-    }
+    'default': dj_database_url.config(default=os.environ.get('HEROKU_DB_URL'))
+        # 'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        # 'NAME': 'df83ptluaipiod',
+        # 'USER': os.environ.get('HEROKU_DB_USER'),
+        # 'PASSWORD': os.environ.get('HEROKU_DB_PASSWORD'), 
+        # "HOST": "ec2-35-169-9-79.compute-1.amazonaws.com",
+        # "PORT": "5432",
+        # "OPTIONS": {'sslmode': 'require'},
+    
 }
 
 
