@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Account{% endblock %}
+
+{% block content %}
+    <h1>
+        Account page
+    </h1>
+    <p>
+        Redirect to <a href="{% url 'account:login' %}">login page</a>
+    </p>
+{% endblock %}

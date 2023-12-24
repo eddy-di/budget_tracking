@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block title %}Hone page{% endblock %}
+
+{% block content %}
+    <h1>Home page</h1>
+    <p><a href="{% url 'wallet:wallet_list' %}">Wallets</a></p>
+    <p><a href="{% url 'account:account_index' %}">Account</a></p>
+{% endblock }

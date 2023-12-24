@@ -11,6 +11,7 @@ from django.contrib.sitemaps.views import sitemap
 from wallet.sitemaps import ExpenseSitemap, IncomeSitemap
 from django.conf import settings
 from django.conf.urls.static import static
+from account.views import home_page
 
 
 sitemaps = {
@@ -19,6 +20,7 @@ sitemaps = {
 }
 
 urlpatterns = [
+    path('', home_page, name='home'),
     path('admin/', admin.site.urls),
     path('account/', include('account.urls', namespace='account')),
     path('wallet-api/', include('wallet.api.urls', namespace='wallet_api')),

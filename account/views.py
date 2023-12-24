@@ -120,3 +120,11 @@ def redirect_to_login(request):
 
 def successful_login(request):
     return render(request, 'account/successful_login.html')
+
+
+def account_index(request):
+    return render(request, 'account/list.html')
+
+
+def home_page(request):
+    return render(request, 'home.html')
