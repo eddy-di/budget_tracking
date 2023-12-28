@@ -6,7 +6,7 @@ from wallet.api.serializers.income import IncomeSerializer
 
 
 class IncomeListView(generics.ListCreateAPIView):
-    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    permission_classes = [permissions.IsAuthenticated]
     queryset = Income.objects.all()
     serializer_class = IncomeSerializer
 

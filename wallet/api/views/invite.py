@@ -39,8 +39,8 @@ class InviteCreateView(generics.ListCreateAPIView):
 
 
 
-@api_view(['GET'])
 @login_required
+@api_view(['GET'])
 def join_wallet(request, token):
     invite = Invite.objects.get(token=token, expiration_date__gte=timezone.now())
     wallet = invite.wallet

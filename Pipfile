@@ -21,6 +21,9 @@ drf-spectacular = "*"
 gunicorn = "*"
 dj-database-url = "*"
 whitenoise = "*"
+pytest-django = "*"
+pytest-factoryboy = "*"
+faker = "*"
 
 [dev-packages]
 
