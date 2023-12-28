@@ -13,10 +13,27 @@ from rest_framework.authtoken.models import Token
 @pytest.mark.django_db
 def test_unauthorized_request_endpoints_token(api_client_with_credentials, urls):
     url = reverse(urls)
-    # token = get_or_create_token
-    # user = User.objects.create_user('test', 'user@example.com', 'Strong-test-pass')
-    # token = Token.objects.create(user=user)
-    # print(token)
-    # api_client.credentials(HTTP_AUTHORIZATION='Token: ' + token.key)
     response = api_client_with_credentials.get(url)
     assert response.status_code == 200
+
+
+@pytest.mark.django_db
+@pytest.mark.parametrize('email, password, verify_code', [
+    ('', [], 400),
+    ((), 'strong_pass', 400),#
+    ('user@example.com', [], 400),#
+    # ('user@example.com', 'invalid_pass', 400),
+    # ('user@example.com', 'strong-test-pass', 200), #
+])
+def test_login_data_validation(
+    email, password, verify_code, create_user, api_client
+):
+    user = create_user(username='user@example.com', password='strong-test-pass').save()
+    url = reverse('token_obtain_pair')
+    data = {
+        'username':email,
+        'password':password
+    }
+    response = api_client.post(url, data=data)
+    print(response)
+    assert response.status_code == verify_code

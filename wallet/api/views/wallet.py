@@ -8,10 +8,10 @@ from wallet.api.permissions import IsUserAssociatedWithWalletDetail
 class WalletListCreateView(generics.ListCreateAPIView):
     queryset = Wallet.objects.all()
     serializer_class = WalletListSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def perform_create(self, serializer):
-        serializer.save(user=[self.request.user])
+        serializer.save(users=[self.request.user])
 
     def get_queryset(self):
         user = self.request.user

@@ -1,10 +1,12 @@
 import uuid
 
 from django.test import Client
-import pytest
 from wallet.models.wallet import Wallet
+from wallet.models.category import Category
+from wallet.models.sub_category import SubCategory
 
 from rest_framework.authtoken.models import Token
+import pytest
 
 from faker import Faker
 fake = Faker()
@@ -22,7 +24,7 @@ def create_user(db, django_user_model, test_password): # initial fixture is used
    def make_user(**kwargs):
        kwargs['password'] = test_password
        if 'username' not in kwargs:
-           kwargs['username'] = fake.name() # or str(uuid.uuid4())
+           kwargs['username'] = fake.name() 
        return django_user_model.objects.create_user(**kwargs)
    return make_user
 
@@ -85,3 +87,31 @@ def api_client_with_credentials(
    api_client.force_authenticate(user=user)
    yield api_client
    api_client.force_authenticate(user=None)
+
+
+# @pytest.fixture
+# def create_category(db):
+    # def _create_category(**kwargs):
+        # return Category.objects.create(name=fake.word(), **kwargs)
+    # return _create_category
+# 
+# @pytest.fixture
+# def create_wallet(db, create_user):
+    # def _create_wallet(**kwargs):
+        # return Wallet.objects.create(
+            # name = fake.word(),
+            # users=[create_user().id],
+            # **kwargs
+        # )
+    # return _create_wallet
+   
+
+@pytest.fixture
+def create_income_expense_fk_fields(db, create_user):
+    def fk_fields(**kwargs):
+        kwargs['member'] = create_user()
+        kwargs['category'] = Category.objects.create(name='income')
+        kwargs['sub_category'] = SubCategory.objects.create(name='Salary', category=kwargs['category'])
+        kwargs['wallet'] = Wallet.objects.create(name=fake.word(), users=kwargs['member'].id)
+        return kwargs
+    return fk_fields
