@@ -24,5 +24,5 @@ class WalletDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = WalletDetailSerializer
 
     def get_queryset(self):
-        user = self.request.user
+        users = self.request.user
         return Wallet.objects.filter(users=user)

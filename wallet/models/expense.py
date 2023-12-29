@@ -83,7 +83,7 @@ class Expense(models.Model):
         
         
     def __str__(self):
-        return f'{self.amount}-{self.category}-{self.sub_category}'
+        return f'("id":{self.id}\n"amount*":{self.amount}\n"currency":{self.currency}\n"created_at":{self.created_at}\n"category*":{self.category}\n"sub_category*":{self.sub_category}\n"wallet*":{self.wallet}\n"comment*":{self.comment})'
     
 
     def get_detail_url(self):
