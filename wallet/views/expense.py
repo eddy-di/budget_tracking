@@ -33,11 +33,8 @@ from wallet.models.sub_category import SubCategory
 
 
 def expense_list(request, wallet_id, tag_slug=None):
-    user = request.user # checks if the user is logged in
-
-    wallet = Wallet.objects.get(users=user, id=wallet_id) 
-
     try:
+        wallet = Wallet.objects.get(users=request.user, id=wallet_id)
         expense_list = Expense.objects.filter(wallet_id=wallet_id)
         tag = None
         if tag_slug:

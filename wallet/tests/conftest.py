@@ -4,13 +4,21 @@ from django.test import Client
 from wallet.models.wallet import Wallet
 from wallet.models.category import Category
 from wallet.models.sub_category import SubCategory
+from wallet.models.expense import Expense
 
 from rest_framework.authtoken.models import Token
 import pytest
+from wallet.tests.factories import WalletFactory, UserFactory, CategoryFactory, SubCategoryFactory, random_datetime # ExpenseFactory,
+from pytest_factoryboy import register
 
 from faker import Faker
 fake = Faker()
 
+register(WalletFactory)
+register(UserFactory)
+# register(ExpenseFactory)
+register(CategoryFactory)
+register(SubCategoryFactory)
 
 
 @pytest.fixture
@@ -115,3 +123,34 @@ def create_income_expense_fk_fields(db, create_user):
         kwargs['wallet'] = Wallet.objects.create(name=fake.word(), users=kwargs['member'].id)
         return kwargs
     return fk_fields
+
+
+@pytest.fixture
+def create_wallet_with_user(db, wallet_factory, auto_login_user):
+    client, user = auto_login_user()
+    wallet = wallet_factory.create()
+    wallet.users.set([user])
+    return wallet, client, user
+
+
+@pytest.fixture
+def subcat_with_cat(db, category_factory, sub_category_factory):
+    category = category_factory.create()
+    sub_category = sub_category_factory.create()
+    sub_category.category = category
+    return category, sub_category
+
+@pytest.fixture
+def create_expense(db, create_wallet_with_user, subcat_with_cat, client):
+    wallet, client, user = create_wallet_with_user
+    category, sub_category = subcat_with_cat
+    expense = Expense.objects.create(
+        amount = fake.pydecimal(3, 2, True),
+        comment = fake.text(),
+        created_at = random_datetime(),
+        category = category,
+        sub_category = sub_category,
+        wallet = wallet,
+        member = user
+    )
+    return expense, client, user
