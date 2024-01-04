@@ -5,6 +5,7 @@ from wallet.models.wallet import Wallet
 from wallet.models.category import Category
 from wallet.models.sub_category import SubCategory
 from wallet.models.expense import Expense
+from wallet.models.income import Income
 
 from rest_framework.authtoken.models import Token
 import pytest
@@ -154,3 +155,18 @@ def create_expense(db, create_wallet_with_user, subcat_with_cat, client):
         member = user
     )
     return expense, client, user
+
+
+@pytest.fixture
+def create_income(db, create_wallet_with_user, subcat_with_cat):
+    wallet, client, user = create_wallet_with_user
+    category, sub_category = subcat_with_cat
+    income = Income.objects.create(
+        amount = fake.pydecimal(3, 2, True),
+        comment = fake.text(),
+        category = category,
+        sub_category = sub_category,
+        wallet = wallet,
+        member = user
+    )
+    return income, client, user

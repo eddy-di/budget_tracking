@@ -127,7 +127,7 @@ def income_share(request, income_id):
             cd = form.cleaned_data
             # ... send email
             income_url = request.build_absolute_uri(
-                income.get_absolute_url())
+                income.get_detail_url())
             subject = f"{cd['name']} recommends you to look at " \
                       f"{income.amount}"
             message = f"Look at {income.amount} at {income_url}\n\n" \
