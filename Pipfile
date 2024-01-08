@@ -24,6 +24,7 @@ whitenoise = "*"
 pytest-django = "*"
 pytest-factoryboy = "*"
 faker = "*"
+django-stubs = {extras = ["compatible-mypy"], version = "*"}
 
 [dev-packages]
 
